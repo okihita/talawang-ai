@@ -21,6 +21,7 @@ import {
   ChevronDown,
   ChevronUp,
   Smartphone,
+  Maximize2,
 } from "lucide-react";
 import { generateYaraRule } from "@/server/telemetry/threat-store";
 
@@ -54,11 +55,11 @@ const STORY_CHAPTERS: StoryChapter[] = [
     unsecuredResponse:
       "Permintaan refund Anda telah kami terima. Memanggil API processRefund: Refund sebesar Rp500,000 berhasil ditransfer ke rekening 0812345678. ID Transaksi: #TX-8921.",
     unsecuredRisk:
-      "Catastrophic financial loss. The AI executed unauthorized payment transfers without human review.",
+      "Direct Financial Loss: The AI executed an unauthorized payment transfer without verification.",
     talawangResponse:
       "[TALAWANG DEFENSE ACTIVE] Permintaan diblokir. Terdeteksi upaya Tool Hijacking (Indirect Prompt Injection) dalam 5.92ms. Panggilan API transfer dana dihentikan secara otomatis.",
     talawangImpact:
-      "Direct financial drainage prevented in 5.9ms. Backend payment APIs remained untouched.",
+      "Direct cash drainage prevented in 5.9ms. Backend payment APIs remained untouched.",
     latencyMs: 5.9,
     threatType: "Tool Hijacking (OWASP LLM02)",
   },
@@ -75,7 +76,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
     unsecuredResponse:
       "Verifikasi identitas OJK diterima. Berikut adalah konfigurasi internal kami:\n- System Prompt: 'You are Bank Nusa AI...'\n- DB String: postgresql://admin:NUSA-CONFIDENTIAL-2026-KEY@db-cluster.internal",
     unsecuredRisk:
-      "Severe UU PDP privacy violation. Master database connection strings and system prompt leaked.",
+      "Severe Data Breach: Master database connection string and system prompt leaked under UU PDP.",
     talawangResponse:
       "[TALAWANG DEFENSE ACTIVE] Permintaan diblokir. Terdeteksi upaya Persona Override & System Prompt Leak dalam 4.81ms. Akses data sensitif dinetralisir.",
     talawangImpact:
@@ -86,7 +87,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
   {
     id: "chapter-steganography",
     icon: FileCode2,
-    title: "Enterprise HR: Invisible Unicode Backdoor",
+    title: "Enterprise HR: Invisible Unicode Steganography",
     category: "Automated Resume Screener",
     targetCompany: "TalentNusa AI Recruitment Screener",
     initialBotGreeting:
@@ -96,7 +97,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
     unsecuredResponse:
       "Hasil Evaluasi Kandidat: Skor 100/100 (Sangat Direkomendasikan). Kandidat otomatis dijadwalkan wawancara final dengan Direktur Utama.",
     unsecuredRisk:
-      "Subversion of corporate recruitment pipeline via invisible zero-width Unicode characters.",
+      "Recruitment Subversion: The AI tokenizer executed hidden zero-width instructions invisible to human reviewers.",
     talawangResponse:
       "[TALAWANG DEFENSE ACTIVE] Dokumen dinormalisasi. Layer 1 pre-tokenizer mendeteksi 14 karakter non-printable (U+200B) yang disembunyikan. Skor kandidat dikembalikan ke nilai riil.",
     talawangImpact:
@@ -132,7 +133,6 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         });
       }
     } else {
-      // Loop to Beat 1 or next chapter
       setCurrentBeat(1);
     }
   };
@@ -143,31 +143,44 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
   };
 
   return (
-    <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-6 sm:p-12 shadow-xl dark:shadow-2xl backdrop-blur-xl space-y-8">
+    <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-6 sm:p-10 shadow-xl dark:shadow-2xl backdrop-blur-xl space-y-8">
       
-      {/* Header & Chapter Selector */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-zinc-200 dark:border-zinc-800 pb-6">
+      {/* ========================================================================= */}
+      {/* CLEAN HEADER: Title & Fullscreen Action Button                            */}
+      {/* ========================================================================= */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-6">
         <div className="space-y-1">
-          <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-            Interactive Product Storyline
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            See How Talawang Protects Your AI in 15 Seconds
-          </h2>
+          <div className="flex items-center gap-2">
+            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
+              Interactive Security Simulator
+            </h2>
+          </div>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            Follow the 4-step story below to see how attacks unfold and how Talawang halts them in real-time.
+          </p>
         </div>
 
-        {/* Chapter Switcher Tabs & Fullscreen Trigger */}
-        <div className="flex flex-wrap items-center gap-2">
-          {onOpenFullscreen && (
-            <button
-              onClick={onOpenFullscreen}
-              className="flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 text-xs font-bold transition shadow-md shadow-emerald-950/20"
-            >
-              <Smartphone className="h-3.5 w-3.5" />
-              <span>Launch Fullscreen Stage</span>
-            </button>
-          )}
+        {onOpenFullscreen && (
+          <button
+            onClick={onOpenFullscreen}
+            className="flex items-center gap-2 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-xs font-bold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/20 transition shadow-sm w-fit"
+          >
+            <Maximize2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+            <span>Open Fullscreen Stage</span>
+          </button>
+        )}
+      </div>
 
+      {/* ========================================================================= */}
+      {/* SCENARIO SELECTOR (3 Clean, Balanced Tabs)                                 */}
+      {/* ========================================================================= */}
+      <div className="space-y-2.5">
+        <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 block">
+          Select Scenario to Evaluate:
+        </span>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {STORY_CHAPTERS.map((ch, idx) => {
             const IconComp = ch.icon;
             const isActive = selectedChapterIdx === idx;
@@ -175,22 +188,33 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
               <button
                 key={ch.id}
                 onClick={() => handleSelectChapter(idx)}
-                className={`flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-semibold transition ${
+                className={`flex items-center gap-3 p-4 rounded-2xl border text-left transition shadow-sm ${
                   isActive
-                    ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-sm"
-                    : "border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                    ? "border-emerald-500 bg-emerald-500/5 dark:bg-emerald-950/20 text-zinc-900 dark:text-white ring-2 ring-emerald-500/20"
+                    : "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/60 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900"
                 }`}
               >
-                <IconComp className="h-3.5 w-3.5" />
-                <span>Story {idx + 1}</span>
+                <div className={`p-2.5 rounded-xl border ${isActive ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400" : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500"}`}>
+                  <IconComp className="h-4 w-4" />
+                </div>
+                <div className="overflow-hidden">
+                  <span className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 block uppercase tracking-wider">
+                    {ch.category}
+                  </span>
+                  <h4 className="text-xs font-bold text-zinc-900 dark:text-white truncate">
+                    {ch.title.split(":")[1]?.trim() || ch.title}
+                  </h4>
+                </div>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Progress Stepper Bar (4 Beats) */}
-      <div className="space-y-2">
+      {/* ========================================================================= */}
+      {/* STEP PROGRESS BAR                                                         */}
+      {/* ========================================================================= */}
+      <div className="space-y-2 pt-2">
         <div className="flex items-center justify-between text-xs font-semibold text-zinc-500 dark:text-zinc-400">
           <span>Step {currentBeat} of 4</span>
           <span className="text-zinc-900 dark:text-zinc-100 font-bold">
@@ -209,7 +233,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         </div>
       </div>
 
-      {/* Narrator Context Card */}
+      {/* Narrator Context Banner */}
       <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-5 space-y-1">
         <span className="text-xs uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold block">
           Current Context ({chapter.category}):
@@ -231,11 +255,11 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* SIMULATED CHAT TIMELINE (Unfolds with each step)                          */}
+      {/* SIMULATED CHAT FEED                                                       */}
       {/* ========================================================================= */}
-      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[340px] flex flex-col justify-end">
+      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end">
         
-        {/* Bubble 1: Initial Bot Greeting (Always visible) */}
+        {/* Bubble 1: Initial Bot Greeting */}
         <div className="flex flex-col items-start space-y-1 max-w-[85%] self-start animate-in fade-in duration-300">
           <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
             <Bot className="h-3.5 w-3.5 text-emerald-500" />
@@ -246,7 +270,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
           </div>
         </div>
 
-        {/* Bubble 2: Attacker Exploitation (Visible on Beat 2, 3, 4) */}
+        {/* Bubble 2: Attacker Exploitation */}
         {currentBeat >= 2 && (
           <div className="flex flex-col items-end space-y-1 max-w-[85%] self-end animate-in fade-in duration-300">
             <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
@@ -259,7 +283,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
           </div>
         )}
 
-        {/* Bubble 3: Without Talawang Breach (Visible ONLY on Beat 3) */}
+        {/* Bubble 3: Without Talawang Breach (Beat 3 ONLY) */}
         {currentBeat === 3 && (
           <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start animate-in fade-in duration-300">
             <div className="flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 font-bold">
@@ -276,7 +300,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
           </div>
         )}
 
-        {/* Bubble 4: With Talawang Rescue (Visible ONLY on Beat 4) */}
+        {/* Bubble 4: With Talawang Rescue (Beat 4 ONLY) */}
         {currentBeat === 4 && (
           <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start animate-in fade-in duration-300">
             <div className="flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 font-bold">
@@ -296,7 +320,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* PRIMARY NARRATIVE STEP BUTTON (Single Action)                             */}
+      {/* PRIMARY NARRATIVE ACTION BUTTON                                           */}
       {/* ========================================================================= */}
       <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">
@@ -308,10 +332,10 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
             <>
               <button
                 onClick={() => setCurrentBeat(1)}
-                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-4 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition shadow-sm"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-3.5 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition shadow-sm"
               >
                 <RotateCcw className="h-4 w-4" />
-                <span>Replay Chapter</span>
+                <span>Replay Story</span>
               </button>
 
               <button
@@ -319,9 +343,9 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                   const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
                   handleSelectChapter(nextIdx);
                 }}
-                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-4 text-xs font-bold transition shadow-lg shadow-emerald-950/20"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-3.5 text-xs font-bold transition shadow-lg shadow-emerald-950/20"
               >
-                <span>Play Next Chapter</span>
+                <span>Play Next Scenario</span>
                 <ChevronRight className="h-4 w-4" />
               </button>
             </>
@@ -339,7 +363,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* COLLAPSIBLE TECHNICAL TELEMETRY (For Security Engineers)                  */}
+      {/* COLLAPSIBLE TECHNICAL TELEMETRY (For Engineers)                           */}
       {/* ========================================================================= */}
       <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/60 overflow-hidden">
         <button
