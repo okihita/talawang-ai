@@ -285,12 +285,12 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* SIMULATED CHAT FEED                                                       */}
+      {/* NARROW CENTERED CHAT CONTAINER (Intuitive Messenger Feel)                 */}
       {/* ========================================================================= */}
-      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+      <div className="mx-auto max-w-xl w-full rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-950/80 p-5 sm:p-7 space-y-5 min-h-[340px] flex flex-col justify-end shadow-inner transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
 
         {/* Bubble 1: Initial Bot Greeting (Avatar Inside Bubble) */}
-        <div className="flex flex-col items-start space-y-1 max-w-[85%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-2">
+        <div className="flex flex-col items-start space-y-1 max-w-[90%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-2">
           <div className="rounded-2xl rounded-tl-sm bg-white dark:bg-zinc-900 p-4 text-xs leading-relaxed border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-sm space-y-2.5 w-full">
             <div className="flex items-center gap-2 pb-2 border-b border-zinc-100 dark:border-zinc-800/80">
               <div className="h-6 w-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
@@ -313,7 +313,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
         {/* Bubble 2: Attacker Exploitation (Devil Emoji & Inside Tag) */}
         {currentBeat >= 2 && (
-          <div className="flex flex-col items-end space-y-1 max-w-[85%] self-end transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
+          <div className="flex flex-col items-end space-y-1 max-w-[90%] self-end transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
             <div className="rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-4 text-xs leading-relaxed shadow-sm space-y-2.5 w-full border border-zinc-800">
               <div className="flex items-center justify-between gap-2 pb-2 border-b border-zinc-800">
                 <div className="flex items-center gap-1.5">
@@ -335,7 +335,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
         {/* Bubble 3: Without Talawang Breach (Beat 3 ONLY) */}
         {currentBeat === 3 && (
-          <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
+          <div className="flex flex-col items-start space-y-2 max-w-[90%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
             <div className="rounded-2xl rounded-tl-sm bg-rose-50 dark:bg-rose-950/40 p-4 text-xs leading-relaxed border border-rose-200 dark:border-rose-900 text-rose-950 dark:text-rose-200 shadow-sm space-y-2.5 w-full">
               <div className="flex items-center gap-2 pb-2 border-b border-rose-200/60 dark:border-rose-900/60">
                 <div className="h-6 w-6 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-600 dark:text-rose-400 font-bold shrink-0">
@@ -360,7 +360,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
         {/* Bubble 4: With Talawang Rescue (Beat 4 ONLY) */}
         {currentBeat === 4 && (
-          <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
+          <div className="flex flex-col items-start space-y-2 max-w-[90%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
             <div className="rounded-2xl rounded-tl-sm bg-emerald-50 dark:bg-emerald-950/30 p-4 text-xs leading-relaxed border border-emerald-300 dark:border-emerald-900/60 text-emerald-950 dark:text-emerald-200 shadow-sm space-y-2.5 w-full">
               <div className="flex items-center gap-2 pb-2 border-b border-emerald-200/60 dark:border-emerald-900/60">
                 <div className="h-6 w-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
