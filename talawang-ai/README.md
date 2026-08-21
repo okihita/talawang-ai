@@ -49,19 +49,10 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to interact 
 
 ---
 
-## 🎬 2-Minute Live Pitch & Demo Flow
+## 📚 Documentation & Competition Resources
 
-When presenting to judges:
+For detailed competition guidelines and pitch scripts, see the [`docs/`](./docs) folder:
+* [**HackNusa 2026 Event Details & Guidelines**](./docs/HACKNUSA_2026_DETAILS.md)
+* [**2-Minute Video Pitch Script**](./docs/PITCH_SCRIPT_2MIN.md)
+* [**Proposal, Architecture & Track Recommendations**](./docs/PROPOSALS_AND_TRACK_RECOMMENDATION.md)
 
-1. **Minute 0:00 – 0:30 (Problem Hook):**
-   * Introduce the rising threat of GenAI jailbreaks and deepfake voice scams bypassing standard firewalls.
-   * Introduce **Talawang AI** as the digital Dayak shield for modern AI infrastructure.
-2. **Minute 0:30 – 1:15 (Live Attack Interception Demo):**
-   * In the **Interactive Sandbox**, select **`⚡ DAN Jailbreak`** or **`🕵️ System Prompt Leak`**.
-   * Hit **Execute Talawang Defense Inspection**.
-   * Show the sub-20ms latency badge (`⚡ 13.8ms`), `BLOCKED` verdict, entropy score, and automated mitigation advice.
-3. **Minute 1:15 – 1:40 (Deepfake Voice Scan Demo):**
-   * Switch to **Deepfake Voice Defense** tab.
-   * Scan the synthetic CEO wire transfer audio sample to highlight spectral harmonic anomaly detection.
-4. **Minute 1:40 – 2:00 (Kaspersky YARA Integration):**
-   * Click **Export YARA** in the navbar to demonstrate real-time threat intelligence export compatible with Kaspersky SIEM feeds.
