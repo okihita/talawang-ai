@@ -536,13 +536,13 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       {/* EXTERNAL CONTROL TOOLBAR (Anchored Height: ZERO Vertical Layout Shift!)    */}
       {/* ========================================================================= */}
       <div className="border-t border-zinc-200 dark:border-zinc-800 pt-6 flex items-center justify-end h-[76px]">
-        <div className="flex items-center gap-3 w-full sm:w-auto h-[50px]">
+        <div className="flex items-center gap-2.5 w-full sm:w-auto h-[50px]">
           {currentStep === 4 ? (
             mode === "unprotected" ? (
               <>
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="flex-1 sm:flex-initial h-[50px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm"
+                  className="h-[50px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-5 text-xs sm:text-sm font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm whitespace-nowrap"
                 >
                   <RotateCcw className="h-4 w-4" />
                   <span>{t.simulator.replayBtn}</span>
@@ -551,7 +551,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                 {/* Rewind Time to Step 1 Protected */}
                 <button
                   onClick={handleRewindToProtected}
-                  className="flex-1 sm:flex-initial h-[50px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-7 text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
+                  className="flex-1 sm:flex-initial h-[50px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-7 text-xs sm:text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer whitespace-nowrap"
                 >
                   <Rewind className="h-4 w-4" />
                   <span>{t.simulator.rewindToProtectedBtn}</span>
@@ -562,7 +562,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
               <>
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="flex-1 sm:flex-initial h-[50px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm"
+                  className="h-[50px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-4 text-xs sm:text-sm font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm whitespace-nowrap"
                 >
                   <RotateCcw className="h-4 w-4" />
                   <span>{t.simulator.replayBtn}</span>
@@ -573,7 +573,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                     handleToggleMode("unprotected");
                     setCurrentStep(1);
                   }}
-                  className="flex-1 sm:flex-initial h-[50px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm"
+                  className="h-[50px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-4 text-xs sm:text-sm font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm whitespace-nowrap"
                 >
                   <Rewind className="h-4 w-4" />
                   <span>{t.simulator.rewindToUnprotectedBtn}</span>
@@ -586,7 +586,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                     setMode("unprotected");
                     setCurrentStep(1);
                   }}
-                  className="flex-1 sm:flex-initial h-[50px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
+                  className="flex-1 sm:flex-initial h-[50px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-7 text-xs sm:text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer whitespace-nowrap"
                 >
                   <span>{t.simulator.nextScenarioBtn}</span>
                   <ChevronRight className="h-4 w-4" />
@@ -596,7 +596,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
           ) : (
             <button
               onClick={handleNextStep}
-              className="w-full sm:w-auto h-[50px] flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
+              className="w-full sm:w-auto h-[50px] flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer whitespace-nowrap"
             >
               {currentStep === 1 && <span>{t.simulator.nextStep1}</span>}
               {currentStep === 2 && mode === "unprotected" && <span>{t.simulator.unprotectedNextStep2}</span>}

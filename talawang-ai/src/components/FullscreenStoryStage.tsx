@@ -535,15 +535,15 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         </div>
 
         {/* ========================================================================= */}
-        {/* BOTTOM ACTION & STEP CONTROLS (Anchored Height)                           */}
+        {/* BOTTOM ACTION & STEP CONTROLS (Anchored Height & Spacious Layout)         */}
         {/* ========================================================================= */}
-        <div className="relative z-10 w-full max-w-md flex items-center justify-end gap-3 pt-2 h-[56px]">
+        <div className="relative z-10 w-full max-w-lg flex items-center justify-center gap-2.5 pt-2 h-[56px]">
           {currentStep === 4 ? (
             mode === "unprotected" ? (
               <>
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+                  className="h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer shadow-sm whitespace-nowrap"
                 >
                   <RotateCcw className="h-4 w-4" />
                   <span>{t.simulator.replayBtn}</span>
@@ -551,7 +551,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
 
                 <button
                   onClick={handleRewindToProtected}
-                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
+                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 text-xs sm:text-sm font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer whitespace-nowrap"
                 >
                   <Rewind className="h-4 w-4" />
                   <span>{t.simulator.rewindToProtectedBtn}</span>
@@ -562,7 +562,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
               <>
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+                  className="h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-4 text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer shadow-sm whitespace-nowrap"
                 >
                   <RotateCcw className="h-4 w-4" />
                   <span>{t.simulator.replayBtn}</span>
@@ -573,7 +573,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                     handleToggleMode("unprotected");
                     setCurrentStep(1);
                   }}
-                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+                  className="h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-4 text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer shadow-sm whitespace-nowrap"
                 >
                   <Rewind className="h-4 w-4" />
                   <span>{t.simulator.rewindToUnprotectedBtn}</span>
@@ -584,7 +584,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                     const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
                     handleSelectChapter(nextIdx);
                   }}
-                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
+                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 text-xs sm:text-sm font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer whitespace-nowrap"
                 >
                   <span>{t.simulator.nextScenarioBtn}</span>
                   <ChevronRight className="h-4 w-4" />
@@ -594,7 +594,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
           ) : (
             <button
               onClick={handleNextStep}
-              className="w-full h-[48px] flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-8 text-sm font-bold transition-all duration-300 shadow-xl shadow-emerald-950/50 cursor-pointer"
+              className="w-full h-[48px] flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-8 text-sm font-bold transition-all duration-300 shadow-xl shadow-emerald-950/50 cursor-pointer whitespace-nowrap"
             >
               {currentStep === 1 && <span>{t.simulator.nextStep1}</span>}
               {currentStep === 2 && mode === "unprotected" && <span>{t.simulator.unprotectedNextStep2}</span>}
