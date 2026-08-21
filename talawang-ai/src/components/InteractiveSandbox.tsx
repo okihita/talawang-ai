@@ -386,8 +386,8 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       >
 
         {/* Bubble 1: Initial Bot Greeting (Step >= 1) */}
-        <div className="flex flex-col items-start space-y-1 max-w-[90%] self-start transition-all duration-500 animate-in fade-in slide-in-from-bottom-2">
-          <div className="rounded-2xl rounded-tl-sm bg-white dark:bg-zinc-900 p-4 text-xs leading-relaxed border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-sm space-y-2.5 w-full">
+        <div className="flex flex-col items-start space-y-1 w-[92%] sm:w-[86%] self-start transition-all duration-500 animate-in fade-in slide-in-from-bottom-2">
+          <div className="w-full rounded-2xl rounded-tl-sm bg-white dark:bg-zinc-900 p-4 text-xs leading-relaxed border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-sm space-y-2.5">
             <div className="flex items-center gap-2 pb-2 border-b border-zinc-100 dark:border-zinc-800/80">
               <div className="h-6 w-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
                 <Bot className="h-3.5 w-3.5" />
@@ -397,7 +397,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                 <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">• {t.simulator.verifiedBot}</span>
               </div>
             </div>
-            <div className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+            <div className="text-zinc-700 dark:text-zinc-300 leading-relaxed min-h-[36px]">
               <TypewriterText
                 text={chapter.initialBotGreeting}
                 speed={8}
@@ -409,8 +409,8 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
         {/* Bubble 2: Attacker Exploitation (Step >= 2) */}
         {currentStep >= 2 && (
-          <div className="flex flex-col items-end space-y-1 max-w-[90%] self-end transition-all duration-500 animate-in fade-in slide-in-from-bottom-3">
-            <div className="rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-4 text-xs leading-relaxed shadow-sm space-y-2.5 w-full border border-zinc-800">
+          <div className="flex flex-col items-end space-y-1 w-[92%] sm:w-[86%] self-end transition-all duration-500 animate-in fade-in slide-in-from-bottom-3">
+            <div className="w-full rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-4 text-xs leading-relaxed shadow-sm space-y-2.5 border border-zinc-800">
               <div className="flex items-center justify-between gap-2 pb-2 border-b border-zinc-800">
                 <div className="flex items-center gap-1.5">
                   <span className="text-sm">😈</span>
@@ -418,7 +418,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                 </div>
                 <span className="text-[10px] text-zinc-400 font-medium">{t.simulator.payloadTag}</span>
               </div>
-              <div className="text-zinc-200 leading-relaxed">
+              <div className="text-zinc-200 leading-relaxed min-h-[36px]">
                 <TypewriterText
                   text={chapter.attackerPrompt}
                   speed={8}
@@ -433,15 +433,15 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         {currentStep >= 3 && (
           mode === "unprotected" ? (
             /* Unprotected Raw Bot Breach Response */
-            <div className="flex flex-col items-start space-y-1 max-w-[90%] self-start transition-all duration-500 animate-in fade-in slide-in-from-bottom-3">
-              <div className="rounded-2xl rounded-tl-sm bg-rose-50 dark:bg-rose-950/40 p-4 text-xs leading-relaxed border border-rose-200 dark:border-rose-900 text-rose-950 dark:text-rose-200 shadow-sm space-y-2.5 w-full">
+            <div className="flex flex-col items-start space-y-1 w-[92%] sm:w-[86%] self-start transition-all duration-500 animate-in fade-in slide-in-from-bottom-3">
+              <div className="w-full rounded-2xl rounded-tl-sm bg-rose-50 dark:bg-rose-950/40 p-4 text-xs leading-relaxed border border-rose-200 dark:border-rose-900 text-rose-950 dark:text-rose-200 shadow-sm space-y-2.5">
                 <div className="flex items-center gap-2 pb-2 border-b border-rose-200/60 dark:border-rose-900/60">
                   <div className="h-6 w-6 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-600 dark:text-rose-400 font-bold shrink-0">
                     <AlertTriangle className="h-3.5 w-3.5" />
                   </div>
                   <span className="font-bold text-xs text-rose-900 dark:text-rose-200">{t.simulator.unprotectedResponse}</span>
                 </div>
-                <div className="whitespace-pre-line leading-relaxed">
+                <div className="whitespace-pre-line leading-relaxed min-h-[36px]">
                   <TypewriterText
                     text={chapter.unsecuredResponse}
                     speed={8}
@@ -452,8 +452,8 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
             </div>
           ) : (
             /* Protected Talawang Defense Response */
-            <div className="flex flex-col items-start space-y-1 max-w-[90%] self-start transition-all duration-500 animate-in fade-in slide-in-from-bottom-3">
-              <div className="rounded-2xl rounded-tl-sm bg-emerald-50 dark:bg-emerald-950/30 p-4 text-xs leading-relaxed border border-emerald-300 dark:border-emerald-900/60 text-emerald-950 dark:text-emerald-200 shadow-sm space-y-2.5 w-full">
+            <div className="flex flex-col items-start space-y-1 w-[92%] sm:w-[86%] self-start transition-all duration-500 animate-in fade-in slide-in-from-bottom-3">
+              <div className="w-full rounded-2xl rounded-tl-sm bg-emerald-50 dark:bg-emerald-950/30 p-4 text-xs leading-relaxed border border-emerald-300 dark:border-emerald-900/60 text-emerald-950 dark:text-emerald-200 shadow-sm space-y-2.5">
                 <div className="flex items-center gap-2 pb-2 border-b border-emerald-200/60 dark:border-emerald-900/60">
                   <div className="h-6 w-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
                     <ShieldCheck className="h-3.5 w-3.5" />
@@ -462,7 +462,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                     {t.simulator.protectedBy} ({chapter.latencyMs}ms)
                   </span>
                 </div>
-                <div className="whitespace-pre-line font-medium leading-relaxed">
+                <div className="whitespace-pre-line font-medium leading-relaxed min-h-[36px]">
                   <TypewriterText
                     text={chapter.talawangResponse}
                     speed={8}

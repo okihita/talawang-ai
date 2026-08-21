@@ -433,15 +433,15 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
             >
               
               {/* Message 1: Initial Bot Greeting (Step >= 1) */}
-              <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in duration-500 w-full">
-                <div className="rounded-2xl rounded-tl-sm bg-zinc-900 p-3.5 text-xs text-zinc-200 leading-relaxed border border-zinc-800/80 shadow-sm space-y-2 w-full">
+              <div className="flex flex-col items-start space-y-1 w-[90%] self-start animate-in fade-in duration-500">
+                <div className="w-full rounded-2xl rounded-tl-sm bg-zinc-900 p-3.5 text-xs text-zinc-200 leading-relaxed border border-zinc-800/80 shadow-sm space-y-2">
                   <div className="flex items-center gap-2 pb-1.5 border-b border-zinc-800/80">
                     <div className="h-5 w-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold shrink-0">
                       <Bot className="h-3 w-3" />
                     </div>
                     <span className="font-bold text-[11px] text-white">{chapter.targetCompany}</span>
                   </div>
-                  <div className="text-zinc-200 leading-relaxed">
+                  <div className="text-zinc-200 leading-relaxed min-h-[36px]">
                     <TypewriterText text={chapter.initialBotGreeting} speed={8} triggerKey={`${chapter.id}-${mode}-fs-step1-${lang}`} />
                   </div>
                 </div>
@@ -450,8 +450,8 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
 
               {/* Message 2: Attacker Payload (Step >= 2) */}
               {currentStep >= 2 && (
-                <div className="flex flex-col items-end space-y-1 max-w-[88%] self-end animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
-                  <div className="rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-3.5 text-xs leading-relaxed shadow-sm space-y-2 w-full border border-zinc-800">
+                <div className="flex flex-col items-end space-y-1 w-[90%] self-end animate-in fade-in slide-in-from-bottom-2 duration-500">
+                  <div className="w-full rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-3.5 text-xs leading-relaxed shadow-sm space-y-2 border border-zinc-800">
                     <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-zinc-800">
                       <div className="flex items-center gap-1.5">
                         <span className="text-sm">😈</span>
@@ -459,7 +459,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                       </div>
                       <span className="text-[10px] text-zinc-400 font-medium">{t.simulator.payloadTag}</span>
                     </div>
-                    <div className="text-zinc-200 leading-relaxed">
+                    <div className="text-zinc-200 leading-relaxed min-h-[36px]">
                       <TypewriterText text={chapter.attackerPrompt} speed={8} triggerKey={`${chapter.id}-${mode}-fs-step2-${lang}`} />
                     </div>
                   </div>
@@ -470,25 +470,25 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
               {/* Message 3: Resolution (Step >= 3) */}
               {currentStep >= 3 && (
                 mode === "unprotected" ? (
-                  <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
-                    <div className="rounded-2xl rounded-tl-sm bg-rose-950/80 p-3.5 text-xs text-rose-100 leading-relaxed border border-rose-600 shadow-md space-y-2 w-full">
+                  <div className="flex flex-col items-start space-y-1 w-[90%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="w-full rounded-2xl rounded-tl-sm bg-rose-950/80 p-3.5 text-xs text-rose-100 leading-relaxed border border-rose-600 shadow-md space-y-2">
                       <div className="flex items-center gap-1.5 pb-1.5 border-b border-rose-800/80 text-[11px] text-rose-300 font-bold">
                         <AlertTriangle className="h-3.5 w-3.5 text-rose-400" />
                         <span>{t.simulator.unprotectedResponse}</span>
                       </div>
-                      <div className="whitespace-pre-line leading-relaxed">
+                      <div className="whitespace-pre-line leading-relaxed min-h-[36px]">
                         <TypewriterText text={chapter.unsecuredResponse} speed={8} triggerKey={`${chapter.id}-unprotected-fs-step3-${lang}`} />
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
-                    <div className="rounded-2xl rounded-tl-sm bg-emerald-950/90 p-3.5 text-xs text-emerald-100 leading-relaxed border border-emerald-500 shadow-md space-y-2 w-full">
+                  <div className="flex flex-col items-start space-y-1 w-[90%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="w-full rounded-2xl rounded-tl-sm bg-emerald-950/90 p-3.5 text-xs text-emerald-100 leading-relaxed border border-emerald-500 shadow-md space-y-2">
                       <div className="flex items-center gap-1.5 pb-1.5 border-b border-emerald-800/80 text-[11px] text-emerald-300 font-bold">
                         <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
                         <span>{t.simulator.protectedBy} ({chapter.latencyMs}ms)</span>
                       </div>
-                      <div className="whitespace-pre-line font-medium leading-relaxed">
+                      <div className="whitespace-pre-line font-medium leading-relaxed min-h-[36px]">
                         <TypewriterText text={chapter.talawangResponse} speed={8} triggerKey={`${chapter.id}-protected-fs-step3-${lang}`} />
                       </div>
                     </div>
