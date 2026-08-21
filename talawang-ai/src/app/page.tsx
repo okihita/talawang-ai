@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import CyberGrid from "@/components/react-bits/CyberGrid";
 import Navbar from "@/components/Navbar";
 import InteractiveSandbox from "@/components/InteractiveSandbox";
+import TechnicalArchitecture from "@/components/TechnicalArchitecture";
 import FullscreenStoryStage from "@/components/FullscreenStoryStage";
 import DayakShieldBadge from "@/components/DayakShieldBadge";
 import { ThreatEvent } from "@/server/telemetry/threat-store";
@@ -132,53 +133,9 @@ export default function DashboardPage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* HOW IT WORKS (3 Simple Steps)                                             */}
+        {/* ARCHITECTURE & HOW IT WORKS (Technical Deep-Dive for CISO / CTO)          */}
         {/* ========================================================================= */}
-        <section id="how-it-works" className="scroll-mt-28 space-y-16">
-          <div className="text-center space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-              Architecture & Integration
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white tracking-tight">
-              How It Works in 3 Steps
-            </h2>
-            <p className="text-base text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-              Drop-in protection for existing AI applications with zero retraining required.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/40 p-8 sm:p-10 space-y-4 shadow-sm">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-lg">
-                1
-              </div>
-              <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Route Through Proxy</h3>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Update your OpenAI, DeepSeek, or LangChain base URL to point to Talawang’s edge endpoint.
-              </p>
-            </div>
-
-            <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/40 p-8 sm:p-10 space-y-4 shadow-sm">
-              <div className="h-12 w-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-600 dark:text-teal-400 font-bold text-lg">
-                2
-              </div>
-              <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Sub-15ms Pre-Inspection</h3>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Every prompt is evaluated for semantic overrides, invisible Unicode steganography, and tool hijack attempts.
-              </p>
-            </div>
-
-            <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/40 p-8 sm:p-10 space-y-4 shadow-sm">
-              <div className="h-12 w-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-600 dark:text-cyan-400 font-bold text-lg">
-                3
-              </div>
-              <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Immediate Neutralization</h3>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Malicious payloads are halted instantly. Clean requests pass through to the model with zero perceivable delay.
-              </p>
-            </div>
-          </div>
-        </section>
+        <TechnicalArchitecture />
 
         {/* ========================================================================= */}
         {/* ENTERPRISE USE CASES                                                      */}

@@ -132,7 +132,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
   };
 
   return (
-    <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-6 sm:p-10 shadow-xl dark:shadow-2xl backdrop-blur-xl space-y-8 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+    <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-6 sm:p-10 shadow-xl dark:shadow-2xl backdrop-blur-xl space-y-8 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
       
       {/* ========================================================================= */}
       {/* HUMAN-FRIENDLY HEADER WITH FULLSCREEN BUTTON TOP-RIGHT                    */}
@@ -153,7 +153,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         {onOpenFullscreen && (
           <button
             onClick={onOpenFullscreen}
-            className="flex items-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-4 py-2.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition cursor-pointer shadow-sm shrink-0 w-fit self-start sm:self-center"
+            className="flex items-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-4 py-2.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm shrink-0 w-fit self-start sm:self-center"
           >
             <Maximize2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
             <span>Fullscreen Mode</span>
@@ -177,13 +177,13 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
               <button
                 key={ch.id}
                 onClick={() => handleSelectChapter(idx)}
-                className={`flex items-center gap-3 p-4 rounded-2xl border text-left transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-sm cursor-pointer ${
+                className={`flex items-center gap-3 p-4 rounded-2xl border text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-sm cursor-pointer ${
                   isActive
-                    ? "border-emerald-500 bg-emerald-500/5 dark:bg-emerald-950/20 text-zinc-900 dark:text-white ring-2 ring-emerald-500/20"
+                    ? "border-emerald-500 bg-emerald-500/5 dark:bg-emerald-950/20 text-zinc-900 dark:text-white ring-2 ring-emerald-500/20 scale-[1.01]"
                     : "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/60 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900"
                 }`}
               >
-                <div className={`p-2.5 rounded-xl border ${isActive ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400" : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500"}`}>
+                <div className={`p-2.5 rounded-xl border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isActive ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400" : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500"}`}>
                   <IconComp className="h-4 w-4" />
                 </div>
                 <div className="overflow-hidden">
@@ -206,7 +206,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       <div className="space-y-2 pt-2">
         <div className="flex items-center justify-between text-xs font-semibold text-zinc-500 dark:text-zinc-400">
           <span>Step {currentBeat} of 4</span>
-          <span className="text-zinc-900 dark:text-zinc-100 font-bold">
+          <span className="text-zinc-900 dark:text-zinc-100 font-bold transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
             {currentBeat === 1 && "1. Normal Customer Interaction"}
             {currentBeat === 2 && "2. Attacker Sends Sneaky Message"}
             {currentBeat === 3 && "3. What Happens Without Protection (Breach)"}
@@ -215,15 +215,15 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         </div>
 
         <div className="grid grid-cols-4 gap-2">
-          <div className={`h-2 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 1 ? "bg-emerald-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
-          <div className={`h-2 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 2 ? "bg-amber-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
-          <div className={`h-2 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 3 ? "bg-rose-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
-          <div className={`h-2 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 4 ? "bg-emerald-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
+          <div className={`h-2 rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 1 ? "bg-emerald-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
+          <div className={`h-2 rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 2 ? "bg-amber-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
+          <div className={`h-2 rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 3 ? "bg-rose-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
+          <div className={`h-2 rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 4 ? "bg-emerald-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
         </div>
       </div>
 
       {/* Human Narrator Banner */}
-      <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-5 space-y-1 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+      <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-5 space-y-1 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
         <span className="text-xs uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold block">
           Current Context:
         </span>
@@ -246,10 +246,10 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       {/* ========================================================================= */}
       {/* SIMULATED CHAT FEED                                                       */}
       {/* ========================================================================= */}
-      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
 
         {/* Bubble 1: Initial Bot Greeting */}
-        <div className="flex flex-col items-start space-y-1 max-w-[85%] self-start animate-in fade-in duration-500">
+        <div className="flex flex-col items-start space-y-1 max-w-[85%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-2">
           <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
             <Bot className="h-3.5 w-3.5 text-emerald-500" />
             <span>{chapter.targetCompany}</span>
@@ -261,7 +261,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
         {/* Bubble 2: Attacker Exploitation */}
         {currentBeat >= 2 && (
-          <div className="flex flex-col items-end space-y-1 max-w-[85%] self-end animate-in fade-in duration-500">
+          <div className="flex flex-col items-end space-y-1 max-w-[85%] self-end transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
             <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
               <span>Malicious User</span>
               <User className="h-3.5 w-3.5 text-amber-500" />
@@ -274,7 +274,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
         {/* Bubble 3: Without Talawang Breach (Beat 3 ONLY) */}
         {currentBeat === 3 && (
-          <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start animate-in fade-in duration-500">
+          <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
             <div className="flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 font-bold">
               <AlertTriangle className="h-3.5 w-3.5" />
               <span>Unprotected Bot Response</span>
@@ -291,7 +291,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
         {/* Bubble 4: With Talawang Rescue (Beat 4 ONLY) */}
         {currentBeat === 4 && (
-          <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start animate-in fade-in duration-500">
+          <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
             <div className="flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 font-bold">
               <ShieldCheck className="h-4 w-4 text-emerald-500" />
               <span>Protected by Talawang ({chapter.latencyMs}ms)</span>
@@ -321,7 +321,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
             <>
               <button
                 onClick={() => setCurrentBeat(1)}
-                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-3.5 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer shadow-sm"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-3.5 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm"
               >
                 <RotateCcw className="h-4 w-4" />
                 <span>Replay Scenario</span>
@@ -332,7 +332,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                   const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
                   handleSelectChapter(nextIdx);
                 }}
-                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-3.5 text-xs font-bold transition shadow-lg shadow-emerald-950/20 cursor-pointer"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-3.5 text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
               >
                 <span>Try Next Scenario</span>
                 <ChevronRight className="h-4 w-4" />
@@ -341,7 +341,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
           ) : (
             <button
               onClick={handleNextBeat}
-              className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-4 text-sm font-bold transition shadow-lg shadow-emerald-950/20 cursor-pointer"
+              className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-4 text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
             >
               {currentBeat === 1 && <span>Next: An Attacker Strikes →</span>}
               {currentBeat === 2 && <span>Next: See What Happens Without Protection →</span>}
