@@ -390,11 +390,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       {/* ========================================================================= */}
       {/* EXTERNAL CONTROL TOOLBAR (Demarcated from Stage)                          */}
       {/* ========================================================================= */}
-      <div className="border-t border-zinc-200 dark:border-zinc-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-          <span className="font-bold text-zinc-900 dark:text-white">Live Simulator Controls</span>
-        </div>
-
+      <div className="border-t border-zinc-200 dark:border-zinc-800 pt-6 flex items-center justify-end">
         <div className="flex items-center gap-3 w-full sm:w-auto">
           {currentBeat === 4 ? (
             <>
