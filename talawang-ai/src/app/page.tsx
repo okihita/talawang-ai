@@ -53,12 +53,12 @@ export default function DashboardPage() {
       {/* Main Navigation */}
       <Navbar />
 
-      <main className="relative z-10 mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
+      <main className="relative z-10 mx-auto max-w-6xl px-6 sm:px-8 lg:px-12 py-16 sm:py-24 space-y-32">
         
         {/* ========================================================================= */}
-        {/* SLIDE 1: HERO SECTION (Exact Fullscreen Presentation Frame)                */}
+        {/* HERO SECTION                                                              */}
         {/* ========================================================================= */}
-        <section className="min-h-[calc(100vh-5rem)] flex flex-col justify-center items-center text-center space-y-8 max-w-4xl mx-auto py-12">
+        <section className="text-center space-y-8 max-w-4xl mx-auto pt-6">
           {/* Hackathon Badge */}
           <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300 shadow-sm">
             <DayakShieldBadge size={16} glow={false} />
@@ -86,7 +86,7 @@ export default function DashboardPage() {
                 e.preventDefault();
                 const el = document.getElementById("demo");
                 if (el) {
-                  el.scrollIntoView({ behavior: "smooth", block: "center" });
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
                 }
               }}
               className="w-full sm:w-auto rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 font-bold px-8 py-4 text-base shadow-xl shadow-emerald-950/20 transition flex items-center justify-center gap-2.5 cursor-pointer"
@@ -105,7 +105,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Value Proof Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-8 pt-6 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+          <div className="flex flex-wrap items-center justify-center gap-8 pt-8 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
             <span className="flex items-center gap-2">
               <Zap className="h-3.5 w-3.5 text-emerald-500" />
               Sub-15ms Latency Overhead
@@ -122,9 +122,9 @@ export default function DashboardPage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SLIDE 2: INTERACTIVE DEMO SIMULATOR (Full Viewport Centered)               */}
+        {/* INTERACTIVE DEMO (Inline Story & Sandbox)                                 */}
         {/* ========================================================================= */}
-        <section id="demo" className="min-h-screen flex flex-col justify-center py-16 scroll-mt-6">
+        <section id="demo" className="scroll-mt-28 space-y-6">
           <InteractiveSandbox
             onScanComplete={handleScanComplete}
             onOpenFullscreen={() => setIsStoryOpen(true)}
@@ -132,9 +132,9 @@ export default function DashboardPage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SLIDE 3: ARCHITECTURE & INTEGRATION (Full Viewport Centered)               */}
+        {/* HOW IT WORKS (3 Simple Steps)                                             */}
         {/* ========================================================================= */}
-        <section id="how-it-works" className="min-h-screen flex flex-col justify-center py-16 scroll-mt-6 space-y-12">
+        <section id="how-it-works" className="scroll-mt-28 space-y-12">
           <div className="text-center space-y-3">
             <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
               Architecture & Integration
@@ -181,58 +181,56 @@ export default function DashboardPage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SLIDE 4: ENTERPRISE USE CASES (Full Viewport Centered)                     */}
+        {/* ENTERPRISE USE CASES                                                      */}
         {/* ========================================================================= */}
-        <section className="min-h-screen flex flex-col justify-center py-16">
-          <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-8 sm:p-12 space-y-8 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-zinc-200 dark:border-zinc-800 pb-8">
-              <div className="space-y-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400">
-                  Industry Applications
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white tracking-tight">
-                  Designed for Production AI Deployments
-                </h2>
+        <section className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-8 sm:p-12 space-y-8 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-zinc-200 dark:border-zinc-800 pb-8">
+            <div className="space-y-1">
+              <span className="text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400">
+                Industry Applications
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white tracking-tight">
+                Designed for Production AI Deployments
+              </h2>
+            </div>
+            <Link
+              href="/study-cases"
+              className="inline-flex items-center gap-2 rounded-2xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white px-5 py-3 text-sm font-semibold transition w-fit"
+            >
+              <span>Explore Case Studies</span>
+              <ArrowRight className="h-4 w-4 text-emerald-500" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+            <div className="space-y-2.5">
+              <div className="flex items-center gap-2.5 font-bold text-zinc-900 dark:text-white text-base">
+                <Building2 className="h-5 w-5 text-emerald-500" />
+                <span>Fintech & Digital Banking</span>
               </div>
-              <Link
-                href="/study-cases"
-                className="inline-flex items-center gap-2 rounded-2xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white px-5 py-3 text-sm font-semibold transition w-fit"
-              >
-                <span>Explore Case Studies</span>
-                <ArrowRight className="h-4 w-4 text-emerald-500" />
-              </Link>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Prevents WhatsApp and in-app virtual assistants from leaking customer NIKs, account balances, or API credentials.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-2.5 font-bold text-zinc-900 dark:text-white text-base">
-                  <Building2 className="h-5 w-5 text-emerald-500" />
-                  <span>Fintech & Digital Banking</span>
-                </div>
-                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Prevents WhatsApp and in-app virtual assistants from leaking customer NIKs, account balances, or API credentials.
-                </p>
+            <div className="space-y-2.5">
+              <div className="flex items-center gap-2.5 font-bold text-zinc-900 dark:text-white text-base">
+                <Layers className="h-5 w-5 text-teal-500" />
+                <span>E-Commerce & Marketplaces</span>
               </div>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Stops indirect prompt injection in customer support notes from hijacking order refund and voucher generation APIs.
+              </p>
+            </div>
 
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-2.5 font-bold text-zinc-900 dark:text-white text-base">
-                  <Layers className="h-5 w-5 text-teal-500" />
-                  <span>E-Commerce & Marketplaces</span>
-                </div>
-                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Stops indirect prompt injection in customer support notes from hijacking order refund and voucher generation APIs.
-                </p>
+            <div className="space-y-2.5">
+              <div className="flex items-center gap-2.5 font-bold text-zinc-900 dark:text-white text-base">
+                <Lock className="h-5 w-5 text-cyan-500" />
+                <span>Enterprise Knowledge Search</span>
               </div>
-
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-2.5 font-bold text-zinc-900 dark:text-white text-base">
-                  <Lock className="h-5 w-5 text-cyan-500" />
-                  <span>Enterprise Knowledge Search</span>
-                </div>
-                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Guards internal RAG systems against privilege escalation and unauthorized employee salary table exfiltration.
-                </p>
-              </div>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                Guards internal RAG systems against privilege escalation and unauthorized employee salary table exfiltration.
+              </p>
             </div>
           </div>
         </section>
