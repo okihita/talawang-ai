@@ -129,8 +129,6 @@ export default function StudyCasesPage() {
       <Navbar
         onOpenYaraModal={() => setIsYaraOpen(true)}
         onOpenQrModal={() => setIsQrOpen(true)}
-        onQuickSimulate={() => {}}
-        isSimulating={false}
       />
 
       <main className="relative z-10 mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 space-y-10">
