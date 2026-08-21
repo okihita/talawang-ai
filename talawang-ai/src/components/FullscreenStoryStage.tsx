@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import confetti from "canvas-confetti";
 import {
   ShieldCheck,
@@ -175,8 +175,18 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
   const [selectedChapterIdx, setSelectedChapterIdx] = useState(0);
   const [mode, setMode] = useState<"unprotected" | "protected">("unprotected");
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
+  const chatScrollRef = useRef<HTMLDivElement>(null);
 
   const chapter = STORY_CHAPTERS[selectedChapterIdx];
+
+  useEffect(() => {
+    if (chatScrollRef.current) {
+      chatScrollRef.current.scrollTo({
+        top: chatScrollRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [currentStep, mode, selectedChapterIdx]);
 
   // Keyboard navigation: Esc to close, Space/Enter/Arrow to advance
   useEffect(() => {
@@ -358,23 +368,26 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
             })}
           </div>
 
-          <p className="text-xs sm:text-sm font-medium leading-relaxed max-w-lg mx-auto">
-            {mode === "unprotected" ? (
-              <>
-                {currentStep === 1 && <span className="text-zinc-300">{t.simulator.unprotectedContext1} (<strong>{chapter.targetCompany}</strong>)</span>}
-                {currentStep === 2 && <span className="text-zinc-300">{t.simulator.unprotectedContext2}</span>}
-                {currentStep === 3 && <span className="text-rose-300 font-semibold">{t.simulator.unprotectedContext3}</span>}
-                {currentStep === 4 && <span className="text-rose-400 font-bold">{t.simulator.unprotectedContext4}</span>}
-              </>
-            ) : (
-              <>
-                {currentStep === 1 && <span className="text-zinc-300">{t.simulator.protectedContext1} (<strong>{chapter.targetCompany}</strong>)</span>}
-                {currentStep === 2 && <span className="text-zinc-300">{t.simulator.protectedContext2}</span>}
-                {currentStep === 3 && <span className="text-emerald-300 font-semibold">{t.simulator.protectedContext3}</span>}
-                {currentStep === 4 && <span className="text-emerald-400 font-bold">{t.simulator.protectedContext4}</span>}
-              </>
-            )}
-          </p>
+          {/* Fixed Height Narration Container */}
+          <div className="min-h-[44px] flex items-center justify-center">
+            <p className="text-xs sm:text-sm font-medium leading-relaxed max-w-lg mx-auto">
+              {mode === "unprotected" ? (
+                <>
+                  {currentStep === 1 && <span className="text-zinc-300">{t.simulator.unprotectedContext1} (<strong>{chapter.targetCompany}</strong>)</span>}
+                  {currentStep === 2 && <span className="text-zinc-300">{t.simulator.unprotectedContext2}</span>}
+                  {currentStep === 3 && <span className="text-rose-300 font-semibold">{t.simulator.unprotectedContext3}</span>}
+                  {currentStep === 4 && <span className="text-rose-400 font-bold">{t.simulator.unprotectedContext4}</span>}
+                </>
+              ) : (
+                <>
+                  {currentStep === 1 && <span className="text-zinc-300">{t.simulator.protectedContext1} (<strong>{chapter.targetCompany}</strong>)</span>}
+                  {currentStep === 2 && <span className="text-zinc-300">{t.simulator.protectedContext2}</span>}
+                  {currentStep === 3 && <span className="text-emerald-300 font-semibold">{t.simulator.protectedContext3}</span>}
+                  {currentStep === 4 && <span className="text-emerald-400 font-bold">{t.simulator.protectedContext4}</span>}
+                </>
+              )}
+            </p>
+          </div>
         </div>
 
         {/* ========================================================================= */}
@@ -413,8 +426,11 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
               </div>
             </div>
 
-            {/* Chat Message Stream */}
-            <div className="min-h-[300px] flex flex-col justify-end space-y-4 p-2">
+            {/* Fixed Height Chat Message Stream */}
+            <div
+              ref={chatScrollRef}
+              className="h-[340px] overflow-y-auto no-scrollbar flex flex-col justify-end space-y-4 p-2"
+            >
               
               {/* Message 1: Initial Bot Greeting (Step >= 1) */}
               <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in duration-500 w-full">
@@ -518,15 +534,15 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         </div>
 
         {/* ========================================================================= */}
-        {/* BOTTOM ACTION & STEP CONTROLS                                             */}
+        {/* BOTTOM ACTION & STEP CONTROLS (Anchored Height)                           */}
         {/* ========================================================================= */}
-        <div className="relative z-10 w-full max-w-md flex items-center justify-end gap-3 pt-2">
+        <div className="relative z-10 w-full max-w-md flex items-center justify-end gap-3 pt-2 h-[56px]">
           {currentStep === 4 ? (
             mode === "unprotected" ? (
               <>
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 py-3.5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
                 >
                   <RotateCcw className="h-4 w-4" />
                   <span>{t.simulator.replayBtn}</span>
@@ -534,7 +550,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
 
                 <button
                   onClick={handleRewindToProtected}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 py-3.5 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
+                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
                 >
                   <span>{t.simulator.rewindToProtectedBtn}</span>
                 </button>
@@ -543,7 +559,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
               <>
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 py-3.5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
                 >
                   <RotateCcw className="h-4 w-4" />
                   <span>{t.simulator.replayBtn}</span>
@@ -554,7 +570,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                     handleToggleMode("unprotected");
                     setCurrentStep(1);
                   }}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 py-3.5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
                 >
                   <span>{t.simulator.rewindToUnprotectedBtn}</span>
                 </button>
@@ -564,7 +580,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                     const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
                     handleSelectChapter(nextIdx);
                   }}
-                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 py-3.5 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
+                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
                 >
                   <span>{t.simulator.nextScenarioBtn}</span>
                   <ChevronRight className="h-4 w-4" />
@@ -574,7 +590,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
           ) : (
             <button
               onClick={handleNextStep}
-              className="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-8 py-4 text-sm font-bold transition-all duration-300 shadow-xl shadow-emerald-950/50 cursor-pointer"
+              className="w-full h-[48px] flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-8 text-sm font-bold transition-all duration-300 shadow-xl shadow-emerald-950/50 cursor-pointer"
             >
               {currentStep === 1 && <span>{t.simulator.nextStep1}</span>}
               {currentStep === 2 && mode === "unprotected" && <span>{t.simulator.unprotectedNextStep2}</span>}
