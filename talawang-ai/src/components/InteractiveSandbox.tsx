@@ -388,40 +388,46 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* ACTION BUTTONS (Centered to Match Chat Frame)                             */}
+      {/* EXTERNAL CONTROL TOOLBAR (Demarcated from Stage)                          */}
       {/* ========================================================================= */}
-      <div className="mx-auto max-w-xl w-full flex items-center justify-center gap-3 pt-2">
-        {currentBeat === 4 ? (
-          <>
-            <button
-              onClick={() => setCurrentBeat(1)}
-              className="flex-1 flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-3.5 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm"
-            >
-              <RotateCcw className="h-4 w-4" />
-              <span>Replay Scenario</span>
-            </button>
+      <div className="border-t border-zinc-200 dark:border-zinc-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+          <span className="font-bold text-zinc-900 dark:text-white">Live Simulator Controls</span>
+        </div>
 
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          {currentBeat === 4 ? (
+            <>
+              <button
+                onClick={() => setCurrentBeat(1)}
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-3.5 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm"
+              >
+                <RotateCcw className="h-4 w-4" />
+                <span>Replay Scenario</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
+                  handleSelectChapter(nextIdx);
+                }}
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-3.5 text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
+              >
+                <span>Try Next Scenario</span>
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </>
+          ) : (
             <button
-              onClick={() => {
-                const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
-                handleSelectChapter(nextIdx);
-              }}
-              className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-3.5 text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
+              onClick={handleNextBeat}
+              className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-4 text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
             >
-              <span>Try Next Scenario</span>
-              <ChevronRight className="h-4 w-4" />
+              {currentBeat === 1 && <span>Next: An Attacker Strikes →</span>}
+              {currentBeat === 2 && <span>Next: See What Happens Without Protection →</span>}
+              {currentBeat === 3 && <span>Next: How Talawang Shields Your Bot →</span>}
             </button>
-          </>
-        ) : (
-          <button
-            onClick={handleNextBeat}
-            className="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-4 text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
-          >
-            {currentBeat === 1 && <span>Next: An Attacker Strikes →</span>}
-            {currentBeat === 2 && <span>Next: See What Happens Without Protection →</span>}
-            {currentBeat === 3 && <span>Next: How Talawang Shields Your Bot →</span>}
-          </button>
-        )}
+          )}
+        </div>
       </div>
 
     </div>
