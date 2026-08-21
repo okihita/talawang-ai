@@ -160,7 +160,7 @@ function TypewriterText({
     <span>
       {displayed}
       {!isDone && (
-        <span className="inline-block w-1.5 h-3 ml-0.5 bg-emerald-400 animate-pulse align-middle" />
+        <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-emerald-400 animate-pulse align-middle" />
       )}
     </span>
   );
@@ -261,7 +261,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-zinc-950/95 text-zinc-100 backdrop-blur-2xl animate-in fade-in duration-500 overflow-y-auto selection:bg-emerald-500/30 selection:text-emerald-200">
+    <div className="fixed inset-0 z-50 flex flex-col bg-zinc-950/98 text-zinc-100 backdrop-blur-3xl animate-in fade-in duration-500 overflow-y-auto selection:bg-emerald-500/30 selection:text-emerald-200">
       
       {/* ========================================================================= */}
       {/* CINEMATIC TOP NAVIGATION BAR                                              */}
@@ -270,7 +270,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           
           {/* Chapter Selector Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2.5 overflow-x-auto no-scrollbar">
             {STORY_CHAPTERS.map((ch, idx) => {
               const IconComp = ch.icon;
               const isActive = selectedChapterIdx === idx;
@@ -280,13 +280,13 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                 <button
                   key={ch.id}
                   onClick={() => handleSelectChapter(idx)}
-                  className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold shrink-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
+                  className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold shrink-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
                     isActive
                       ? "bg-emerald-500 text-zinc-950 font-bold shadow-md shadow-emerald-950/50"
                       : "border border-zinc-800 bg-zinc-900/80 text-zinc-400 hover:text-white hover:bg-zinc-800"
                   }`}
                 >
-                  <IconComp className="h-3.5 w-3.5" />
+                  <IconComp className="h-4 w-4" />
                   <span>Skenario {idx + 1}: {categoryText}</span>
                 </button>
               );
@@ -296,7 +296,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2 text-xs font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-200 cursor-pointer shadow-sm shrink-0"
+            className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/80 px-5 py-2.5 text-xs sm:text-sm font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-200 cursor-pointer shadow-sm shrink-0"
           >
             <span>{t.simulator.exitFullscreen}</span>
             <X className="h-4 w-4" />
@@ -305,13 +305,13 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
       </header>
 
       {/* ========================================================================= */}
-      {/* STAGE CONTAINER (Centered Hero Experience)                                 */}
+      {/* STAGE CONTAINER (Centered Hero Experience with Generous Breathing Room)   */}
       {/* ========================================================================= */}
-      <main className="flex-1 flex flex-col items-center justify-between max-w-5xl mx-auto w-full px-6 py-8 sm:py-12 space-y-6">
+      <main className="flex-1 flex flex-col items-center justify-between max-w-5xl mx-auto w-full px-6 py-8 sm:py-12 space-y-7">
         
         {/* Dynamic Atmosphere Lighting */}
         <div
-          className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] sm:w-[900px] h-[500px] blur-3xl pointer-events-none rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-20 ${
+          className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] sm:w-[1000px] h-[550px] blur-3xl pointer-events-none rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-20 ${
             mode === "unprotected" ? "bg-rose-600" : "bg-emerald-400"
           }`}
         />
@@ -323,7 +323,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
           <div className="grid grid-cols-2 p-1.5 rounded-2xl border border-zinc-800 bg-zinc-900/90 gap-1.5 shadow-inner">
             <button
               onClick={() => handleToggleMode("unprotected")}
-              className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
+              className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
                 mode === "unprotected"
                   ? "bg-rose-950/90 text-rose-200 shadow-md border border-rose-800 ring-2 ring-rose-500/20"
                   : "text-zinc-400 hover:text-white"
@@ -335,7 +335,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
 
             <button
               onClick={() => handleToggleMode("protected")}
-              className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
+              className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
                 mode === "protected"
                   ? "bg-emerald-950/90 text-emerald-200 shadow-md border border-emerald-800 ring-2 ring-emerald-500/20"
                   : "text-zinc-400 hover:text-white"
@@ -393,104 +393,98 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         </div>
 
         {/* ========================================================================= */}
-        {/* REALISTIC SMARTPHONE / DEVICE MOCKUP FRAME                                */}
+        {/* WIDER & TALLER CINEMATIC STAGE CONSOLE FRAME (Generous Space!)           */}
         {/* ========================================================================= */}
-        <div className="relative z-10 w-full max-w-md">
-          {/* Phone Shell */}
+        <div className="relative z-10 w-full max-w-2xl">
           <div
-            className={`rounded-[36px] border-4 p-3 sm:p-4 shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-zinc-950 ${
+            className={`rounded-[32px] sm:rounded-[38px] border-2 p-5 sm:p-7 shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-zinc-950/90 backdrop-blur-xl ${
               mode === "unprotected"
                 ? "border-rose-500/50 shadow-rose-950/40 ring-4 ring-rose-500/10"
                 : "border-emerald-500/60 shadow-emerald-950/50 ring-4 ring-emerald-500/10"
             }`}
           >
-            {/* Phone Speaker & Notch */}
-            <div className="mx-auto h-4 w-28 rounded-full bg-zinc-900 mb-3 flex items-center justify-center">
-              <div className="h-1.5 w-10 rounded-full bg-zinc-800" />
-            </div>
-
-            {/* Chat App Header */}
-            <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/90 px-4 py-3 flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">
+            {/* Top Stage App Header */}
+            <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/90 px-5 py-3.5 flex items-center justify-between mb-5 shadow-sm">
+              <div className="flex items-center gap-3.5">
+                <div className="h-10 w-10 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold shrink-0">
                   <Bot className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+                  <h4 className="text-sm font-bold text-white flex items-center gap-1.5">
                     {chapter.targetCompany}
-                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
                   </h4>
-                  <p className="text-[10px] text-emerald-400 font-medium flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    WhatsApp Business Verified • Online
+                  <p className="text-xs text-emerald-400 font-medium flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                    WhatsApp Business Verified • Live Protection Gateway
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Fixed Height Chat Message Stream */}
+            {/* Generous Height Chat Message Stream */}
             <div
               ref={chatScrollRef}
-              className="h-[340px] overflow-y-auto no-scrollbar flex flex-col justify-end space-y-4 p-2"
+              className="h-[460px] sm:h-[500px] overflow-y-auto no-scrollbar flex flex-col justify-end space-y-4 p-2"
             >
               
               {/* Message 1: Initial Bot Greeting (Step >= 1) */}
-              <div className="flex flex-col items-start space-y-1 w-[90%] self-start animate-in fade-in duration-500">
-                <div className="w-full rounded-2xl rounded-tl-sm bg-zinc-900 p-3.5 text-xs text-zinc-200 leading-relaxed border border-zinc-800/80 shadow-sm space-y-2">
-                  <div className="flex items-center gap-2 pb-1.5 border-b border-zinc-800/80">
-                    <div className="h-5 w-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold shrink-0">
-                      <Bot className="h-3 w-3" />
+              <div className="flex flex-col items-start space-y-1.5 w-[92%] sm:w-[88%] self-start animate-in fade-in duration-500">
+                <div className="w-full rounded-2xl rounded-tl-sm bg-zinc-900/90 p-4 sm:p-5 text-xs sm:text-sm text-zinc-200 leading-relaxed border border-zinc-800/80 shadow-md space-y-2.5">
+                  <div className="flex items-center gap-2 pb-2 border-b border-zinc-800/80">
+                    <div className="h-6 w-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold shrink-0">
+                      <Bot className="h-3.5 w-3.5" />
                     </div>
-                    <span className="font-bold text-[11px] text-white">{chapter.targetCompany}</span>
+                    <span className="font-bold text-xs sm:text-sm text-white">{chapter.targetCompany}</span>
                   </div>
-                  <div className="text-zinc-200 leading-relaxed min-h-[36px]">
+                  <div className="text-zinc-200 leading-relaxed min-h-[40px]">
                     <TypewriterText text={chapter.initialBotGreeting} speed={8} triggerKey={`${chapter.id}-${mode}-fs-step1-${lang}`} />
                   </div>
                 </div>
-                <span className="text-[10px] text-zinc-600 px-1 font-medium">10:41 AM</span>
+                <span className="text-[11px] text-zinc-500 px-1 font-medium">10:41 AM</span>
               </div>
 
               {/* Message 2: Attacker Payload (Step >= 2) */}
               {currentStep >= 2 && (
-                <div className="flex flex-col items-end space-y-1 w-[90%] self-end animate-in fade-in slide-in-from-bottom-2 duration-500">
-                  <div className="w-full rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-3.5 text-xs leading-relaxed shadow-sm space-y-2 border border-zinc-800">
-                    <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-zinc-800">
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-sm">😈</span>
-                        <span className="font-bold text-[11px] text-amber-400">{t.simulator.maliciousUser}</span>
+                <div className="flex flex-col items-end space-y-1.5 w-[92%] sm:w-[88%] self-end animate-in fade-in slide-in-from-bottom-2 duration-500">
+                  <div className="w-full rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-4 sm:p-5 text-xs sm:text-sm leading-relaxed shadow-md space-y-2.5 border border-zinc-800">
+                    <div className="flex items-center justify-between gap-2 pb-2 border-b border-zinc-800">
+                      <div className="flex items-center gap-2">
+                        <span className="text-base">😈</span>
+                        <span className="font-bold text-xs sm:text-sm text-amber-400">{t.simulator.maliciousUser}</span>
                       </div>
-                      <span className="text-[10px] text-zinc-400 font-medium">{t.simulator.payloadTag}</span>
+                      <span className="text-[11px] text-zinc-400 font-medium">{t.simulator.payloadTag}</span>
                     </div>
-                    <div className="text-zinc-200 leading-relaxed min-h-[36px]">
+                    <div className="text-zinc-200 leading-relaxed min-h-[40px]">
                       <TypewriterText text={chapter.attackerPrompt} speed={8} triggerKey={`${chapter.id}-${mode}-fs-step2-${lang}`} />
                     </div>
                   </div>
-                  <span className="text-[10px] text-zinc-500 px-1 font-medium">10:42 AM • Sent</span>
+                  <span className="text-[11px] text-zinc-500 px-1 font-medium">10:42 AM • Sent</span>
                 </div>
               )}
 
               {/* Message 3: Resolution (Step >= 3) */}
               {currentStep >= 3 && (
                 mode === "unprotected" ? (
-                  <div className="flex flex-col items-start space-y-1 w-[90%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500">
-                    <div className="w-full rounded-2xl rounded-tl-sm bg-rose-950/80 p-3.5 text-xs text-rose-100 leading-relaxed border border-rose-600 shadow-md space-y-2">
-                      <div className="flex items-center gap-1.5 pb-1.5 border-b border-rose-800/80 text-[11px] text-rose-300 font-bold">
-                        <AlertTriangle className="h-3.5 w-3.5 text-rose-400" />
+                  <div className="flex flex-col items-start space-y-1.5 w-[92%] sm:w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="w-full rounded-2xl rounded-tl-sm bg-rose-950/80 p-4 sm:p-5 text-xs sm:text-sm text-rose-100 leading-relaxed border border-rose-600 shadow-md space-y-2.5">
+                      <div className="flex items-center gap-2 pb-2 border-b border-rose-800/80 text-xs sm:text-sm text-rose-300 font-bold">
+                        <AlertTriangle className="h-4 w-4 text-rose-400" />
                         <span>{t.simulator.unprotectedResponse}</span>
                       </div>
-                      <div className="whitespace-pre-line leading-relaxed min-h-[36px]">
+                      <div className="whitespace-pre-line leading-relaxed min-h-[40px]">
                         <TypewriterText text={chapter.unsecuredResponse} speed={8} triggerKey={`${chapter.id}-unprotected-fs-step3-${lang}`} />
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-start space-y-1 w-[90%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500">
-                    <div className="w-full rounded-2xl rounded-tl-sm bg-emerald-950/90 p-3.5 text-xs text-emerald-100 leading-relaxed border border-emerald-500 shadow-md space-y-2">
-                      <div className="flex items-center gap-1.5 pb-1.5 border-b border-emerald-800/80 text-[11px] text-emerald-300 font-bold">
-                        <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+                  <div className="flex flex-col items-start space-y-1.5 w-[92%] sm:w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="w-full rounded-2xl rounded-tl-sm bg-emerald-950/90 p-4 sm:p-5 text-xs sm:text-sm text-emerald-100 leading-relaxed border border-emerald-500 shadow-md space-y-2.5">
+                      <div className="flex items-center gap-2 pb-2 border-b border-emerald-800/80 text-xs sm:text-sm text-emerald-300 font-bold">
+                        <ShieldCheck className="h-4 w-4 text-emerald-400" />
                         <span>{t.simulator.protectedBy} ({chapter.latencyMs}ms)</span>
                       </div>
-                      <div className="whitespace-pre-line font-medium leading-relaxed min-h-[36px]">
+                      <div className="whitespace-pre-line font-medium leading-relaxed min-h-[40px]">
                         <TypewriterText text={chapter.talawangResponse} speed={8} triggerKey={`${chapter.id}-protected-fs-step3-${lang}`} />
                       </div>
                     </div>
@@ -501,30 +495,36 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
               {/* Step 4: Incident Report or Telemetry Banner */}
               {currentStep === 4 && (
                 mode === "unprotected" ? (
-                  <div className="w-full rounded-2xl border border-rose-500/60 bg-zinc-950/95 p-3.5 shadow-2xl space-y-2 text-left animate-in fade-in slide-in-from-bottom-3">
-                    <div className="flex items-center justify-between border-b border-rose-900/60 pb-2">
-                      <span className="text-[11px] font-bold tracking-wider text-rose-400 uppercase">
-                        🚨 {t.simulator.incidentReportHeader}
-                      </span>
-                      <span className="text-[9px] font-bold text-rose-300 bg-rose-950/80 px-1.5 py-0.5 rounded border border-rose-800 tracking-wide">
+                  <div className="w-full rounded-2xl border border-rose-500/60 bg-zinc-950/95 p-4 sm:p-5 shadow-2xl space-y-2.5 text-left animate-in fade-in slide-in-from-bottom-3">
+                    <div className="flex items-center justify-between border-b border-rose-900/60 pb-2.5">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-2.5 w-2.5 rounded-full bg-rose-500 animate-pulse" />
+                        <span className="text-xs sm:text-sm font-bold tracking-wider text-rose-400 uppercase">
+                          🚨 {t.simulator.incidentReportHeader}
+                        </span>
+                      </div>
+                      <span className="text-[10px] sm:text-xs font-bold text-rose-300 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800 tracking-wide">
                         BREACH COMPLETED
                       </span>
                     </div>
-                    <div className="text-xs text-rose-200 font-semibold leading-relaxed">
+                    <div className="text-xs sm:text-sm text-rose-200 font-semibold leading-relaxed">
                       <strong>{t.simulator.damageLabel} </strong>{chapter.unsecuredRisk[lang]}
                     </div>
                   </div>
                 ) : (
-                  <div className="w-full rounded-2xl border border-emerald-500/60 bg-zinc-950/95 p-3.5 shadow-2xl space-y-2 text-left animate-in fade-in slide-in-from-bottom-3">
-                    <div className="flex items-center justify-between border-b border-emerald-900/60 pb-2">
-                      <span className="text-[11px] font-bold tracking-wider text-emerald-400 uppercase">
-                        🛡️ {t.simulator.telemetryReportHeader}
-                      </span>
-                      <span className="text-[9px] font-bold text-emerald-300 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-800 tracking-wide">
+                  <div className="w-full rounded-2xl border border-emerald-500/60 bg-zinc-950/95 p-4 sm:p-5 shadow-2xl space-y-2.5 text-left animate-in fade-in slide-in-from-bottom-3">
+                    <div className="flex items-center justify-between border-b border-emerald-900/60 pb-2.5">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="text-xs sm:text-sm font-bold tracking-wider text-emerald-400 uppercase">
+                          🛡️ {t.simulator.telemetryReportHeader}
+                        </span>
+                      </div>
+                      <span className="text-[10px] sm:text-xs font-bold text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800 tracking-wide">
                         LATENCY: {chapter.latencyMs}ms • BLOCKED
                       </span>
                     </div>
-                    <div className="text-xs text-emerald-200 font-semibold leading-relaxed">
+                    <div className="text-xs sm:text-sm text-emerald-200 font-semibold leading-relaxed">
                       <strong>{t.simulator.outcomeLabel} </strong>{chapter.talawangImpact[lang]}
                     </div>
                   </div>
@@ -536,15 +536,15 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         </div>
 
         {/* ========================================================================= */}
-        {/* BOTTOM ACTION & STEP CONTROLS (Anchored Height & Spacious Layout)         */}
+        {/* BOTTOM ACTION & STEP CONTROLS (Spacious & Matching Width)                 */}
         {/* ========================================================================= */}
-        <div className="relative z-10 w-full max-w-lg flex items-center justify-center gap-2.5 pt-2 h-[56px]">
+        <div className="relative z-10 w-full max-w-2xl flex items-center justify-center gap-3 pt-2 h-[56px]">
           {currentStep === 4 ? (
             mode === "unprotected" ? (
               <>
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer shadow-sm whitespace-nowrap"
+                  className="h-[50px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-6 text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer shadow-sm whitespace-nowrap"
                 >
                   <RotateCcw className="h-4 w-4" />
                   <span>{t.simulator.replayBtn}</span>
@@ -552,7 +552,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
 
                 <button
                   onClick={handleRewindToProtected}
-                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 text-xs sm:text-sm font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer whitespace-nowrap"
+                  className="flex-1 h-[50px] flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-7 text-xs sm:text-sm font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer whitespace-nowrap"
                 >
                   <Rewind className="h-4 w-4" />
                   <span>{t.simulator.rewindToProtectedBtn}</span>
@@ -563,7 +563,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
               <>
                 <button
                   onClick={() => setCurrentStep(1)}
-                  className="h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-4 text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer shadow-sm whitespace-nowrap"
+                  className="h-[50px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer shadow-sm whitespace-nowrap"
                 >
                   <RotateCcw className="h-4 w-4" />
                   <span>{t.simulator.replayBtn}</span>
@@ -574,7 +574,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                     handleToggleMode("unprotected");
                     setCurrentStep(1);
                   }}
-                  className="h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-4 text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer shadow-sm whitespace-nowrap"
+                  className="h-[50px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs sm:text-sm font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer shadow-sm whitespace-nowrap"
                 >
                   <Rewind className="h-4 w-4" />
                   <span>{t.simulator.rewindToUnprotectedBtn}</span>
@@ -585,7 +585,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                     const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
                     handleSelectChapter(nextIdx);
                   }}
-                  className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 text-xs sm:text-sm font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer whitespace-nowrap"
+                  className="flex-1 h-[50px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-7 text-xs sm:text-sm font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer whitespace-nowrap"
                 >
                   <span>{t.simulator.nextScenarioBtn}</span>
                   <ChevronRight className="h-4 w-4" />
@@ -595,7 +595,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
           ) : (
             <button
               onClick={handleNextStep}
-              className="w-full h-[48px] flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-8 text-sm font-bold transition-all duration-300 shadow-xl shadow-emerald-950/50 cursor-pointer whitespace-nowrap"
+              className="w-full h-[50px] flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-8 text-sm sm:text-base font-bold transition-all duration-300 shadow-xl shadow-emerald-950/50 cursor-pointer whitespace-nowrap"
             >
               {currentStep === 1 && <span>{t.simulator.nextStep1}</span>}
               {currentStep === 2 && mode === "unprotected" && <span>{t.simulator.unprotectedNextStep2}</span>}
