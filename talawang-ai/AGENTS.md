@@ -38,3 +38,23 @@ This file contains mandatory guidelines and behavioral constraints for all AI ag
   - Protected Mode: 4 Steps (Greeting $\rightarrow$ Attack $\rightarrow$ 5.9ms Intercept $\rightarrow$ Telemetry Audit).
 - **Distinct Telemetry Styling**:
   - Telemetry and Incident reports must NEVER be styled like chat bubbles. They must use full-width security console banner styling.
+
+---
+
+## 5. 🔀 Git Flow & Versioning Guidelines (MANDATORY)
+- **Git Flow Branching & Conventions**:
+  - All development follows Git Flow methodology.
+  - Feature branches: `feat/<feature-name>`
+  - Bugfix branches: `fix/<bug-name>`
+  - Maintenance / refactors: `chore/<task-name>` or `refactor/<name>`
+  - Releases: `release/vX.Y.Z` or tagged directly on `main`
+- **Conventional Commits**:
+  - Structure commits using standard types: `feat:`, `fix:`, `style:`, `docs:`, `chore:`, `refactor:`, `test:`.
+  - Provide descriptive summaries explaining the why and what of the change.
+- **Semantic Release & Version Tagging**:
+  - Track versions in `package.json` following `MAJOR.MINOR.PATCH` Semantic Versioning.
+  - Each official release must:
+    1. Pass `pnpm build` with zero errors.
+    2. Be committed with `chore(release): vX.Y.Z`.
+    3. Be tagged with an annotated tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`.
+    4. Be pushed to remote with tags: `git push origin main --tags`.
