@@ -14,6 +14,7 @@ import {
   Maximize2,
   XCircle,
   Zap,
+  Rewind,
 } from "lucide-react";
 import { useI18n } from "@/i18n/I18nContext";
 
@@ -547,12 +548,14 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                   <span>{t.simulator.replayBtn}</span>
                 </button>
 
-                {/* ⏪ Rewind Time to Step 1 Protected! */}
+                {/* Rewind Time to Step 1 Protected */}
                 <button
                   onClick={handleRewindToProtected}
-                  className="flex-1 sm:flex-initial h-[50px] flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
+                  className="flex-1 sm:flex-initial h-[50px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-7 text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
                 >
+                  <Rewind className="h-4 w-4" />
                   <span>{t.simulator.rewindToProtectedBtn}</span>
+                  <ChevronRight className="h-4 w-4" />
                 </button>
               </>
             ) : (
@@ -572,6 +575,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                   }}
                   className="flex-1 sm:flex-initial h-[50px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm"
                 >
+                  <Rewind className="h-4 w-4" />
                   <span>{t.simulator.rewindToUnprotectedBtn}</span>
                 </button>
 

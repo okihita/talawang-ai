@@ -8,6 +8,7 @@ This file contains mandatory guidelines and behavioral constraints for all AI ag
 - **NO MONO FONT**: **Do NOT use monospace fonts (`font-mono`)** for UI elements, labels, headers, incident reports, telemetry badges, stats, or story text.
 - **Always use modern sans-serif** typography (Geist Sans / Tailwind `font-sans`).
 - Monospace font is **ONLY permitted** for raw executable code blocks in technical integration guides (e.g. `<pre>` / `<code>` snippets in `TechnicalArchitecture.tsx`).
+- **NO CHEAP EMOJIS IN BUTTONS / CONTROLS**: Never use unicode emojis (such as `⏪`, `⏩`, `🔄`, `➡️`) for UI action buttons or control labels. Always use clean, professional **Lucide React SVG icons** (e.g. `<Rewind />`, `<RotateCcw />`, `<ChevronRight />`).
 
 ---
 
@@ -33,7 +34,7 @@ This file contains mandatory guidelines and behavioral constraints for all AI ag
   - Message bubbles must have fixed outer widths (`w-[92%] sm:w-[86%]`) so character-by-character typewriter streaming does not jitter or expand horizontally.
 - **4-Step Story Tracks with Time Rewind**:
   - Unprotected Mode: 4 Steps (Greeting $\rightarrow$ Attack $\rightarrow$ Breach $\rightarrow$ Incident Report).
-  - Step 4 of Unprotected leads to **Rewind Time (`⏪`)** to Step 1 of Protected Mode.
+  - Step 4 of Unprotected leads to **Rewind Time (`<Rewind />`)** to Step 1 of Protected Mode.
   - Protected Mode: 4 Steps (Greeting $\rightarrow$ Attack $\rightarrow$ 5.9ms Intercept $\rightarrow$ Telemetry Audit).
 - **Distinct Telemetry Styling**:
   - Telemetry and Incident reports must NEVER be styled like chat bubbles. They must use full-width security console banner styling.

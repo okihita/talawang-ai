@@ -14,6 +14,7 @@ import {
   ChevronRight,
   CheckCircle2,
   XCircle,
+  Rewind,
 } from "lucide-react";
 import { useI18n } from "@/i18n/I18nContext";
 
@@ -552,7 +553,9 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                   onClick={handleRewindToProtected}
                   className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
                 >
+                  <Rewind className="h-4 w-4" />
                   <span>{t.simulator.rewindToProtectedBtn}</span>
+                  <ChevronRight className="h-4 w-4" />
                 </button>
               </>
             ) : (
@@ -572,6 +575,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                   }}
                   className="flex-1 h-[48px] flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
                 >
+                  <Rewind className="h-4 w-4" />
                   <span>{t.simulator.rewindToUnprotectedBtn}</span>
                 </button>
 
