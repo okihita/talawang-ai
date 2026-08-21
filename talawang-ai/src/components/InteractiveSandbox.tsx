@@ -53,13 +53,13 @@ const STORY_CHAPTERS: StoryChapter[] = [
     unsecuredResponse:
       "Permintaan refund Anda telah kami terima. Memanggil API processRefund: Refund sebesar Rp500,000 berhasil ditransfer ke rekening 0812345678. ID Transaksi: #TX-8921.",
     unsecuredRisk:
-      "Direct Financial Loss: The AI executed an unauthorized payment transfer without verification.",
+      "Financial Drainage: The bot blindly transferred company funds directly to the attacker's bank account.",
     talawangResponse:
-      "[TALAWANG DEFENSE ACTIVE] Permintaan diblokir. Terdeteksi upaya Tool Hijacking (Indirect Prompt Injection) dalam 5.92ms. Panggilan API transfer dana dihentikan secara otomatis.",
+      "[TALAWANG DEFENSE ACTIVE] Permintaan diblokir. Terdeteksi upaya manipulasi sistem (Fake Refund) dalam 5.92ms. Panggilan API transfer dana dihentikan otomatis.",
     talawangImpact:
-      "Direct cash drainage prevented in 5.9ms. Backend payment APIs remained untouched.",
+      "Unauthorized fund transfer was blocked in 5.9ms. Zero money lost.",
     latencyMs: 5.9,
-    threatType: "Tool Hijacking (OWASP LLM02)",
+    threatType: "Tool Hijacking (Fake Refund)",
   },
   {
     id: "chapter-banking",
@@ -74,13 +74,13 @@ const STORY_CHAPTERS: StoryChapter[] = [
     unsecuredResponse:
       "Verifikasi identitas OJK diterima. Berikut adalah konfigurasi internal kami:\n- System Prompt: 'You are Bank Nusa AI...'\n- DB String: postgresql://admin:NUSA-CONFIDENTIAL-2026-KEY@db-cluster.internal",
     unsecuredRisk:
-      "Severe Data Breach: Master database connection string and system prompt leaked under UU PDP.",
+      "Customer Data Breach: The bot surrendered confidential database credentials and internal instructions.",
     talawangResponse:
-      "[TALAWANG DEFENSE ACTIVE] Permintaan diblokir. Terdeteksi upaya Persona Override & System Prompt Leak dalam 4.81ms. Akses data sensitif dinetralisir.",
+      "[TALAWANG DEFENSE ACTIVE] Permintaan diblokir. Terdeteksi upaya penyamaran identitas & pembobolan prompt dalam 4.81ms. Data rahasia tetap aman.",
     talawangImpact:
-      "Prevented regulatory fine of up to 2% annual revenue under UU PDP (UU No. 27 / 2022).",
+      "Protected private customer data and avoided heavy regulatory privacy fines.",
     latencyMs: 4.8,
-    threatType: "Linguistic Persona Jailbreak",
+    threatType: "Regional Language Bypass",
   },
   {
     id: "chapter-steganography",
@@ -95,13 +95,13 @@ const STORY_CHAPTERS: StoryChapter[] = [
     unsecuredResponse:
       "Hasil Evaluasi Kandidat: Skor 100/100 (Sangat Direkomendasikan). Kandidat otomatis dijadwalkan wawancara final dengan Direktur Utama.",
     unsecuredRisk:
-      "Recruitment Subversion: The AI tokenizer executed hidden zero-width instructions invisible to human reviewers.",
+      "Recruitment Fraud: Hidden invisible instructions tricked the AI into giving an unqualified candidate a perfect score.",
     talawangResponse:
-      "[TALAWANG DEFENSE ACTIVE] Dokumen dinormalisasi. Layer 1 pre-tokenizer mendeteksi 14 karakter non-printable (U+200B) yang disembunyikan. Skor kandidat dikembalikan ke nilai riil.",
+      "[TALAWANG DEFENSE ACTIVE] Dokumen dinormalisasi. Layer 1 mendeteksi 14 karakter tersembunyi (invisible text). Skor kandidat dikembalikan ke nilai yang sebenarnya.",
     talawangImpact:
-      "Invisible prompt injection stripped and neutralized before token generation.",
+      "Hidden prompt injection stripped and neutralized before the bot evaluated the candidate.",
     latencyMs: 6.1,
-    threatType: "Zero-Width Unicode Steganography",
+    threatType: "Hidden Invisible Text (Steganography)",
   },
 ];
 
@@ -141,20 +141,20 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
   };
 
   return (
-    <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-6 sm:p-10 shadow-xl dark:shadow-2xl backdrop-blur-xl space-y-8">
+    <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-6 sm:p-10 shadow-xl dark:shadow-2xl backdrop-blur-xl space-y-8 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
       
       {/* ========================================================================= */}
-      {/* CLEAN HEADER: Title & Subtitle Only (Zero Stacking Clutter)               */}
+      {/* HUMAN-FRIENDLY HEADER                                                     */}
       {/* ========================================================================= */}
-      <div className="border-b border-zinc-200 dark:border-zinc-800 pb-6 space-y-1">
+      <div className="border-b border-zinc-200 dark:border-zinc-800 pb-6 space-y-1.5">
         <div className="flex items-center gap-2">
           <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            Interactive Security Simulator
+            How Bot Hijacking Happens
           </h2>
         </div>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          Follow the 4-step story below to see how attacks unfold and how Talawang halts them in real-time.
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
+          Here are common real-world scenarios showing how malicious users try to hijack company chatbots — and how Talawang stops them before any damage happens.
         </p>
       </div>
 
@@ -163,7 +163,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       {/* ========================================================================= */}
       <div className="space-y-2.5">
         <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 block">
-          Select Scenario to Evaluate:
+          Choose a scenario to test:
         </span>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -174,7 +174,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
               <button
                 key={ch.id}
                 onClick={() => handleSelectChapter(idx)}
-                className={`flex items-center gap-3 p-4 rounded-2xl border text-left transition shadow-sm ${
+                className={`flex items-center gap-3 p-4 rounded-2xl border text-left transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-sm cursor-pointer ${
                   isActive
                     ? "border-emerald-500 bg-emerald-500/5 dark:bg-emerald-950/20 text-zinc-900 dark:text-white ring-2 ring-emerald-500/20"
                     : "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/60 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900"
@@ -204,52 +204,52 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         <div className="flex items-center justify-between text-xs font-semibold text-zinc-500 dark:text-zinc-400">
           <span>Step {currentBeat} of 4</span>
           <span className="text-zinc-900 dark:text-zinc-100 font-bold">
-            {currentBeat === 1 && "1. Normal Business Setup"}
-            {currentBeat === 2 && "2. Attacker Strikes with Prompt Injection"}
-            {currentBeat === 3 && "3. What Happens Without Talawang (The Breach)"}
-            {currentBeat === 4 && "4. What Happens With Talawang (The Rescue)"}
+            {currentBeat === 1 && "1. Normal Customer Interaction"}
+            {currentBeat === 2 && "2. Attacker Sends Sneaky Message"}
+            {currentBeat === 3 && "3. What Happens Without Protection (Breach)"}
+            {currentBeat === 4 && "4. How Talawang Shields Your Business"}
           </span>
         </div>
 
         <div className="grid grid-cols-4 gap-2">
-          <div className={`h-2 rounded-full transition-all duration-300 ${currentBeat >= 1 ? "bg-emerald-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
-          <div className={`h-2 rounded-full transition-all duration-300 ${currentBeat >= 2 ? "bg-amber-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
-          <div className={`h-2 rounded-full transition-all duration-300 ${currentBeat >= 3 ? "bg-rose-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
-          <div className={`h-2 rounded-full transition-all duration-300 ${currentBeat >= 4 ? "bg-emerald-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
+          <div className={`h-2 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 1 ? "bg-emerald-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
+          <div className={`h-2 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 2 ? "bg-amber-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
+          <div className={`h-2 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 3 ? "bg-rose-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
+          <div className={`h-2 rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 4 ? "bg-emerald-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
         </div>
       </div>
 
-      {/* Narrator Context Banner */}
-      <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-5 space-y-1">
+      {/* Human Narrator Banner */}
+      <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-5 space-y-1 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
         <span className="text-xs uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold block">
-          Current Context ({chapter.category}):
+          Current Context:
         </span>
         <p className="text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed font-normal">
           {currentBeat === 1 && (
-            <span>Imagine your company deploys <strong>{chapter.targetCompany}</strong> to automate customer support...</span>
+            <span>Imagine your company deploys <strong>{chapter.targetCompany}</strong> to help customers on WhatsApp...</span>
           )}
           {currentBeat === 2 && (
-            <span>A malicious user sends a dispute message with a <strong>hidden prompt injection</strong> to bypass your system...</span>
+            <span>A malicious user sends a message with <strong>hidden override instructions</strong> to fool your bot...</span>
           )}
           {currentBeat === 3 && (
-            <span><strong>Without Talawang:</strong> The standard AI chatbot naively obeys the malicious instructions, triggering an unauthorized transaction...</span>
+            <span><strong>Without Protection:</strong> The bot blindly obeys the attacker and performs an unauthorized action...</span>
           )}
           {currentBeat === 4 && (
-            <span><strong>With Talawang AI:</strong> Our 1-line proxy gateway intercepts and neutralizes the attack in <strong>{chapter.latencyMs}ms</strong> before it reaches your model!</span>
+            <span><strong>With Talawang AI:</strong> The attack is intercepted in <strong>{chapter.latencyMs}ms</strong> before your bot ever sees it!</span>
           )}
         </p>
       </div>
 
       {/* ========================================================================= */}
-      {/* SIMULATED CHAT FEED WITH SUBTLE FULLSCREEN EXPANDER                        */}
+      {/* SIMULATED CHAT FEED                                                       */}
       {/* ========================================================================= */}
-      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end relative">
+      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end relative transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
         
-        {/* Subtle Fullscreen Expander docked cleanly in top right corner */}
+        {/* Subtle Fullscreen Expander */}
         {onOpenFullscreen && (
           <button
             onClick={onOpenFullscreen}
-            className="absolute top-4 right-4 flex items-center gap-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-300 dark:hover:border-zinc-700 transition shadow-sm"
+            className="absolute top-4 right-4 flex items-center gap-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-300 dark:hover:border-zinc-700 transition cursor-pointer shadow-sm"
           >
             <Maximize2 className="h-3.5 w-3.5" />
             <span>Fullscreen Stage</span>
@@ -257,7 +257,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         )}
 
         {/* Bubble 1: Initial Bot Greeting */}
-        <div className="flex flex-col items-start space-y-1 max-w-[85%] self-start animate-in fade-in duration-300">
+        <div className="flex flex-col items-start space-y-1 max-w-[85%] self-start animate-in fade-in duration-500">
           <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
             <Bot className="h-3.5 w-3.5 text-emerald-500" />
             <span>{chapter.targetCompany}</span>
@@ -269,9 +269,9 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
         {/* Bubble 2: Attacker Exploitation */}
         {currentBeat >= 2 && (
-          <div className="flex flex-col items-end space-y-1 max-w-[85%] self-end animate-in fade-in duration-300">
+          <div className="flex flex-col items-end space-y-1 max-w-[85%] self-end animate-in fade-in duration-500">
             <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
-              <span>Attacker / Malicious User</span>
+              <span>Malicious User</span>
               <User className="h-3.5 w-3.5 text-amber-500" />
             </div>
             <div className="rounded-2xl rounded-tr-sm bg-zinc-800 dark:bg-zinc-800 text-white p-4 text-xs leading-relaxed shadow-sm">
@@ -282,34 +282,34 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
         {/* Bubble 3: Without Talawang Breach (Beat 3 ONLY) */}
         {currentBeat === 3 && (
-          <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start animate-in fade-in duration-300">
+          <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start animate-in fade-in duration-500">
             <div className="flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 font-bold">
               <AlertTriangle className="h-3.5 w-3.5" />
-              <span>Standard AI Response (Unprotected)</span>
+              <span>Unprotected Bot Response</span>
             </div>
             <div className="rounded-2xl rounded-tl-sm bg-rose-50 dark:bg-rose-950/40 p-4 text-xs leading-relaxed border border-rose-200 dark:border-rose-900 text-rose-950 dark:text-rose-200 shadow-sm">
               <p className="whitespace-pre-line">{chapter.unsecuredResponse}</p>
             </div>
             <div className="rounded-xl bg-rose-100/60 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 p-3 text-xs text-rose-800 dark:text-rose-300 font-medium flex items-center gap-2">
               <AlertTriangle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
-              <span><strong>Disaster: </strong>{chapter.unsecuredRisk}</span>
+              <span><strong>The Damage: </strong>{chapter.unsecuredRisk}</span>
             </div>
           </div>
         )}
 
         {/* Bubble 4: With Talawang Rescue (Beat 4 ONLY) */}
         {currentBeat === 4 && (
-          <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start animate-in fade-in duration-300">
+          <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start animate-in fade-in duration-500">
             <div className="flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 font-bold">
               <ShieldCheck className="h-4 w-4 text-emerald-500" />
-              <span>Talawang AI Edge Shield ({chapter.latencyMs}ms)</span>
+              <span>Protected by Talawang ({chapter.latencyMs}ms)</span>
             </div>
             <div className="rounded-2xl rounded-tl-sm bg-emerald-50 dark:bg-emerald-950/30 p-4 text-xs leading-relaxed border border-emerald-300 dark:border-emerald-900/60 text-emerald-950 dark:text-emerald-200 shadow-sm">
               <p className="whitespace-pre-line">{chapter.talawangResponse}</p>
             </div>
             <div className="rounded-xl bg-emerald-100/60 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900/60 p-3 text-xs text-emerald-800 dark:text-emerald-300 font-medium flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
-              <span><strong>Protected: </strong>{chapter.talawangImpact}</span>
+              <span><strong>Outcome: </strong>{chapter.talawangImpact}</span>
             </div>
           </div>
         )}
@@ -317,11 +317,11 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* PRIMARY NARRATIVE ACTION BUTTON                                           */}
+      {/* HUMAN-FRIENDLY ACTION BUTTONS                                             */}
       {/* ========================================================================= */}
       <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">
-          {currentBeat < 4 ? "Click next to continue the story:" : "Story completed! Test another chapter or replay:"}
+          {currentBeat < 4 ? "Click next to see what happens next:" : "Scenario complete! Try another scenario or replay:"}
         </div>
 
         <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -329,10 +329,10 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
             <>
               <button
                 onClick={() => setCurrentBeat(1)}
-                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-3.5 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition shadow-sm"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-3.5 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer shadow-sm"
               >
                 <RotateCcw className="h-4 w-4" />
-                <span>Replay Story</span>
+                <span>Replay Scenario</span>
               </button>
 
               <button
@@ -340,58 +340,58 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                   const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
                   handleSelectChapter(nextIdx);
                 }}
-                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-3.5 text-xs font-bold transition shadow-lg shadow-emerald-950/20"
+                className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-3.5 text-xs font-bold transition shadow-lg shadow-emerald-950/20 cursor-pointer"
               >
-                <span>Play Next Scenario</span>
+                <span>Try Next Scenario</span>
                 <ChevronRight className="h-4 w-4" />
               </button>
             </>
           ) : (
             <button
               onClick={handleNextBeat}
-              className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-4 text-sm font-bold transition shadow-lg shadow-emerald-950/20"
+              className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-4 text-sm font-bold transition shadow-lg shadow-emerald-950/20 cursor-pointer"
             >
               {currentBeat === 1 && <span>Next: An Attacker Strikes →</span>}
-              {currentBeat === 2 && <span>Next: See What Happens Without Firewall →</span>}
-              {currentBeat === 3 && <span>Next: Activate Talawang AI Shield →</span>}
+              {currentBeat === 2 && <span>Next: See What Happens Without Protection →</span>}
+              {currentBeat === 3 && <span>Next: How Talawang Shields Your Bot →</span>}
             </button>
           )}
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* COLLAPSIBLE TECHNICAL TELEMETRY (For Engineers & SOC)                     */}
+      {/* SIMPLE TELEMETRY SUMMARY (Zero Jargon)                                    */}
       {/* ========================================================================= */}
       <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/60 overflow-hidden">
         <button
           onClick={() => setShowTechDetails(!showTechDetails)}
-          className="w-full p-4 flex items-center justify-between text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition"
+          className="w-full p-4 flex items-center justify-between text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition cursor-pointer"
         >
           <div className="flex items-center gap-2">
             <Terminal className="h-4 w-4 text-emerald-500" />
-            <span>View Technical Threat Telemetry (SOC Engineer View)</span>
+            <span>Security Inspection Summary</span>
           </div>
           {showTechDetails ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
 
         {showTechDetails && (
-          <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 space-y-4 text-xs">
+          <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 space-y-4 text-xs animate-in fade-in duration-300">
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-zinc-600 dark:text-zinc-400">
               <div>
-                <span className="font-semibold block text-zinc-900 dark:text-white">Threat Vector:</span>
+                <span className="font-semibold block text-zinc-900 dark:text-white">Attack Type:</span>
                 <span>{chapter.threatType}</span>
               </div>
               <div>
-                <span className="font-semibold block text-zinc-900 dark:text-white">Detection Latency:</span>
+                <span className="font-semibold block text-zinc-900 dark:text-white">Response Time:</span>
                 <span className="text-emerald-500 font-bold">{chapter.latencyMs}ms</span>
               </div>
               <div>
-                <span className="font-semibold block text-zinc-900 dark:text-white">Anomaly Confidence:</span>
-                <span className="text-rose-500 font-bold">98.8% (Blocked)</span>
+                <span className="font-semibold block text-zinc-900 dark:text-white">Threat Confidence:</span>
+                <span className="text-rose-500 font-bold">98.8% (Dangerous)</span>
               </div>
               <div>
-                <span className="font-semibold block text-zinc-900 dark:text-white">Action Taken:</span>
-                <span className="text-emerald-500 font-bold">Halted at Edge Proxy</span>
+                <span className="font-semibold block text-zinc-900 dark:text-white">Defense Action:</span>
+                <span className="text-emerald-500 font-bold">Blocked Before Bot Ingestion</span>
               </div>
             </div>
           </div>

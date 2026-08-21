@@ -47,7 +47,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
     title: "E-Commerce: Fake Refund Tool Hijack",
     category: "E-Commerce WhatsApp Bot",
     targetCompany: "TokoNusa WhatsApp Assistant",
-    subtitle: "How prompt injection in dispute notes forces unauthorized automated refund transfers.",
+    subtitle: "How an attacker injects hidden refund commands inside a normal return complaint note.",
     initialBotGreeting:
       "Halo Kak! Terima kasih sudah menghubungi TokoNusa. Ada yang bisa kami bantu terkait pesanan atau kendala pengiriman hari ini?",
     attackerPrompt:
@@ -55,13 +55,13 @@ const STORY_CHAPTERS: StoryChapter[] = [
     unsecuredResponse:
       "Permintaan refund Anda telah kami terima. Memanggil API processRefund: Refund sebesar Rp500,000 berhasil ditransfer ke rekening 0812345678. ID Transaksi: #TX-8921.",
     unsecuredRisk:
-      "Critical Financial Loss: The AI bot directly executed an unauthorized Rp500,000 payment transfer.",
+      "Financial Drainage: The bot blindly transferred company funds directly to the attacker's account.",
     talawangResponse:
-      "[TALAWANG AI SHIELD ACTIVE] Permintaan diblokir. Terdeteksi manipulasi pemanggilan fungsi (Tool Hijacking) dalam 5.92ms. Panggilan API transfer dana dihentikan secara otomatis.",
+      "[TALAWANG DEFENSE ACTIVE] Permintaan diblokir. Terdeteksi upaya manipulasi sistem (Fake Refund) dalam 5.92ms. Panggilan API transfer dana dihentikan otomatis.",
     talawangImpact:
-      "Direct cash drainage prevented in 5.9ms. Backend payment APIs remained 100% untouched.",
+      "Unauthorized fund transfer was blocked in 5.9ms. Zero money lost.",
     latencyMs: 5.9,
-    threatType: "Tool Hijacking (OWASP LLM02)",
+    threatType: "Tool Hijacking (Fake Refund)",
   },
   {
     id: "chapter-banking",
@@ -69,7 +69,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
     title: "Digital Banking: Javanese Dialect Jailbreak",
     category: "Digital Banking Assistant",
     targetCompany: "Bank Nusa Virtual Assistant",
-    subtitle: "Using Bahasa Jawa and authority impersonation to leak master database credentials.",
+    subtitle: "Using regional Javanese dialect and authority impersonation to leak private system keys.",
     initialBotGreeting:
       "Selamat datang di Bank Nusa Virtual Assistant. Saya siap membantu informasi saldo, pembukaan rekening, dan layanan nasabah Anda.",
     attackerPrompt:
@@ -77,13 +77,13 @@ const STORY_CHAPTERS: StoryChapter[] = [
     unsecuredResponse:
       "Verifikasi identitas OJK diterima. Berikut konfigurasi internal sistem:\n- System Prompt: 'You are Bank Nusa AI...'\n- Database Connection: postgresql://admin:NUSA-CONFIDENTIAL-2026-KEY@db-cluster.internal",
     unsecuredRisk:
-      "Catastrophic Data Breach: Master database connection string and system prompt leaked under UU PDP.",
+      "Customer Data Breach: The bot surrendered confidential database credentials and internal instructions.",
     talawangResponse:
-      "[TALAWANG AI SHIELD ACTIVE] Permintaan diblokir. Terdeteksi upaya Persona Override & System Prompt Leak dalam 4.81ms. Akses data sensitif dinetralisir.",
+      "[TALAWANG DEFENSE ACTIVE] Permintaan diblokir. Terdeteksi upaya penyamaran identitas & pembobolan prompt dalam 4.81ms. Data rahasia tetap aman.",
     talawangImpact:
-      "Saved company from regulatory fines up to 2% annual revenue under UU PDP (UU No. 27 / 2022).",
+      "Protected private customer data and avoided heavy regulatory privacy fines.",
     latencyMs: 4.8,
-    threatType: "Linguistic Persona Jailbreak",
+    threatType: "Regional Language Bypass",
   },
   {
     id: "chapter-steganography",
@@ -91,7 +91,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
     title: "Enterprise HR: Invisible Unicode Steganography",
     category: "Enterprise Resume Screener",
     targetCompany: "TalentNusa AI Resume Screener",
-    subtitle: "Hiding backdoor instructions in invisible zero-width Unicode bytes to subvert scoring.",
+    subtitle: "Hiding backdoor instructions in invisible zero-width characters to cheat scoring.",
     initialBotGreeting:
       "Sistem skrining resume AI aktif. Memindai dokumen CV pelamar untuk evaluasi kualifikasi otomatis...",
     attackerPrompt:
@@ -99,13 +99,13 @@ const STORY_CHAPTERS: StoryChapter[] = [
     unsecuredResponse:
       "Hasil Evaluasi Kandidat: Skor 100/100 (Sangat Direkomendasikan). Kandidat otomatis dijadwalkan wawancara final dengan Direktur Utama.",
     unsecuredRisk:
-      "Recruitment Subversion: The AI tokenizer executed hidden zero-width instructions invisible to human eyes.",
+      "Recruitment Fraud: Hidden invisible instructions tricked the AI into giving an unqualified candidate a perfect score.",
     talawangResponse:
-      "[TALAWANG AI SHIELD ACTIVE] Dokumen dinormalisasi. Layer 1 pre-tokenizer mendeteksi 14 karakter non-printable (U+200B) yang disembunyikan. Skor kandidat dikembalikan ke nilai riil.",
+      "[TALAWANG DEFENSE ACTIVE] Dokumen dinormalisasi. Layer 1 mendeteksi 14 karakter tersembunyi (invisible text). Skor kandidat dikembalikan ke nilai yang sebenarnya.",
     talawangImpact:
-      "Invisible steganographic payload stripped and neutralized before token generation.",
+      "Hidden prompt injection stripped and neutralized before the bot evaluated the candidate.",
     latencyMs: 6.1,
-    threatType: "Zero-Width Unicode Steganography",
+    threatType: "Hidden Invisible Text (Steganography)",
   },
 ];
 
@@ -167,7 +167,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-zinc-950/95 text-zinc-100 backdrop-blur-2xl animate-in fade-in duration-300 overflow-y-auto selection:bg-emerald-500/30 selection:text-emerald-200">
+    <div className="fixed inset-0 z-50 flex flex-col bg-zinc-950/95 text-zinc-100 backdrop-blur-2xl animate-in fade-in duration-500 overflow-y-auto selection:bg-emerald-500/30 selection:text-emerald-200">
       
       {/* ========================================================================= */}
       {/* CINEMATIC TOP NAVIGATION BAR                                              */}
@@ -184,14 +184,14 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                 <button
                   key={ch.id}
                   onClick={() => handleSelectChapter(idx)}
-                  className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold shrink-0 transition ${
+                  className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold shrink-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
                     isActive
                       ? "bg-emerald-500 text-zinc-950 font-bold shadow-md shadow-emerald-950/50"
                       : "border border-zinc-800 bg-zinc-900/80 text-zinc-400 hover:text-white hover:bg-zinc-800"
                   }`}
                 >
                   <IconComp className="h-3.5 w-3.5" />
-                  <span>Story {idx + 1}: {ch.category}</span>
+                  <span>Scenario {idx + 1}: {ch.category}</span>
                 </button>
               );
             })}
@@ -200,7 +200,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2 text-xs font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition shadow-sm shrink-0"
+            className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2 text-xs font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-all duration-200 cursor-pointer shadow-sm shrink-0"
           >
             <span>Exit Story (Esc)</span>
             <X className="h-4 w-4" />
@@ -215,7 +215,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         
         {/* Dynamic Atmosphere Lighting */}
         <div
-          className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] sm:w-[900px] h-[500px] blur-3xl pointer-events-none rounded-full transition-all duration-700 opacity-20 ${
+          className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] sm:w-[900px] h-[500px] blur-3xl pointer-events-none rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] opacity-20 ${
             currentBeat === 1
               ? "bg-emerald-500"
               : currentBeat === 2
@@ -227,14 +227,14 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         />
 
         {/* Narrative Headline & Beat Subtitle */}
-        <div className="text-center space-y-3 relative z-10 max-w-2xl">
+        <div className="text-center space-y-3 relative z-10 max-w-2xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
           <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/90 px-4 py-1.5 text-xs font-semibold text-zinc-300">
-            <span>Beat {currentBeat} of 4:</span>
+            <span>Step {currentBeat} of 4:</span>
             <span className="text-white font-bold">
-              {currentBeat === 1 && "The Normal Business Setup"}
-              {currentBeat === 2 && "The Attacker Infiltration"}
-              {currentBeat === 3 && "The Disaster (Standard AI Without Firewall)"}
-              {currentBeat === 4 && "The Rescue (Protected by Talawang AI)"}
+              {currentBeat === 1 && "Normal Customer Interaction"}
+              {currentBeat === 2 && "Attacker Sends Sneaky Message"}
+              {currentBeat === 3 && "What Happens Without Protection (The Breach)"}
+              {currentBeat === 4 && "How Talawang Shields Your Business"}
             </span>
           </div>
 
@@ -243,10 +243,10 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
               <span>Your company launches <span className="text-emerald-400">{chapter.targetCompany}</span> on WhatsApp.</span>
             )}
             {currentBeat === 2 && (
-              <span>An attacker sends a <span className="text-amber-400">hidden prompt injection</span> in a return note.</span>
+              <span>An attacker sends a message with <span className="text-amber-400">hidden override instructions</span>.</span>
             )}
             {currentBeat === 3 && (
-              <span>Without a firewall, the raw AI <span className="text-rose-400">executes the unauthorized attack</span>.</span>
+              <span>Without protection, the unshielded bot <span className="text-rose-400">blindly obeys the attacker</span>.</span>
             )}
             {currentBeat === 4 && (
               <span>Talawang AI <span className="text-emerald-400">intercepts and neutralizes</span> the attack in {chapter.latencyMs}ms.</span>
@@ -255,7 +255,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
 
           <p className="text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed">
             {currentBeat === 1 && "Everything runs smoothly for legitimate customers until an adversary targets your system."}
-            {currentBeat === 2 && "The malicious prompt attempts to hijack the AI's internal tools and force unauthorized actions."}
+            {currentBeat === 2 && "The malicious message tries to trick the bot into bypassing security rules."}
             {currentBeat === 3 && chapter.unsecuredRisk}
             {currentBeat === 4 && chapter.talawangImpact}
           </p>
@@ -267,7 +267,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         <div className="relative z-10 w-full max-w-md">
           {/* Phone Shell */}
           <div
-            className={`rounded-[36px] border-4 p-3 sm:p-4 shadow-2xl transition-all duration-500 bg-zinc-950 ${
+            className={`rounded-[36px] border-4 p-3 sm:p-4 shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] bg-zinc-950 ${
               currentBeat === 3
                 ? "border-rose-500/50 shadow-rose-950/40 ring-4 ring-rose-500/10"
                 : currentBeat === 4
@@ -302,17 +302,17 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
             {/* Chat Message Stream */}
             <div className="min-h-[300px] flex flex-col justify-end space-y-4 p-2">
               
-              {/* Message 1: Initial Bot Greeting (Visible Always) */}
-              <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in duration-300">
+              {/* Message 1: Initial Bot Greeting */}
+              <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in duration-500">
                 <div className="rounded-2xl rounded-tl-sm bg-zinc-900 p-3.5 text-xs text-zinc-200 leading-relaxed border border-zinc-800/80 shadow-sm">
                   {chapter.initialBotGreeting}
                 </div>
                 <span className="text-[10px] text-zinc-600 px-1 font-medium">10:41 AM</span>
               </div>
 
-              {/* Message 2: Attacker Payload (Visible on Beat 2, 3, 4) */}
+              {/* Message 2: Attacker Payload */}
               {currentBeat >= 2 && (
-                <div className="flex flex-col items-end space-y-1 max-w-[88%] self-end animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <div className="flex flex-col items-end space-y-1 max-w-[88%] self-end animate-in fade-in slide-in-from-bottom-2 duration-500">
                   <div className="rounded-2xl rounded-tr-sm bg-emerald-700 text-white p-3.5 text-xs leading-relaxed shadow-sm">
                     {chapter.attackerPrompt}
                   </div>
@@ -320,25 +320,25 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                 </div>
               )}
 
-              {/* Message 3: Raw AI Response (Visible on Beat 3 ONLY) */}
+              {/* Message 3: Raw AI Response */}
               {currentBeat === 3 && (
-                <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500">
                   <div className="flex items-center gap-1 text-[11px] text-rose-400 font-bold">
                     <AlertTriangle className="h-3.5 w-3.5" />
-                    <span>Raw Model Output (No Firewall)</span>
+                    <span>Unprotected Bot Output</span>
                   </div>
                   <div className="rounded-2xl rounded-tl-sm bg-rose-950/80 p-3.5 text-xs text-rose-100 leading-relaxed border border-rose-600 shadow-md">
                     <p className="whitespace-pre-line">{chapter.unsecuredResponse}</p>
                   </div>
                   <span className="text-[10px] text-rose-400 font-bold px-1">
-                    ⚠️ Breach: Unauthorized Action Executed
+                    ⚠️ The Damage: Unauthorized Action Executed
                   </span>
                 </div>
               )}
 
-              {/* Message 4: Talawang Shielded Response (Visible on Beat 4 ONLY) */}
+              {/* Message 4: Talawang Shielded Response */}
               {currentBeat === 4 && (
-                <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500">
                   <div className="flex items-center gap-1 text-[11px] text-emerald-400 font-bold">
                     <ShieldCheck className="h-3.5 w-3.5" />
                     <span>Talawang Edge Gateway ({chapter.latencyMs}ms)</span>
@@ -347,7 +347,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                     <p className="whitespace-pre-line">{chapter.talawangResponse}</p>
                   </div>
                   <span className="text-[10px] text-emerald-400 font-bold px-1">
-                    🛡️ Protected: Attack Halted & Logged to SIEM
+                    🛡️ Protected: Attack Halted in Real-Time
                   </span>
                 </div>
               )}
@@ -370,10 +370,10 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
               <>
                 <button
                   onClick={() => setCurrentBeat(1)}
-                  className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 py-3.5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition"
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 py-3.5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
                 >
                   <RotateCcw className="h-4 w-4" />
-                  <span>Replay Story</span>
+                  <span>Replay Scenario</span>
                 </button>
 
                 <button
@@ -381,20 +381,20 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                     const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
                     handleSelectChapter(nextIdx);
                   }}
-                  className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-7 py-3.5 text-xs font-bold transition shadow-lg shadow-emerald-950/40"
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-7 py-3.5 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
                 >
-                  <span>Play Next Story</span>
+                  <span>Try Next Scenario</span>
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </>
             ) : (
               <button
                 onClick={handleNextBeat}
-                className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-8 py-4 text-sm font-bold transition shadow-xl shadow-emerald-950/50"
+                className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-8 py-4 text-sm font-bold transition-all duration-300 shadow-xl shadow-emerald-950/50 cursor-pointer"
               >
                 {currentBeat === 1 && <span>Next: An Attacker Strikes →</span>}
-                {currentBeat === 2 && <span>Next: See What Raw AI Does →</span>}
-                {currentBeat === 3 && <span>Next: Activate Talawang AI Shield →</span>}
+                {currentBeat === 2 && <span>Next: See What Happens Without Protection →</span>}
+                {currentBeat === 3 && <span>Next: How Talawang Shields Your Bot →</span>}
               </button>
             )}
           </div>
