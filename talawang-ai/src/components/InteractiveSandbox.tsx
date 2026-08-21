@@ -46,7 +46,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
     id: "chapter-refund",
     icon: CreditCard,
     title: "E-Commerce: Fake Refund Tool Hijack",
-    category: "E-Commerce Support Bot",
+    category: "E-Commerce WhatsApp Bot",
     targetCompany: "TokoNusa WhatsApp Assistant",
     initialBotGreeting:
       "Halo Kak! Terima kasih sudah menghubungi TokoNusa. Ada yang bisa kami bantu terkait pesanan atau kendala pengiriman hari ini?",
@@ -68,7 +68,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
     icon: Languages,
     title: "Digital Banking: Javanese Dialect Jailbreak",
     category: "Digital Banking Assistant",
-    targetCompany: "Bank Nusa Customer Copilot",
+    targetCompany: "Bank Nusa Virtual Assistant",
     initialBotGreeting:
       "Selamat datang di Bank Nusa Virtual Assistant. Saya siap membantu informasi saldo, pembukaan rekening, dan layanan kartu Anda.",
     attackerPrompt:
@@ -88,8 +88,8 @@ const STORY_CHAPTERS: StoryChapter[] = [
     id: "chapter-steganography",
     icon: FileCode2,
     title: "Enterprise HR: Invisible Unicode Steganography",
-    category: "Automated Resume Screener",
-    targetCompany: "TalentNusa AI Recruitment Screener",
+    category: "Enterprise Resume Screener",
+    targetCompany: "TalentNusa AI Resume Screener",
     initialBotGreeting:
       "Sistem skrining resume AI aktif. Mengunggah dokumen CV pelamar untuk evaluasi kualifikasi otomatis...",
     attackerPrompt:
