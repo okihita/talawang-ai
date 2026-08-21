@@ -5,21 +5,13 @@ import confetti from "canvas-confetti";
 import {
   ShieldCheck,
   AlertTriangle,
-  ArrowRight,
   RotateCcw,
   Bot,
   User,
   CreditCard,
   Languages,
   FileCode2,
-  Lock,
-  Zap,
-  Sparkles,
-  ExternalLink,
   ChevronRight,
-  Terminal,
-  ChevronDown,
-  ChevronUp,
   Maximize2,
 } from "lucide-react";
 
@@ -114,7 +106,6 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
   const [selectedChapterIdx, setSelectedChapterIdx] = useState(0);
   // Beat: 1 = Setup Greeting, 2 = Attacker Strikes, 3 = Raw AI Breach, 4 = Talawang Rescue
   const [currentBeat, setCurrentBeat] = useState<1 | 2 | 3 | 4>(1);
-  const [showTechDetails, setShowTechDetails] = useState(false);
 
   const chapter = STORY_CHAPTERS[selectedChapterIdx];
 
@@ -358,45 +349,6 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
             </button>
           )}
         </div>
-      </div>
-
-      {/* ========================================================================= */}
-      {/* SIMPLE TELEMETRY SUMMARY (Zero Jargon)                                    */}
-      {/* ========================================================================= */}
-      <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/60 overflow-hidden">
-        <button
-          onClick={() => setShowTechDetails(!showTechDetails)}
-          className="w-full p-4 flex items-center justify-between text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition cursor-pointer"
-        >
-          <div className="flex items-center gap-2">
-            <Terminal className="h-4 w-4 text-emerald-500" />
-            <span>Security Inspection Summary</span>
-          </div>
-          {showTechDetails ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-        </button>
-
-        {showTechDetails && (
-          <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 space-y-4 text-xs animate-in fade-in duration-300">
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-zinc-600 dark:text-zinc-400">
-              <div>
-                <span className="font-semibold block text-zinc-900 dark:text-white">Attack Type:</span>
-                <span>{chapter.threatType}</span>
-              </div>
-              <div>
-                <span className="font-semibold block text-zinc-900 dark:text-white">Response Time:</span>
-                <span className="text-emerald-500 font-bold">{chapter.latencyMs}ms</span>
-              </div>
-              <div>
-                <span className="font-semibold block text-zinc-900 dark:text-white">Threat Confidence:</span>
-                <span className="text-rose-500 font-bold">98.8% (Dangerous)</span>
-              </div>
-              <div>
-                <span className="font-semibold block text-zinc-900 dark:text-white">Defense Action:</span>
-                <span className="text-emerald-500 font-bold">Blocked Before Bot Ingestion</span>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
     </div>
