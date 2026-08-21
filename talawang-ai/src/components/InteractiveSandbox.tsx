@@ -181,6 +181,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
   const handleSelectChapter = (idx: number) => {
     setSelectedChapterIdx(idx);
+    setMode("unprotected");
     setCurrentStep(1);
   };
 

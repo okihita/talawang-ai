@@ -215,6 +215,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
 
   const handleSelectChapter = (idx: number) => {
     setSelectedChapterIdx(idx);
+    setMode("unprotected");
     setCurrentStep(1);
   };
 
