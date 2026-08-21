@@ -9,6 +9,7 @@ import FullscreenStoryStage from "@/components/FullscreenStoryStage";
 import DayakShieldBadge from "@/components/DayakShieldBadge";
 import { ThreatEvent } from "@/server/telemetry/threat-store";
 import { PromptScanResult } from "@/server/detectors/prompt-injection";
+import { useI18n } from "@/i18n/I18nContext";
 import {
   ShieldCheck,
   Zap,
@@ -23,6 +24,7 @@ import {
 import Link from "next/link";
 
 export default function DashboardPage() {
+  const { t } = useI18n();
   const [isStoryOpen, setIsStoryOpen] = useState(false);
   const [events, setEvents] = useState<ThreatEvent[]>([]);
 
@@ -63,21 +65,20 @@ export default function DashboardPage() {
           {/* Hackathon Badge */}
           <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300 shadow-sm">
             <DayakShieldBadge size={16} glow={false} />
-            <span>Built for HackNusa 2026 • Telkom University × Kaspersky</span>
+            <span>{t.hero.badge}</span>
           </div>
 
           {/* Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-[1.1]">
-            The invisible firewall for your{" "}
+            {t.hero.titlePrefix}{" "}
             <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500 dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400 bg-clip-text text-transparent">
-              AI chatbots & agents
+              {t.hero.titleGradient}
             </span>
           </h1>
 
           {/* Subheading */}
           <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-3xl mx-auto font-normal">
-            Prevent customer support bots from leaking passwords, executing unauthorized refunds, or succumbing to multi-lingual prompt injections.
-            Installs in <strong>60 seconds</strong> with just <strong>1 line of code</strong>.
+            {t.hero.description}
           </p>
 
           {/* CTA Actions */}
@@ -93,7 +94,7 @@ export default function DashboardPage() {
               className="w-full sm:w-auto rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 font-bold px-8 py-4 text-base shadow-xl shadow-emerald-950/20 transition flex items-center justify-center gap-2.5 cursor-pointer"
             >
               <Play className="h-4 w-4 fill-current" />
-              <span>Try Interactive Demo ↓</span>
+              <span>{t.hero.tryDemoBtn}</span>
             </button>
 
             <Link
@@ -101,7 +102,7 @@ export default function DashboardPage() {
               className="w-full sm:w-auto rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 dark:text-white font-semibold px-7 py-4 text-base transition flex items-center justify-center gap-2.5 shadow-sm"
             >
               <BookOpen className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Explore Case Studies →</span>
+              <span>{t.hero.caseStudiesBtn}</span>
             </Link>
           </div>
 
@@ -109,15 +110,15 @@ export default function DashboardPage() {
           <div className="flex flex-wrap items-center justify-center gap-8 pt-8 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
             <span className="flex items-center gap-2">
               <Zap className="h-3.5 w-3.5 text-emerald-500" />
-              Sub-15ms Latency Overhead
+              {t.hero.proofLatency}
             </span>
             <span className="flex items-center gap-2">
               <Globe2 className="h-3.5 w-3.5 text-teal-500" />
-              Bahasa Indonesia & Javanese
+              {t.hero.proofLang}
             </span>
             <span className="flex items-center gap-2">
               <Lock className="h-3.5 w-3.5 text-cyan-500" />
-              UU PDP & OWASP Compliant
+              {t.hero.proofCompliance}
             </span>
           </div>
         </section>
@@ -144,17 +145,17 @@ export default function DashboardPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-zinc-200 dark:border-zinc-800 pb-8">
             <div className="space-y-1">
               <span className="text-xs font-semibold uppercase tracking-wider text-teal-600 dark:text-teal-400">
-                Industry Applications
+                {t.useCases.badge}
               </span>
               <h2 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-white tracking-tight">
-                Designed for Production AI Deployments
+                {t.useCases.title}
               </h2>
             </div>
             <Link
               href="/study-cases"
               className="inline-flex items-center gap-2 rounded-2xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white px-5 py-3 text-sm font-semibold transition w-fit"
             >
-              <span>Explore Case Studies</span>
+              <span>{t.useCases.cta}</span>
               <ArrowRight className="h-4 w-4 text-emerald-500" />
             </Link>
           </div>
@@ -163,30 +164,30 @@ export default function DashboardPage() {
             <div className="space-y-2.5">
               <div className="flex items-center gap-2.5 font-bold text-zinc-900 dark:text-white text-base">
                 <Building2 className="h-5 w-5 text-emerald-500" />
-                <span>Fintech & Digital Banking</span>
+                <span>{t.useCases.fintechTitle}</span>
               </div>
               <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Prevents WhatsApp and in-app virtual assistants from leaking customer NIKs, account balances, or API credentials.
+                {t.useCases.fintechDesc}
               </p>
             </div>
 
             <div className="space-y-2.5">
               <div className="flex items-center gap-2.5 font-bold text-zinc-900 dark:text-white text-base">
                 <Layers className="h-5 w-5 text-teal-500" />
-                <span>E-Commerce & Marketplaces</span>
+                <span>{t.useCases.ecommerceTitle}</span>
               </div>
               <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Stops indirect prompt injection in customer support notes from hijacking order refund and voucher generation APIs.
+                {t.useCases.ecommerceDesc}
               </p>
             </div>
 
             <div className="space-y-2.5">
               <div className="flex items-center gap-2.5 font-bold text-zinc-900 dark:text-white text-base">
                 <Lock className="h-5 w-5 text-cyan-500" />
-                <span>Enterprise Knowledge Search</span>
+                <span>{t.useCases.ragTitle}</span>
               </div>
               <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                Guards internal RAG systems against privilege escalation and unauthorized employee salary table exfiltration.
+                {t.useCases.ragDesc}
               </p>
             </div>
           </div>
@@ -200,10 +201,10 @@ export default function DashboardPage() {
           <div className="flex items-center gap-2.5">
             <DayakShieldBadge size={20} glow={false} />
             <span className="text-zinc-800 dark:text-zinc-300 font-bold">Talawang AI</span>
-            <span>— Securing Tomorrow, Innovating Trust</span>
+            <span>— {t.footer.tagline}</span>
           </div>
           <p>
-            Submission Prototype for <strong className="text-zinc-800 dark:text-zinc-300">HackNusa 2026</strong> (Telkom University × Kaspersky)
+            {t.footer.subText} <strong className="text-zinc-800 dark:text-zinc-300">HackNusa 2026</strong> (Telkom University × Kaspersky)
           </p>
         </div>
       </footer>
