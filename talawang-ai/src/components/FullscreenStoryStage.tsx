@@ -311,42 +311,52 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
           }`}
         />
 
-        {/* Narrative Headline, Scenario Pills & 2-Way Left-Right Switcher */}
-        <div className="text-center space-y-5 relative z-10 max-w-2xl mx-auto w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-          
-          {/* Scenario Selector: 3 Clean Grid Pills Right Above Left-Right Toggle */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
+        {/* ========================================================================= */}
+        {/* FULLSCREEN SCENARIO SELECTION PILLS (Full Width Grid)                     */}
+        {/* ========================================================================= */}
+        <div className="w-full max-w-5xl relative z-10 space-y-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 w-full">
             {STORY_CHAPTERS.map((ch, idx) => {
               const IconComp = ch.icon;
               const isActive = selectedChapterIdx === idx;
               const categoryText = (t.simulator as any)[ch.categoryKey] || ch.categoryKey;
               const titleText = (t.simulator as any)[ch.titleKey] || ch.titleKey;
+              const subtitleText = ch.subtitle[lang];
 
               return (
                 <button
                   key={ch.id}
                   onClick={() => handleSelectChapter(idx)}
-                  className={`flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-sm cursor-pointer ${
+                  className={`flex flex-col justify-between p-4 sm:p-5 rounded-2xl border text-left transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-sm cursor-pointer ${
                     isActive
                       ? "border-emerald-500 bg-emerald-500/10 dark:bg-emerald-950/40 text-zinc-900 dark:text-white ring-2 ring-emerald-500/20 scale-[1.01]"
-                      : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white"
+                      : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-50 dark:hover:bg-zinc-900"
                   }`}
                 >
-                  <div className={`p-2 rounded-xl border transition-all ${isActive ? "bg-emerald-500/20 border-emerald-500/30 text-emerald-600 dark:text-emerald-400" : "bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-500"}`}>
-                    <IconComp className="h-4 w-4" />
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className={`p-2.5 rounded-xl border transition-all ${isActive ? "bg-emerald-500/20 border-emerald-500/30 text-emerald-600 dark:text-emerald-400" : "bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-500"}`}>
+                      <IconComp className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <span className="text-[11px] font-semibold text-zinc-400 dark:text-zinc-500 block uppercase tracking-wider">
+                        Skenario {idx + 1}: {categoryText}
+                      </span>
+                      <h4 className="text-sm font-bold text-zinc-900 dark:text-white truncate">
+                        {titleText.split(":")[1]?.trim() || titleText}
+                      </h4>
+                    </div>
                   </div>
-                  <div className="overflow-hidden">
-                    <span className="text-[10px] sm:text-[11px] font-medium text-zinc-400 dark:text-zinc-500 block uppercase tracking-wider">
-                      {categoryText}
-                    </span>
-                    <h4 className="text-xs font-bold text-zinc-900 dark:text-white truncate">
-                      {titleText.split(":")[1]?.trim() || titleText}
-                    </h4>
-                  </div>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+                    {subtitleText}
+                  </p>
                 </button>
               );
             })}
           </div>
+        </div>
+
+        {/* Narrative Headline & 2-Way Left-Right Switcher */}
+        <div className="text-center space-y-4 relative z-10 max-w-xl mx-auto w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
 
           {/* Left-Right Switcher (Directly Under Scenario Pills) */}
           <div className="grid grid-cols-2 p-1.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-200/80 dark:bg-zinc-900/90 gap-1.5 shadow-inner">
