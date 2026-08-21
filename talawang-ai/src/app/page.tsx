@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import CyberGrid from "@/components/react-bits/CyberGrid";
 import Navbar from "@/components/Navbar";
 import InteractiveSandbox from "@/components/InteractiveSandbox";
+import FullscreenStoryStage from "@/components/FullscreenStoryStage";
 import YaraExporterModal from "@/components/YaraExporterModal";
 import QrChallengeModal from "@/components/QrChallengeModal";
 import DayakShieldBadge from "@/components/DayakShieldBadge";
@@ -32,6 +33,7 @@ import Link from "next/link";
 export default function DashboardPage() {
   const [isYaraOpen, setIsYaraOpen] = useState(false);
   const [isQrOpen, setIsQrOpen] = useState(false);
+  const [isStoryOpen, setIsStoryOpen] = useState(false);
   const [events, setEvents] = useState<ThreatEvent[]>([]);
 
   const fetchTelemetry = async () => {
@@ -93,13 +95,13 @@ export default function DashboardPage() {
 
           {/* CTA Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <a
-              href="#demo"
+            <button
+              onClick={() => setIsStoryOpen(true)}
               className="w-full sm:w-auto rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 font-bold px-8 py-4 text-base shadow-xl shadow-emerald-950/20 transition flex items-center justify-center gap-2.5"
             >
               <Play className="h-4 w-4 fill-current" />
-              <span>Try Live Interactive Demo</span>
-            </a>
+              <span>Launch Fullscreen Story Walkthrough</span>
+            </button>
 
             <button
               onClick={() => setIsQrOpen(true)}
@@ -128,10 +130,13 @@ export default function DashboardPage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* INTERACTIVE DEMO (Before & After)                                         */}
+        {/* INTERACTIVE DEMO (Inline Story & Sandbox)                                 */}
         {/* ========================================================================= */}
         <section id="demo" className="scroll-mt-28 space-y-6">
-          <InteractiveSandbox onScanComplete={handleScanComplete} />
+          <InteractiveSandbox
+            onScanComplete={handleScanComplete}
+            onOpenFullscreen={() => setIsStoryOpen(true)}
+          />
         </section>
 
         {/* ========================================================================= */}
@@ -254,7 +259,8 @@ export default function DashboardPage() {
         </div>
       </footer>
 
-      {/* Modals */}
+      {/* Fullscreen Story Stage & Modals */}
+      <FullscreenStoryStage isOpen={isStoryOpen} onClose={() => setIsStoryOpen(false)} />
       <YaraExporterModal isOpen={isYaraOpen} onClose={() => setIsYaraOpen(false)} />
       <QrChallengeModal isOpen={isQrOpen} onClose={() => setIsQrOpen(false)} />
     </div>

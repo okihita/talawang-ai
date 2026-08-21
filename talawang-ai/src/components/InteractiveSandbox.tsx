@@ -20,6 +20,7 @@ import {
   Terminal,
   ChevronDown,
   ChevronUp,
+  Smartphone,
 } from "lucide-react";
 import { generateYaraRule } from "@/server/telemetry/threat-store";
 
@@ -107,9 +108,10 @@ const STORY_CHAPTERS: StoryChapter[] = [
 
 interface InteractiveSandboxProps {
   onScanComplete?: (result: any, prompt: string) => void;
+  onOpenFullscreen?: () => void;
 }
 
-export default function InteractiveSandbox({ onScanComplete }: InteractiveSandboxProps) {
+export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }: InteractiveSandboxProps) {
   const [selectedChapterIdx, setSelectedChapterIdx] = useState(0);
   // Beat: 1 = Setup Greeting, 2 = Attacker Strikes, 3 = Raw AI Breach, 4 = Talawang Rescue
   const [currentBeat, setCurrentBeat] = useState<1 | 2 | 3 | 4>(1);
@@ -154,8 +156,18 @@ export default function InteractiveSandbox({ onScanComplete }: InteractiveSandbo
           </h2>
         </div>
 
-        {/* Chapter Switcher Tabs */}
+        {/* Chapter Switcher Tabs & Fullscreen Trigger */}
         <div className="flex flex-wrap items-center gap-2">
+          {onOpenFullscreen && (
+            <button
+              onClick={onOpenFullscreen}
+              className="flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 text-xs font-bold transition shadow-md shadow-emerald-950/20"
+            >
+              <Smartphone className="h-3.5 w-3.5" />
+              <span>Launch Fullscreen Stage</span>
+            </button>
+          )}
+
           {STORY_CHAPTERS.map((ch, idx) => {
             const IconComp = ch.icon;
             const isActive = selectedChapterIdx === idx;
@@ -165,12 +177,12 @@ export default function InteractiveSandbox({ onScanComplete }: InteractiveSandbo
                 onClick={() => handleSelectChapter(idx)}
                 className={`flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-semibold transition ${
                   isActive
-                    ? "bg-emerald-600 dark:bg-emerald-500 text-white dark:text-zinc-950 shadow-sm"
+                    ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 shadow-sm"
                     : "border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900"
                 }`}
               >
                 <IconComp className="h-3.5 w-3.5" />
-                <span>Chapter {idx + 1}</span>
+                <span>Story {idx + 1}</span>
               </button>
             );
           })}
