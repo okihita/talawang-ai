@@ -7,7 +7,6 @@ import {
   AlertTriangle,
   RotateCcw,
   Bot,
-  User,
   CreditCard,
   Languages,
   FileCode2,
@@ -128,7 +127,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
 // Quick Typewriter Component
 function TypewriterText({
   text,
-  speed = 10,
+  speed = 8,
   triggerKey,
 }: {
   text: string;
@@ -175,33 +174,42 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
   const { lang, t } = useI18n();
   const [selectedChapterIdx, setSelectedChapterIdx] = useState(0);
   const [mode, setMode] = useState<"unprotected" | "protected">("unprotected");
+  const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
 
   const chapter = STORY_CHAPTERS[selectedChapterIdx];
 
-  // Keyboard navigation: Esc to close, Tab/Arrow to toggle mode
+  // Keyboard navigation: Esc to close, Space/Enter/Arrow to advance
   useEffect(() => {
     if (!isOpen) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();
-      } else if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-        setMode((prev) => (prev === "unprotected" ? "protected" : "unprotected"));
+      } else if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        handleNextStep();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        if (currentStep > 1) {
+          setCurrentStep((prev) => (prev - 1) as 1 | 2 | 3);
+        }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, selectedChapterIdx]);
+  }, [isOpen, currentStep, selectedChapterIdx, mode]);
 
   if (!isOpen) return null;
 
   const handleSelectChapter = (idx: number) => {
     setSelectedChapterIdx(idx);
+    setCurrentStep(1);
   };
 
   const handleToggleMode = (newMode: "unprotected" | "protected") => {
     setMode(newMode);
+    setCurrentStep(1);
     if (newMode === "protected") {
       confetti({
         particleCount: 50,
@@ -209,6 +217,23 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         origin: { y: 0.75 },
         colors: ["#10b981", "#34d399", "#06b6d4"],
       });
+    }
+  };
+
+  const handleNextStep = () => {
+    if (currentStep < 3) {
+      const next = (currentStep + 1) as 1 | 2 | 3;
+      setCurrentStep(next);
+      if (next === 3 && mode === "protected") {
+        confetti({
+          particleCount: 50,
+          spread: 70,
+          origin: { y: 0.75 },
+          colors: ["#10b981", "#34d399", "#06b6d4"],
+        });
+      }
+    } else {
+      setCurrentStep(1);
     }
   };
 
@@ -298,13 +323,44 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
             </button>
           </div>
 
+          {/* Minimalist 3-Step Dot Line */}
+          <div className="relative flex items-center justify-between w-full px-6 max-w-xs mx-auto pt-1">
+            <div className="absolute left-8 right-8 top-1/2 -translate-y-1/2 h-[1.5px] bg-zinc-800 -z-0" />
+            {[1, 2, 3].map((step) => {
+              const isPassedOrCurrent = currentStep >= step;
+              const isCurrent = currentStep === step;
+
+              return (
+                <div
+                  key={step}
+                  className={`relative z-10 flex h-3.5 w-3.5 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isCurrent
+                      ? mode === "unprotected"
+                        ? "border-rose-400 bg-rose-500 ring-4 ring-rose-500/30 scale-125"
+                        : "border-emerald-400 bg-emerald-500 ring-4 ring-emerald-500/30 scale-125"
+                      : isPassedOrCurrent
+                      ? "border-zinc-400 bg-zinc-400"
+                      : "border-zinc-700 bg-zinc-900"
+                  }`}
+                />
+              );
+            })}
+          </div>
+
           <p className="text-xs sm:text-sm font-medium leading-relaxed max-w-lg mx-auto">
-            {mode === "unprotected" ? (
+            {currentStep === 1 && (
+              <span className="text-zinc-300">{t.simulator.context1} (<strong>{chapter.targetCompany}</strong>)</span>
+            )}
+            {currentStep === 2 && (
+              <span className="text-zinc-300">{t.simulator.context2}</span>
+            )}
+            {currentStep === 3 && mode === "unprotected" && (
               <span className="text-rose-300">
                 <strong>{lang === "id" ? "Tanpa Perlindungan: " : "Without Protection: "}</strong>
                 {chapter.unsecuredRisk[lang]}
               </span>
-            ) : (
+            )}
+            {currentStep === 3 && mode === "protected" && (
               <span className="text-emerald-300">
                 <strong>{lang === "id" ? "Dengan Talawang AI: " : "With Talawang AI: "}</strong>
                 {chapter.talawangImpact[lang]}
@@ -352,7 +408,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
             {/* Chat Message Stream */}
             <div className="min-h-[300px] flex flex-col justify-end space-y-4 p-2">
               
-              {/* Message 1: Initial Bot Greeting */}
+              {/* Message 1: Initial Bot Greeting (Step >= 1) */}
               <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in duration-500 w-full">
                 <div className="rounded-2xl rounded-tl-sm bg-zinc-900 p-3.5 text-xs text-zinc-200 leading-relaxed border border-zinc-800/80 shadow-sm space-y-2 w-full">
                   <div className="flex items-center gap-2 pb-1.5 border-b border-zinc-800/80">
@@ -362,60 +418,64 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                     <span className="font-bold text-[11px] text-white">{chapter.targetCompany}</span>
                   </div>
                   <div className="text-zinc-200 leading-relaxed">
-                    <TypewriterText text={chapter.initialBotGreeting} speed={8} triggerKey={`${chapter.id}-fs-greeting-${lang}`} />
+                    <TypewriterText text={chapter.initialBotGreeting} speed={8} triggerKey={`${chapter.id}-${mode}-fs-step1-${lang}`} />
                   </div>
                 </div>
                 <span className="text-[10px] text-zinc-600 px-1 font-medium">10:41 AM</span>
               </div>
 
-              {/* Message 2: Attacker Payload */}
-              <div className="flex flex-col items-end space-y-1 max-w-[88%] self-end animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
-                <div className="rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-3.5 text-xs leading-relaxed shadow-sm space-y-2 w-full border border-zinc-800">
-                  <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-zinc-800">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-sm">😈</span>
-                      <span className="font-bold text-[11px] text-amber-400">{t.simulator.maliciousUser}</span>
+              {/* Message 2: Attacker Payload (Step >= 2) */}
+              {currentStep >= 2 && (
+                <div className="flex flex-col items-end space-y-1 max-w-[88%] self-end animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
+                  <div className="rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-3.5 text-xs leading-relaxed shadow-sm space-y-2 w-full border border-zinc-800">
+                    <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-zinc-800">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm">😈</span>
+                        <span className="font-bold text-[11px] text-amber-400">{t.simulator.maliciousUser}</span>
+                      </div>
+                      <span className="text-[10px] text-zinc-400 font-medium">{t.simulator.payloadTag}</span>
                     </div>
-                    <span className="text-[10px] text-zinc-400 font-medium">{t.simulator.payloadTag}</span>
+                    <div className="text-zinc-200 leading-relaxed">
+                      <TypewriterText text={chapter.attackerPrompt} speed={8} triggerKey={`${chapter.id}-${mode}-fs-step2-${lang}`} />
+                    </div>
                   </div>
-                  <div className="text-zinc-200 leading-relaxed">
-                    <TypewriterText text={chapter.attackerPrompt} speed={8} triggerKey={`${chapter.id}-fs-attack-${lang}`} />
-                  </div>
+                  <span className="text-[10px] text-zinc-500 px-1 font-medium">10:42 AM • Sent</span>
                 </div>
-                <span className="text-[10px] text-zinc-500 px-1 font-medium">10:42 AM • Sent</span>
-              </div>
+              )}
 
-              {/* Message 3: Unprotected vs Protected Outcome */}
-              {mode === "unprotected" ? (
-                <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
-                  <div className="rounded-2xl rounded-tl-sm bg-rose-950/80 p-3.5 text-xs text-rose-100 leading-relaxed border border-rose-600 shadow-md space-y-2 w-full">
-                    <div className="flex items-center gap-1.5 pb-1.5 border-b border-rose-800/80 text-[11px] text-rose-300 font-bold">
-                      <AlertTriangle className="h-3.5 w-3.5 text-rose-400" />
-                      <span>{t.simulator.unprotectedResponse}</span>
+              {/* Message 3: Resolution (Step === 3) */}
+              {currentStep === 3 && (
+                mode === "unprotected" ? (
+                  <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
+                    <div className="rounded-2xl rounded-tl-sm bg-rose-950/80 p-3.5 text-xs text-rose-100 leading-relaxed border border-rose-600 shadow-md space-y-2 w-full">
+                      <div className="flex items-center gap-1.5 pb-1.5 border-b border-rose-800/80 text-[11px] text-rose-300 font-bold">
+                        <AlertTriangle className="h-3.5 w-3.5 text-rose-400" />
+                        <span>{t.simulator.unprotectedResponse}</span>
+                      </div>
+                      <div className="whitespace-pre-line leading-relaxed">
+                        <TypewriterText text={chapter.unsecuredResponse} speed={8} triggerKey={`${chapter.id}-unprotected-fs-step3-${lang}`} />
+                      </div>
                     </div>
-                    <div className="whitespace-pre-line leading-relaxed">
-                      <TypewriterText text={chapter.unsecuredResponse} speed={8} triggerKey={`${chapter.id}-fs-unprotected-${lang}`} />
-                    </div>
+                    <span className="text-[10px] text-rose-400 font-bold px-1">
+                      ⚠️ {t.simulator.damageLabel} {chapter.unsecuredRisk[lang]}
+                    </span>
                   </div>
-                  <span className="text-[10px] text-rose-400 font-bold px-1">
-                    ⚠️ {t.simulator.damageLabel} {chapter.unsecuredRisk[lang]}
-                  </span>
-                </div>
-              ) : (
-                <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
-                  <div className="rounded-2xl rounded-tl-sm bg-emerald-950/90 p-3.5 text-xs text-emerald-100 leading-relaxed border border-emerald-500 shadow-md space-y-2 w-full">
-                    <div className="flex items-center gap-1.5 pb-1.5 border-b border-emerald-800/80 text-[11px] text-emerald-300 font-bold">
-                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                      <span>{t.simulator.protectedBy} ({chapter.latencyMs}ms)</span>
+                ) : (
+                  <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
+                    <div className="rounded-2xl rounded-tl-sm bg-emerald-950/90 p-3.5 text-xs text-emerald-100 leading-relaxed border border-emerald-500 shadow-md space-y-2 w-full">
+                      <div className="flex items-center gap-1.5 pb-1.5 border-b border-emerald-800/80 text-[11px] text-emerald-300 font-bold">
+                        <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+                        <span>{t.simulator.protectedBy} ({chapter.latencyMs}ms)</span>
+                      </div>
+                      <div className="whitespace-pre-line font-medium leading-relaxed">
+                        <TypewriterText text={chapter.talawangResponse} speed={8} triggerKey={`${chapter.id}-protected-fs-step3-${lang}`} />
+                      </div>
                     </div>
-                    <div className="whitespace-pre-line font-medium leading-relaxed">
-                      <TypewriterText text={chapter.talawangResponse} speed={8} triggerKey={`${chapter.id}-fs-protected-${lang}`} />
-                    </div>
+                    <span className="text-[10px] text-emerald-400 font-bold px-1">
+                      🛡️ {t.simulator.outcomeLabel} {chapter.talawangImpact[lang]}
+                    </span>
                   </div>
-                  <span className="text-[10px] text-emerald-400 font-bold px-1">
-                    🛡️ {t.simulator.outcomeLabel} {chapter.talawangImpact[lang]}
-                  </span>
-                </div>
+                )
               )}
 
             </div>
@@ -426,25 +486,58 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         {/* BOTTOM ACTION & STEP CONTROLS                                             */}
         {/* ========================================================================= */}
         <div className="relative z-10 w-full max-w-md flex items-center justify-end gap-3 pt-2">
-          {mode === "unprotected" ? (
-            <button
-              onClick={() => handleToggleMode("protected")}
-              className="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-8 py-4 text-sm font-bold transition-all duration-300 shadow-xl shadow-emerald-950/50 cursor-pointer"
-            >
-              <ShieldCheck className="h-4 w-4" />
-              <span>{t.simulator.switchToProtectedBtn}</span>
-            </button>
+          {currentStep === 3 ? (
+            mode === "unprotected" ? (
+              <>
+                <button
+                  onClick={() => setCurrentStep(1)}
+                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 py-3.5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  <span>{t.simulator.replayBtn}</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    handleToggleMode("protected");
+                    setCurrentStep(3);
+                  }}
+                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 py-3.5 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
+                >
+                  <ShieldCheck className="h-4 w-4" />
+                  <span>{t.simulator.switchToProtectedBtn}</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => setCurrentStep(1)}
+                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 py-3.5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  <span>{t.simulator.replayBtn}</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
+                    handleSelectChapter(nextIdx);
+                  }}
+                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 py-3.5 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
+                >
+                  <span>{t.simulator.nextScenarioBtn}</span>
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </>
+            )
           ) : (
             <button
-              onClick={() => {
-                const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
-                handleSelectChapter(nextIdx);
-                setMode("unprotected");
-              }}
-              className="w-full flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-7 py-3.5 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
+              onClick={handleNextStep}
+              className="w-full flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-8 py-4 text-sm font-bold transition-all duration-300 shadow-xl shadow-emerald-950/50 cursor-pointer"
             >
-              <span>{t.simulator.nextScenarioBtn}</span>
-              <ChevronRight className="h-4 w-4" />
+              {currentStep === 1 && <span>{t.simulator.nextStep1}</span>}
+              {currentStep === 2 && mode === "unprotected" && <span>{t.simulator.unprotectedNextStep2}</span>}
+              {currentStep === 2 && mode === "protected" && <span>{t.simulator.protectedNextStep2}</span>}
             </button>
           )}
         </div>

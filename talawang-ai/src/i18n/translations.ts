@@ -57,8 +57,8 @@ export const translations = {
       replayBtn: "Ulangi Skenario",
       nextScenarioBtn: "Coba Skenario Berikutnya",
       nextStep1: "Lanjut: Pelaku Mengirim Serangan →",
-      nextStep2: "Lanjut: Lihat Akibat Tanpa Perlindungan →",
-      nextStep3: "Lanjut: Cara Talawang Mengamankan Bot →",
+      unprotectedNextStep2: "Lanjut: Lihat Kebobolan Tanpa Perlindungan →",
+      protectedNextStep2: "Lanjut: Lihat Cara Talawang Mengamankan Bot →",
       spaceHint: "Tekan Spasi / → untuk lanjut",
     },
     architecture: {
@@ -171,8 +171,8 @@ export const translations = {
       replayBtn: "Replay Scenario",
       nextScenarioBtn: "Try Next Scenario",
       nextStep1: "Next: An Attacker Strikes →",
-      nextStep2: "Next: See What Happens Without Protection →",
-      nextStep3: "Next: How Talawang Shields Your Bot →",
+      unprotectedNextStep2: "Next: See The Breach Without Protection →",
+      protectedNextStep2: "Next: See Talawang Shield In Action →",
       spaceHint: "Press Space / → to advance",
     },
     architecture: {
