@@ -144,18 +144,30 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
     <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-6 sm:p-10 shadow-xl dark:shadow-2xl backdrop-blur-xl space-y-8 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
       
       {/* ========================================================================= */}
-      {/* HUMAN-FRIENDLY HEADER                                                     */}
+      {/* HUMAN-FRIENDLY HEADER WITH FULLSCREEN BUTTON TOP-RIGHT                    */}
       {/* ========================================================================= */}
-      <div className="border-b border-zinc-200 dark:border-zinc-800 pb-6 space-y-1.5">
-        <div className="flex items-center gap-2">
-          <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
-            How Bot Hijacking Happens
-          </h2>
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-6">
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2">
+            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
+              How Bot Hijacking Happens
+            </h2>
+          </div>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
+            Here are common real-world scenarios showing how malicious users try to hijack company chatbots — and how Talawang stops them before any damage happens.
+          </p>
         </div>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl leading-relaxed">
-          Here are common real-world scenarios showing how malicious users try to hijack company chatbots — and how Talawang stops them before any damage happens.
-        </p>
+
+        {onOpenFullscreen && (
+          <button
+            onClick={onOpenFullscreen}
+            className="flex items-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-4 py-2.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition cursor-pointer shadow-sm shrink-0 w-fit self-start sm:self-center"
+          >
+            <Maximize2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+            <span>Fullscreen Mode</span>
+          </button>
+        )}
       </div>
 
       {/* ========================================================================= */}
@@ -243,18 +255,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       {/* ========================================================================= */}
       {/* SIMULATED CHAT FEED                                                       */}
       {/* ========================================================================= */}
-      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end relative transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-        
-        {/* Subtle Fullscreen Expander */}
-        {onOpenFullscreen && (
-          <button
-            onClick={onOpenFullscreen}
-            className="absolute top-4 right-4 flex items-center gap-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-300 dark:hover:border-zinc-700 transition cursor-pointer shadow-sm"
-          >
-            <Maximize2 className="h-3.5 w-3.5" />
-            <span>Fullscreen Stage</span>
-          </button>
-        )}
+      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
 
         {/* Bubble 1: Initial Bot Greeting */}
         <div className="flex flex-col items-start space-y-1 max-w-[85%] self-start animate-in fade-in duration-500">
