@@ -10,8 +10,8 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 w-full border-b border-zinc-200/80 dark:border-zinc-800/60 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-12">
         
-        {/* Brand & Clean Logo */}
-        <div className="flex items-center gap-4">
+        {/* Left: Brand & Clean Logo */}
+        <div className="flex-1 flex items-center justify-start">
           <Link href="/" className="flex items-center gap-3.5 group">
             <DayakShieldBadge size={36} glow={false} />
             <div>
@@ -27,8 +27,8 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Clean Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 font-medium text-sm text-zinc-600 dark:text-zinc-300">
+        {/* Center: Perfectly Centered Navigation Links */}
+        <nav className="hidden md:flex items-center justify-center gap-1 font-medium text-sm text-zinc-600 dark:text-zinc-300">
           <Link
             href="/#demo"
             className="flex items-center gap-2 rounded-xl px-4 py-2 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition"
@@ -54,9 +54,8 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        {/* Right Actions & Light/Dark Theme Switch */}
-        <div className="flex items-center gap-3">
-          {/* Theme Toggle Button */}
+        {/* Right: Light/Dark Theme Switch */}
+        <div className="flex-1 flex items-center justify-end">
           <ThemeToggle />
         </div>
       </div>
