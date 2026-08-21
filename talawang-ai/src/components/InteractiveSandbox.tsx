@@ -20,7 +20,6 @@ import {
   Terminal,
   ChevronDown,
   ChevronUp,
-  Smartphone,
   Maximize2,
 } from "lucide-react";
 import { generateYaraRule } from "@/server/telemetry/threat-store";
@@ -146,30 +145,18 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
     <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-6 sm:p-10 shadow-xl dark:shadow-2xl backdrop-blur-xl space-y-8">
       
       {/* ========================================================================= */}
-      {/* CLEAN HEADER: Title & Fullscreen Action Button                            */}
+      {/* CLEAN HEADER: Title & Subtitle Only (Zero Stacking Clutter)               */}
       {/* ========================================================================= */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-6">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
-              Interactive Security Simulator
-            </h2>
-          </div>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            Follow the 4-step story below to see how attacks unfold and how Talawang halts them in real-time.
-          </p>
+      <div className="border-b border-zinc-200 dark:border-zinc-800 pb-6 space-y-1">
+        <div className="flex items-center gap-2">
+          <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            Interactive Security Simulator
+          </h2>
         </div>
-
-        {onOpenFullscreen && (
-          <button
-            onClick={onOpenFullscreen}
-            className="flex items-center gap-2 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-xs font-bold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/20 transition shadow-sm w-fit"
-          >
-            <Maximize2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-            <span>Open Fullscreen Stage</span>
-          </button>
-        )}
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          Follow the 4-step story below to see how attacks unfold and how Talawang halts them in real-time.
+        </p>
       </div>
 
       {/* ========================================================================= */}
@@ -255,10 +242,21 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* SIMULATED CHAT FEED                                                       */}
+      {/* SIMULATED CHAT FEED WITH SUBTLE FULLSCREEN EXPANDER                        */}
       {/* ========================================================================= */}
-      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end">
+      <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end relative">
         
+        {/* Subtle Fullscreen Expander docked cleanly in top right corner */}
+        {onOpenFullscreen && (
+          <button
+            onClick={onOpenFullscreen}
+            className="absolute top-4 right-4 flex items-center gap-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-300 dark:hover:border-zinc-700 transition shadow-sm"
+          >
+            <Maximize2 className="h-3.5 w-3.5" />
+            <span>Fullscreen Stage</span>
+          </button>
+        )}
+
         {/* Bubble 1: Initial Bot Greeting */}
         <div className="flex flex-col items-start space-y-1 max-w-[85%] self-start animate-in fade-in duration-300">
           <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-medium">

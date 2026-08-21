@@ -95,21 +95,21 @@ export default function DashboardPage() {
 
           {/* CTA Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <button
-              onClick={() => setIsStoryOpen(true)}
+            <a
+              href="#demo"
               className="w-full sm:w-auto rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 font-bold px-8 py-4 text-base shadow-xl shadow-emerald-950/20 transition flex items-center justify-center gap-2.5"
             >
               <Play className="h-4 w-4 fill-current" />
-              <span>Launch Fullscreen Story Walkthrough</span>
-            </button>
+              <span>Try Interactive Demo ↓</span>
+            </a>
 
-            <button
-              onClick={() => setIsQrOpen(true)}
-              className="w-full sm:w-auto rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 dark:text-white font-semibold px-6 py-4 text-base transition flex items-center justify-center gap-2.5 shadow-sm"
+            <Link
+              href="/study-cases"
+              className="w-full sm:w-auto rounded-2xl border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 dark:text-white font-semibold px-7 py-4 text-base transition flex items-center justify-center gap-2.5 shadow-sm"
             >
-              <QrCode className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Scan QR with Phone</span>
-            </button>
+              <BookOpen className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+              <span>Explore Case Studies →</span>
+            </Link>
           </div>
 
           {/* Value Proof Badges */}
