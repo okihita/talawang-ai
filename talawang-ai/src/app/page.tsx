@@ -81,13 +81,19 @@ export default function DashboardPage() {
 
           {/* CTA Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <a
-              href="#demo"
-              className="w-full sm:w-auto rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 font-bold px-8 py-4 text-base shadow-xl shadow-emerald-950/20 transition flex items-center justify-center gap-2.5"
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById("demo");
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
+              className="w-full sm:w-auto rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 font-bold px-8 py-4 text-base shadow-xl shadow-emerald-950/20 transition flex items-center justify-center gap-2.5 cursor-pointer"
             >
               <Play className="h-4 w-4 fill-current" />
               <span>Try Interactive Demo ↓</span>
-            </a>
+            </button>
 
             <Link
               href="/study-cases"
