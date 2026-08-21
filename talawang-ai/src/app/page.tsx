@@ -53,12 +53,12 @@ export default function DashboardPage() {
       {/* Main Navigation */}
       <Navbar />
 
-      <main className="relative z-10 mx-auto max-w-6xl px-6 sm:px-8 lg:px-12 py-16 sm:py-24 space-y-32">
+      <main className="relative z-10 mx-auto max-w-6xl px-6 sm:px-8 lg:px-12 py-20 sm:py-32 space-y-40 sm:space-y-56">
         
         {/* ========================================================================= */}
         {/* HERO SECTION                                                              */}
         {/* ========================================================================= */}
-        <section className="text-center space-y-8 max-w-4xl mx-auto pt-6">
+        <section className="text-center space-y-10 max-w-4xl mx-auto pt-8 sm:pt-16">
           {/* Hackathon Badge */}
           <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300 shadow-sm">
             <DayakShieldBadge size={16} glow={false} />
@@ -124,7 +124,7 @@ export default function DashboardPage() {
         {/* ========================================================================= */}
         {/* INTERACTIVE DEMO (Inline Story & Sandbox)                                 */}
         {/* ========================================================================= */}
-        <section id="demo" className="scroll-mt-28 space-y-6">
+        <section id="demo" className="scroll-mt-28 space-y-8">
           <InteractiveSandbox
             onScanComplete={handleScanComplete}
             onOpenFullscreen={() => setIsStoryOpen(true)}
@@ -134,7 +134,7 @@ export default function DashboardPage() {
         {/* ========================================================================= */}
         {/* HOW IT WORKS (3 Simple Steps)                                             */}
         {/* ========================================================================= */}
-        <section id="how-it-works" className="scroll-mt-28 space-y-12">
+        <section id="how-it-works" className="scroll-mt-28 space-y-16">
           <div className="text-center space-y-3">
             <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
               Architecture & Integration
@@ -238,7 +238,7 @@ export default function DashboardPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-200 dark:border-zinc-900 bg-white dark:bg-zinc-950 py-12 text-center text-xs text-zinc-500">
+      <footer className="border-t border-zinc-200 dark:border-zinc-900 bg-white dark:bg-zinc-950 py-16 sm:py-20 text-center text-xs text-zinc-500">
         <div className="mx-auto max-w-6xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <DayakShieldBadge size={20} glow={false} />
