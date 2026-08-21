@@ -249,9 +249,9 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         {onOpenFullscreen && (
           <button
             onClick={onOpenFullscreen}
-            className="group flex items-center gap-2.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 px-5 py-3 text-sm font-semibold text-zinc-800 dark:text-zinc-200 hover:border-emerald-500/50 hover:bg-emerald-500/5 dark:hover:bg-emerald-950/30 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm shrink-0 self-start sm:self-center"
+            className="group flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white dark:text-zinc-950 dark:from-emerald-400 dark:to-teal-400 dark:hover:from-emerald-300 dark:hover:to-teal-300 px-5 sm:px-6 py-3 text-xs sm:text-sm font-bold shadow-lg shadow-emerald-600/20 dark:shadow-emerald-950/50 hover:shadow-xl hover:shadow-emerald-600/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shrink-0 self-start sm:self-center ring-2 ring-emerald-500/30"
           >
-            <Maximize2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-200 shrink-0" />
+            <Maximize2 className="h-4 w-4 group-hover:scale-110 transition-transform duration-200 shrink-0" />
             <span className="tracking-tight whitespace-nowrap">{t.simulator.fullscreenBtn}</span>
           </button>
         )}
