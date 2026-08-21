@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Maximize2,
   XCircle,
+  Zap,
 } from "lucide-react";
 import { useI18n } from "@/i18n/I18nContext";
 
@@ -161,8 +162,8 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
   const [selectedChapterIdx, setSelectedChapterIdx] = useState(0);
   // Protection Mode: "unprotected" (Left) | "protected" (Right)
   const [mode, setMode] = useState<"unprotected" | "protected">("unprotected");
-  // Progressive step within the active mode: 1 = Greeting, 2 = Attack, 3 = Resolution
-  const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
+  // 4 Steps for both modes: 1 = Greeting, 2 = Attack, 3 = Resolution, 4 = Incident/Telemetry Impact
+  const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
 
   const chapter = STORY_CHAPTERS[selectedChapterIdx];
 
@@ -176,8 +177,8 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
     setCurrentStep(1);
     if (newMode === "protected") {
       confetti({
-        particleCount: 30,
-        spread: 50,
+        particleCount: 35,
+        spread: 55,
         origin: { y: 0.8 },
         colors: ["#10b981", "#34d399", "#06b6d4"],
       });
@@ -185,13 +186,13 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
   };
 
   const handleNextStep = () => {
-    if (currentStep < 3) {
-      const next = (currentStep + 1) as 1 | 2 | 3;
+    if (currentStep < 4) {
+      const next = (currentStep + 1) as 1 | 2 | 3 | 4;
       setCurrentStep(next);
-      if (next === 3 && mode === "protected") {
+      if (next === 4 && mode === "protected") {
         confetti({
-          particleCount: 40,
-          spread: 60,
+          particleCount: 45,
+          spread: 65,
           origin: { y: 0.8 },
           colors: ["#10b981", "#34d399", "#06b6d4"],
         });
@@ -199,6 +200,18 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
     } else {
       setCurrentStep(1);
     }
+  };
+
+  // Rewind Time to Step 1 of Protected Mode
+  const handleRewindToProtected = () => {
+    setMode("protected");
+    setCurrentStep(1);
+    confetti({
+      particleCount: 40,
+      spread: 60,
+      origin: { y: 0.8 },
+      colors: ["#10b981", "#34d399", "#06b6d4"],
+    });
   };
 
   return (
@@ -307,10 +320,10 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
           </button>
         </div>
 
-        {/* Minimalist 3-Step Dot Line */}
-        <div className="relative flex items-center justify-between w-full px-6 max-w-xs mx-auto pt-1">
+        {/* Minimalist 4-Step Dot Line */}
+        <div className="relative flex items-center justify-between w-full px-6 max-w-sm mx-auto pt-1">
           <div className="absolute left-8 right-8 top-1/2 -translate-y-1/2 h-[1.5px] bg-zinc-200 dark:bg-zinc-800 -z-0" />
-          {[1, 2, 3].map((step) => {
+          {[1, 2, 3, 4].map((step) => {
             const isPassedOrCurrent = currentStep >= step;
             const isCurrent = currentStep === step;
 
@@ -331,19 +344,22 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
           })}
         </div>
 
-        {/* Crisp Single-Line Narration */}
+        {/* Crisp Single-Line Narration for 4 Steps */}
         <p className="text-center text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed px-2">
-          {currentStep === 1 && (
-            <span>{t.simulator.context1} (<strong>{chapter.targetCompany}</strong>)</span>
-          )}
-          {currentStep === 2 && (
-            <span>{t.simulator.context2}</span>
-          )}
-          {currentStep === 3 && mode === "unprotected" && (
-            <span className="text-rose-600 dark:text-rose-400 font-semibold">{t.simulator.context3}</span>
-          )}
-          {currentStep === 3 && mode === "protected" && (
-            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{t.simulator.context4}</span>
+          {mode === "unprotected" ? (
+            <>
+              {currentStep === 1 && <span>{t.simulator.unprotectedContext1} (<strong>{chapter.targetCompany}</strong>)</span>}
+              {currentStep === 2 && <span>{t.simulator.unprotectedContext2}</span>}
+              {currentStep === 3 && <span className="text-rose-600 dark:text-rose-400 font-semibold">{t.simulator.unprotectedContext3}</span>}
+              {currentStep === 4 && <span className="text-rose-700 dark:text-rose-300 font-bold">{t.simulator.unprotectedContext4}</span>}
+            </>
+          ) : (
+            <>
+              {currentStep === 1 && <span>{t.simulator.protectedContext1} (<strong>{chapter.targetCompany}</strong>)</span>}
+              {currentStep === 2 && <span>{t.simulator.protectedContext2}</span>}
+              {currentStep === 3 && <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{t.simulator.protectedContext3}</span>}
+              {currentStep === 4 && <span className="text-emerald-700 dark:text-emerald-300 font-bold">{t.simulator.protectedContext4}</span>}
+            </>
           )}
         </p>
       </div>
@@ -397,11 +413,11 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
           </div>
         )}
 
-        {/* Bubble 3: Step === 3 Outcome */}
-        {currentStep === 3 && (
+        {/* Bubble 3: Bot Response (Step >= 3) */}
+        {currentStep >= 3 && (
           mode === "unprotected" ? (
-            /* Unprotected Breach Response */
-            <div className="flex flex-col items-start space-y-2 max-w-[90%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
+            /* Unprotected Raw Bot Breach Response */
+            <div className="flex flex-col items-start space-y-1 max-w-[90%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
               <div className="rounded-2xl rounded-tl-sm bg-rose-50 dark:bg-rose-950/40 p-4 text-xs leading-relaxed border border-rose-200 dark:border-rose-900 text-rose-950 dark:text-rose-200 shadow-sm space-y-2.5 w-full">
                 <div className="flex items-center gap-2 pb-2 border-b border-rose-200/60 dark:border-rose-900/60">
                   <div className="h-6 w-6 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-600 dark:text-rose-400 font-bold shrink-0">
@@ -417,14 +433,10 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                   />
                 </div>
               </div>
-              <div className="rounded-xl bg-rose-100/60 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 p-3 text-xs text-rose-800 dark:text-rose-300 font-medium flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
-                <span><strong>{t.simulator.damageLabel} </strong>{chapter.unsecuredRisk[lang]}</span>
-              </div>
             </div>
           ) : (
-            /* Protected Talawang Response */
-            <div className="flex flex-col items-start space-y-2 max-w-[90%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
+            /* Protected Talawang Defense Response */
+            <div className="flex flex-col items-start space-y-1 max-w-[90%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
               <div className="rounded-2xl rounded-tl-sm bg-emerald-50 dark:bg-emerald-950/30 p-4 text-xs leading-relaxed border border-emerald-300 dark:border-emerald-900/60 text-emerald-950 dark:text-emerald-200 shadow-sm space-y-2.5 w-full">
                 <div className="flex items-center gap-2 pb-2 border-b border-emerald-200/60 dark:border-emerald-900/60">
                   <div className="h-6 w-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
@@ -442,9 +454,60 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                   />
                 </div>
               </div>
-              <div className="rounded-xl bg-emerald-100/60 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900/60 p-3 text-xs text-emerald-800 dark:text-emerald-300 font-medium flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
-                <span><strong>{t.simulator.outcomeLabel} </strong>{chapter.talawangImpact[lang]}</span>
+            </div>
+          )
+        )}
+
+        {/* ========================================================================= */}
+        {/* STEP 4: DEDICATED TELEMETRY / INCIDENT ANALYSIS BANNER (NOT A CHAT BUBBLE) */}
+        {/* ========================================================================= */}
+        {currentStep === 4 && (
+          mode === "unprotected" ? (
+            /* Unprotected Incident Report Banner */
+            <div className="w-full rounded-2xl border border-rose-500/60 bg-zinc-950/95 p-4 shadow-2xl space-y-3 text-left animate-in fade-in slide-in-from-bottom-3 transition-all duration-500">
+              <div className="flex items-center justify-between border-b border-rose-900/60 pb-2.5">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-2.5 w-2.5 rounded-full bg-rose-500 animate-pulse" />
+                  <span className="text-xs font-mono font-bold tracking-wider text-rose-400 uppercase">
+                    🚨 {t.simulator.incidentReportHeader}
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono font-semibold text-rose-300 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800">
+                  STATUS: BREACH COMPLETED
+                </span>
+              </div>
+
+              <div className="space-y-1.5 text-xs">
+                <div className="text-rose-200 font-semibold leading-relaxed">
+                  <strong>{t.simulator.damageLabel} </strong>{chapter.unsecuredRisk[lang]}
+                </div>
+                <div className="text-[11px] font-mono text-zinc-400 pt-1 border-t border-zinc-900">
+                  Vektor Serangan: <span className="text-zinc-200">{chapter.threatType}</span> • Gateway Guardrail: <span className="text-rose-400 font-bold">OFF (0% Defense)</span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Protected Security Telemetry Audit Banner */
+            <div className="w-full rounded-2xl border border-emerald-500/60 bg-zinc-950/95 p-4 shadow-2xl space-y-3 text-left animate-in fade-in slide-in-from-bottom-3 transition-all duration-500">
+              <div className="flex items-center justify-between border-b border-emerald-900/60 pb-2.5">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-mono font-bold tracking-wider text-emerald-400 uppercase">
+                    🛡️ {t.simulator.telemetryReportHeader}
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono font-semibold text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
+                  LATENCY: {chapter.latencyMs}ms • BLOCKED
+                </span>
+              </div>
+
+              <div className="space-y-1.5 text-xs">
+                <div className="text-emerald-200 font-semibold leading-relaxed">
+                  <strong>{t.simulator.outcomeLabel} </strong>{chapter.talawangImpact[lang]}
+                </div>
+                <div className="text-[11px] font-mono text-zinc-400 pt-1 border-t border-zinc-900">
+                  Gateway Edge: <span className="text-emerald-400 font-bold">Layer 1 & Layer 2 Active</span> • LLM Token Cost: <span className="text-emerald-400 font-bold">0 Tokens Spent (100% Saved)</span>
+                </div>
               </div>
             </div>
           )
@@ -457,7 +520,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       {/* ========================================================================= */}
       <div className="border-t border-zinc-200 dark:border-zinc-800 pt-6 flex items-center justify-end">
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          {currentStep === 3 ? (
+          {currentStep === 4 ? (
             mode === "unprotected" ? (
               <>
                 <button
@@ -468,15 +531,12 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                   <span>{t.simulator.replayBtn}</span>
                 </button>
 
+                {/* ⏪ Rewind Time to Step 1 Protected! */}
                 <button
-                  onClick={() => {
-                    handleToggleMode("protected");
-                    setCurrentStep(3);
-                  }}
+                  onClick={handleRewindToProtected}
                   className="flex-1 sm:flex-initial flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-3.5 text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
                 >
-                  <ShieldCheck className="h-4 w-4" />
-                  <span>{t.simulator.switchToProtectedBtn}</span>
+                  <span>{t.simulator.rewindToProtectedBtn}</span>
                 </button>
               </>
             ) : (
@@ -491,8 +551,20 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
 
                 <button
                   onClick={() => {
+                    handleToggleMode("unprotected");
+                    setCurrentStep(1);
+                  }}
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-3.5 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm"
+                >
+                  <span>{t.simulator.rewindToUnprotectedBtn}</span>
+                </button>
+
+                <button
+                  onClick={() => {
                     const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
                     handleSelectChapter(nextIdx);
+                    setMode("unprotected");
+                    setCurrentStep(1);
                   }}
                   className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-3.5 text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
                 >
@@ -509,6 +581,8 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
               {currentStep === 1 && <span>{t.simulator.nextStep1}</span>}
               {currentStep === 2 && mode === "unprotected" && <span>{t.simulator.unprotectedNextStep2}</span>}
               {currentStep === 2 && mode === "protected" && <span>{t.simulator.protectedNextStep2}</span>}
+              {currentStep === 3 && mode === "unprotected" && <span>{t.simulator.nextStep3Unprotected}</span>}
+              {currentStep === 3 && mode === "protected" && <span>{t.simulator.nextStep3Protected}</span>}
             </button>
           )}
         </div>

@@ -52,7 +52,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
     unsecuredResponse:
       "Permintaan refund Anda telah kami terima. Memanggil API processRefund: Refund sebesar Rp500,000 berhasil ditransfer ke rekening 0812345678. ID Transaksi: #TX-8921.",
     unsecuredRisk: {
-      id: "Kerugian Finansial: Bot mentransfer dana perusahaan sebesar Rp500,000 langsung ke rekening pelaku tanpa verifikasi.",
+      id: "Kerugian Finansial Langsung: Bot mentransfer dana perusahaan sebesar Rp500,000 langsung ke rekening pelaku tanpa verifikasi.",
       en: "Financial Drainage: The bot blindly transferred company funds directly to the attacker's account.",
     },
     talawangResponse:
@@ -124,7 +124,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
   },
 ];
 
-// Quick Typewriter Component
+// Snappy Typewriter Component
 function TypewriterText({
   text,
   speed = 8,
@@ -174,7 +174,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
   const { lang, t } = useI18n();
   const [selectedChapterIdx, setSelectedChapterIdx] = useState(0);
   const [mode, setMode] = useState<"unprotected" | "protected">("unprotected");
-  const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
+  const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
 
   const chapter = STORY_CHAPTERS[selectedChapterIdx];
 
@@ -191,7 +191,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
         if (currentStep > 1) {
-          setCurrentStep((prev) => (prev - 1) as 1 | 2 | 3);
+          setCurrentStep((prev) => (prev - 1) as 1 | 2 | 3 | 4);
         }
       }
     };
@@ -221,10 +221,10 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
   };
 
   const handleNextStep = () => {
-    if (currentStep < 3) {
-      const next = (currentStep + 1) as 1 | 2 | 3;
+    if (currentStep < 4) {
+      const next = (currentStep + 1) as 1 | 2 | 3 | 4;
       setCurrentStep(next);
-      if (next === 3 && mode === "protected") {
+      if (next === 4 && mode === "protected") {
         confetti({
           particleCount: 50,
           spread: 70,
@@ -235,6 +235,17 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
     } else {
       setCurrentStep(1);
     }
+  };
+
+  const handleRewindToProtected = () => {
+    setMode("protected");
+    setCurrentStep(1);
+    confetti({
+      particleCount: 50,
+      spread: 70,
+      origin: { y: 0.75 },
+      colors: ["#10b981", "#34d399", "#06b6d4"],
+    });
   };
 
   return (
@@ -323,10 +334,10 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
             </button>
           </div>
 
-          {/* Minimalist 3-Step Dot Line */}
-          <div className="relative flex items-center justify-between w-full px-6 max-w-xs mx-auto pt-1">
+          {/* Minimalist 4-Step Dot Line */}
+          <div className="relative flex items-center justify-between w-full px-6 max-w-sm mx-auto pt-1">
             <div className="absolute left-8 right-8 top-1/2 -translate-y-1/2 h-[1.5px] bg-zinc-800 -z-0" />
-            {[1, 2, 3].map((step) => {
+            {[1, 2, 3, 4].map((step) => {
               const isPassedOrCurrent = currentStep >= step;
               const isCurrent = currentStep === step;
 
@@ -348,23 +359,20 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
           </div>
 
           <p className="text-xs sm:text-sm font-medium leading-relaxed max-w-lg mx-auto">
-            {currentStep === 1 && (
-              <span className="text-zinc-300">{t.simulator.context1} (<strong>{chapter.targetCompany}</strong>)</span>
-            )}
-            {currentStep === 2 && (
-              <span className="text-zinc-300">{t.simulator.context2}</span>
-            )}
-            {currentStep === 3 && mode === "unprotected" && (
-              <span className="text-rose-300">
-                <strong>{lang === "id" ? "Tanpa Perlindungan: " : "Without Protection: "}</strong>
-                {chapter.unsecuredRisk[lang]}
-              </span>
-            )}
-            {currentStep === 3 && mode === "protected" && (
-              <span className="text-emerald-300">
-                <strong>{lang === "id" ? "Dengan Talawang AI: " : "With Talawang AI: "}</strong>
-                {chapter.talawangImpact[lang]}
-              </span>
+            {mode === "unprotected" ? (
+              <>
+                {currentStep === 1 && <span className="text-zinc-300">{t.simulator.unprotectedContext1} (<strong>{chapter.targetCompany}</strong>)</span>}
+                {currentStep === 2 && <span className="text-zinc-300">{t.simulator.unprotectedContext2}</span>}
+                {currentStep === 3 && <span className="text-rose-300 font-semibold">{t.simulator.unprotectedContext3}</span>}
+                {currentStep === 4 && <span className="text-rose-400 font-bold">{t.simulator.unprotectedContext4}</span>}
+              </>
+            ) : (
+              <>
+                {currentStep === 1 && <span className="text-zinc-300">{t.simulator.protectedContext1} (<strong>{chapter.targetCompany}</strong>)</span>}
+                {currentStep === 2 && <span className="text-zinc-300">{t.simulator.protectedContext2}</span>}
+                {currentStep === 3 && <span className="text-emerald-300 font-semibold">{t.simulator.protectedContext3}</span>}
+                {currentStep === 4 && <span className="text-emerald-400 font-bold">{t.simulator.protectedContext4}</span>}
+              </>
             )}
           </p>
         </div>
@@ -443,10 +451,10 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                 </div>
               )}
 
-              {/* Message 3: Resolution (Step === 3) */}
-              {currentStep === 3 && (
+              {/* Message 3: Resolution (Step >= 3) */}
+              {currentStep >= 3 && (
                 mode === "unprotected" ? (
-                  <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
+                  <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
                     <div className="rounded-2xl rounded-tl-sm bg-rose-950/80 p-3.5 text-xs text-rose-100 leading-relaxed border border-rose-600 shadow-md space-y-2 w-full">
                       <div className="flex items-center gap-1.5 pb-1.5 border-b border-rose-800/80 text-[11px] text-rose-300 font-bold">
                         <AlertTriangle className="h-3.5 w-3.5 text-rose-400" />
@@ -456,12 +464,9 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                         <TypewriterText text={chapter.unsecuredResponse} speed={8} triggerKey={`${chapter.id}-unprotected-fs-step3-${lang}`} />
                       </div>
                     </div>
-                    <span className="text-[10px] text-rose-400 font-bold px-1">
-                      ⚠️ {t.simulator.damageLabel} {chapter.unsecuredRisk[lang]}
-                    </span>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
+                  <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
                     <div className="rounded-2xl rounded-tl-sm bg-emerald-950/90 p-3.5 text-xs text-emerald-100 leading-relaxed border border-emerald-500 shadow-md space-y-2 w-full">
                       <div className="flex items-center gap-1.5 pb-1.5 border-b border-emerald-800/80 text-[11px] text-emerald-300 font-bold">
                         <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
@@ -471,9 +476,39 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                         <TypewriterText text={chapter.talawangResponse} speed={8} triggerKey={`${chapter.id}-protected-fs-step3-${lang}`} />
                       </div>
                     </div>
-                    <span className="text-[10px] text-emerald-400 font-bold px-1">
-                      🛡️ {t.simulator.outcomeLabel} {chapter.talawangImpact[lang]}
-                    </span>
+                  </div>
+                )
+              )}
+
+              {/* Step 4: Incident Report or Telemetry Banner */}
+              {currentStep === 4 && (
+                mode === "unprotected" ? (
+                  <div className="w-full rounded-2xl border border-rose-500/60 bg-zinc-950/95 p-3.5 shadow-2xl space-y-2 text-left animate-in fade-in slide-in-from-bottom-3">
+                    <div className="flex items-center justify-between border-b border-rose-900/60 pb-2">
+                      <span className="text-[11px] font-mono font-bold tracking-wider text-rose-400 uppercase">
+                        🚨 {t.simulator.incidentReportHeader}
+                      </span>
+                      <span className="text-[9px] font-mono text-rose-300 bg-rose-950/80 px-1.5 py-0.5 rounded border border-rose-800">
+                        BREACH COMPLETED
+                      </span>
+                    </div>
+                    <div className="text-xs text-rose-200 font-semibold leading-relaxed">
+                      <strong>{t.simulator.damageLabel} </strong>{chapter.unsecuredRisk[lang]}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="w-full rounded-2xl border border-emerald-500/60 bg-zinc-950/95 p-3.5 shadow-2xl space-y-2 text-left animate-in fade-in slide-in-from-bottom-3">
+                    <div className="flex items-center justify-between border-b border-emerald-900/60 pb-2">
+                      <span className="text-[11px] font-mono font-bold tracking-wider text-emerald-400 uppercase">
+                        🛡️ {t.simulator.telemetryReportHeader}
+                      </span>
+                      <span className="text-[9px] font-mono text-emerald-300 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-800">
+                        LATENCY: {chapter.latencyMs}ms • BLOCKED
+                      </span>
+                    </div>
+                    <div className="text-xs text-emerald-200 font-semibold leading-relaxed">
+                      <strong>{t.simulator.outcomeLabel} </strong>{chapter.talawangImpact[lang]}
+                    </div>
                   </div>
                 )
               )}
@@ -486,7 +521,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
         {/* BOTTOM ACTION & STEP CONTROLS                                             */}
         {/* ========================================================================= */}
         <div className="relative z-10 w-full max-w-md flex items-center justify-end gap-3 pt-2">
-          {currentStep === 3 ? (
+          {currentStep === 4 ? (
             mode === "unprotected" ? (
               <>
                 <button
@@ -498,14 +533,10 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                 </button>
 
                 <button
-                  onClick={() => {
-                    handleToggleMode("protected");
-                    setCurrentStep(3);
-                  }}
+                  onClick={handleRewindToProtected}
                   className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 px-6 py-3.5 text-xs font-bold transition-all duration-300 shadow-lg shadow-emerald-950/40 cursor-pointer"
                 >
-                  <ShieldCheck className="h-4 w-4" />
-                  <span>{t.simulator.switchToProtectedBtn}</span>
+                  <span>{t.simulator.rewindToProtectedBtn}</span>
                 </button>
               </>
             ) : (
@@ -516,6 +547,16 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                 >
                   <RotateCcw className="h-4 w-4" />
                   <span>{t.simulator.replayBtn}</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    handleToggleMode("unprotected");
+                    setCurrentStep(1);
+                  }}
+                  className="flex-1 flex items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900 px-5 py-3.5 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+                >
+                  <span>{t.simulator.rewindToUnprotectedBtn}</span>
                 </button>
 
                 <button
@@ -538,6 +579,8 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
               {currentStep === 1 && <span>{t.simulator.nextStep1}</span>}
               {currentStep === 2 && mode === "unprotected" && <span>{t.simulator.unprotectedNextStep2}</span>}
               {currentStep === 2 && mode === "protected" && <span>{t.simulator.protectedNextStep2}</span>}
+              {currentStep === 3 && mode === "unprotected" && <span>{t.simulator.nextStep3Unprotected}</span>}
+              {currentStep === 3 && mode === "protected" && <span>{t.simulator.nextStep3Protected}</span>}
             </button>
           )}
         </div>
