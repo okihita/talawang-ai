@@ -29,11 +29,11 @@ export default function ThreatRadar({
         <div className="flex items-center justify-between border-b border-zinc-800 pb-4 mb-4">
           <div className="flex items-center gap-2.5">
             <Radio className="h-5 w-5 text-rose-400 animate-pulse" />
-            <h3 className="text-base font-bold text-white font-mono tracking-tight">
+            <h3 className="text-sm font-bold text-white tracking-tight uppercase">
               LIVE THREAT INTERCEPT STREAM
             </h3>
           </div>
-          <span className="text-sm font-mono text-zinc-300 bg-zinc-900 px-3 py-1 rounded-lg border border-zinc-800">
+          <span className="text-xs font-semibold text-zinc-300 bg-zinc-900 px-3 py-1 rounded-lg border border-zinc-800">
             BUFFER: {events.length} EVENTS
           </span>
         </div>
@@ -42,7 +42,7 @@ export default function ThreatRadar({
           {events.map((evt) => (
             <div
               key={evt.id}
-              className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 text-sm transition hover:border-zinc-700 hover:bg-zinc-900/70"
+              className="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 text-xs transition hover:border-zinc-700 hover:bg-zinc-900/70"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
@@ -51,14 +51,14 @@ export default function ThreatRadar({
                       evt.verdict === "BLOCKED" ? "bg-rose-500 animate-pulse" : "bg-emerald-400"
                     }`}
                   />
-                  <span className="font-semibold text-zinc-100 font-mono text-sm">
+                  <span className="font-bold text-zinc-100 text-xs">
                     {evt.attackType}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-mono text-zinc-400">⚡ {evt.latencyMs}ms</span>
+                  <span className="text-xs font-medium text-zinc-400">⚡ {evt.latencyMs}ms</span>
                   <span
-                    className={`px-2 py-0.5 rounded-md text-sm font-mono font-bold ${
+                    className={`px-2 py-0.5 rounded-md text-xs font-bold ${
                       evt.verdict === "BLOCKED"
                         ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
                         : "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
@@ -69,13 +69,13 @@ export default function ThreatRadar({
                 </div>
               </div>
 
-              <p className="mt-2 font-mono text-sm text-zinc-300 truncate bg-zinc-950/80 p-2 rounded-lg border border-zinc-800/50">
+              <p className="mt-2 text-xs text-zinc-300 truncate bg-zinc-950/80 p-2.5 rounded-lg border border-zinc-800/50 leading-relaxed">
                 {evt.payloadSnippet}
               </p>
 
-              <div className="mt-2.5 flex items-center justify-between text-sm text-zinc-400 font-mono">
+              <div className="mt-2.5 flex items-center justify-between text-xs text-zinc-400 font-medium">
                 <span className="flex items-center gap-1.5">
-                  <Globe className="h-4 w-4 text-zinc-400" />
+                  <Globe className="h-3.5 w-3.5 text-zinc-400" />
                   {evt.sourceIp}
                 </span>
                 <span>{new Date(evt.timestamp).toLocaleTimeString()}</span>
@@ -89,11 +89,11 @@ export default function ThreatRadar({
       <div className="lg:col-span-5 rounded-2xl border border-zinc-800/80 bg-zinc-950/70 p-6 backdrop-blur-xl flex flex-col justify-between">
         <div>
           <div className="flex items-center justify-between border-b border-zinc-800 pb-4 mb-4">
-            <h3 className="text-base font-bold text-white font-mono tracking-tight flex items-center gap-2">
-              <Activity className="h-5 w-5 text-emerald-400" />
+            <h3 className="text-sm font-bold text-white tracking-tight uppercase flex items-center gap-2">
+              <Activity className="h-4 w-4 text-emerald-400" />
               THREAT SPECTRUM & VOLUME
             </h3>
-            <span className="text-sm font-mono text-emerald-400">24H TIMELINE</span>
+            <span className="text-xs font-bold text-emerald-400">24H TIMELINE</span>
           </div>
 
           {/* Area Chart */}
@@ -110,13 +110,13 @@ export default function ThreatRadar({
                     <stop stopColor="#10b981" stopOpacity={0.05} />
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="time" stroke="#a1a1aa" fontSize={12} tickLine={false} />
-                <YAxis stroke="#a1a1aa" fontSize={12} tickLine={false} />
+                <XAxis dataKey="time" stroke="#a1a1aa" fontSize={11} tickLine={false} />
+                <YAxis stroke="#a1a1aa" fontSize={11} tickLine={false} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "#09090b",
                     borderColor: "#27272a",
-                    fontSize: "13px",
+                    fontSize: "12px",
                     borderRadius: "8px",
                   }}
                 />
@@ -143,20 +143,20 @@ export default function ThreatRadar({
 
         {/* Attack Type Badges */}
         <div className="mt-5 pt-4 border-t border-zinc-800/80">
-          <span className="text-sm font-mono text-zinc-300 block mb-2 font-semibold">
+          <span className="text-xs text-zinc-300 block mb-2 font-bold uppercase tracking-wider">
             TOP VECTOR DISTRIBUTION:
           </span>
           <div className="space-y-2">
             {attackTypesDistribution.map((item, idx) => (
-              <div key={idx} className="flex items-center justify-between text-sm">
-                <span className="flex items-center gap-2 text-zinc-200 font-mono">
+              <div key={idx} className="flex items-center justify-between text-xs">
+                <span className="flex items-center gap-2 text-zinc-200 font-medium">
                   <span
-                    className="h-2.5 w-2.5 rounded-full"
+                    className="h-2 w-2 rounded-full"
                     style={{ backgroundColor: item.color }}
                   />
                   {item.name}
                 </span>
-                <span className="font-mono text-zinc-400 font-medium">{item.count} attacks</span>
+                <span className="text-zinc-400 font-semibold">{item.count} attacks</span>
               </div>
             ))}
           </div>

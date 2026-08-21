@@ -27,7 +27,7 @@ export default function DecryptedText({
   characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+~`|}{[]:;?><,./-=",
   className = "",
   parentClassName = "",
-  encryptedClassName = "text-emerald-400 font-mono",
+  encryptedClassName = "text-emerald-400 font-bold",
   animateOn = "mount",
 }: DecryptedTextProps) {
   const [displayText, setDisplayText] = useState(text);

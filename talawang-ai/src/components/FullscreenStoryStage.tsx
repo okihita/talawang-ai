@@ -501,10 +501,10 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                 mode === "unprotected" ? (
                   <div className="w-full rounded-2xl border border-rose-500/60 bg-zinc-950/95 p-3.5 shadow-2xl space-y-2 text-left animate-in fade-in slide-in-from-bottom-3">
                     <div className="flex items-center justify-between border-b border-rose-900/60 pb-2">
-                      <span className="text-[11px] font-mono font-bold tracking-wider text-rose-400 uppercase">
+                      <span className="text-[11px] font-bold tracking-wider text-rose-400 uppercase">
                         🚨 {t.simulator.incidentReportHeader}
                       </span>
-                      <span className="text-[9px] font-mono text-rose-300 bg-rose-950/80 px-1.5 py-0.5 rounded border border-rose-800">
+                      <span className="text-[9px] font-bold text-rose-300 bg-rose-950/80 px-1.5 py-0.5 rounded border border-rose-800 tracking-wide">
                         BREACH COMPLETED
                       </span>
                     </div>
@@ -515,10 +515,10 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
                 ) : (
                   <div className="w-full rounded-2xl border border-emerald-500/60 bg-zinc-950/95 p-3.5 shadow-2xl space-y-2 text-left animate-in fade-in slide-in-from-bottom-3">
                     <div className="flex items-center justify-between border-b border-emerald-900/60 pb-2">
-                      <span className="text-[11px] font-mono font-bold tracking-wider text-emerald-400 uppercase">
+                      <span className="text-[11px] font-bold tracking-wider text-emerald-400 uppercase">
                         🛡️ {t.simulator.telemetryReportHeader}
                       </span>
-                      <span className="text-[9px] font-mono text-emerald-300 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-800">
+                      <span className="text-[9px] font-bold text-emerald-300 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-800 tracking-wide">
                         LATENCY: {chapter.latencyMs}ms • BLOCKED
                       </span>
                     </div>

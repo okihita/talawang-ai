@@ -484,11 +484,11 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
               <div className="flex items-center justify-between border-b border-rose-900/60 pb-2">
                 <div className="flex items-center gap-2">
                   <span className="flex h-2.5 w-2.5 rounded-full bg-rose-500 animate-pulse" />
-                  <span className="text-xs font-mono font-bold tracking-wider text-rose-400 uppercase">
+                  <span className="text-xs font-bold tracking-wider text-rose-400 uppercase">
                     🚨 {t.simulator.incidentReportHeader}
                   </span>
                 </div>
-                <span className="text-[10px] font-mono font-semibold text-rose-300 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800">
+                <span className="text-[10px] font-bold text-rose-300 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800 tracking-wide">
                   STATUS: BREACH COMPLETED
                 </span>
               </div>
@@ -497,8 +497,8 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                 <div className="text-rose-200 font-semibold leading-relaxed">
                   <strong>{t.simulator.damageLabel} </strong>{chapter.unsecuredRisk[lang]}
                 </div>
-                <div className="text-[11px] font-mono text-zinc-400 pt-1 border-t border-zinc-900">
-                  Vektor Serangan: <span className="text-zinc-200">{chapter.threatType}</span> • Gateway Guardrail: <span className="text-rose-400 font-bold">OFF (0% Defense)</span>
+                <div className="text-[11px] text-zinc-400 pt-1 border-t border-zinc-900">
+                  Vektor Serangan: <span className="text-zinc-200 font-medium">{chapter.threatType}</span> • Gateway Guardrail: <span className="text-rose-400 font-bold">OFF (0% Defense)</span>
                 </div>
               </div>
             </div>
@@ -508,11 +508,11 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
               <div className="flex items-center justify-between border-b border-emerald-900/60 pb-2">
                 <div className="flex items-center gap-2">
                   <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-xs font-mono font-bold tracking-wider text-emerald-400 uppercase">
+                  <span className="text-xs font-bold tracking-wider text-emerald-400 uppercase">
                     🛡️ {t.simulator.telemetryReportHeader}
                   </span>
                 </div>
-                <span className="text-[10px] font-mono font-semibold text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
+                <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800 tracking-wide">
                   LATENCY: {chapter.latencyMs}ms • BLOCKED
                 </span>
               </div>
@@ -521,7 +521,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                 <div className="text-emerald-200 font-semibold leading-relaxed">
                   <strong>{t.simulator.outcomeLabel} </strong>{chapter.talawangImpact[lang]}
                 </div>
-                <div className="text-[11px] font-mono text-zinc-400 pt-1 border-t border-zinc-900">
+                <div className="text-[11px] text-zinc-400 pt-1 border-t border-zinc-900">
                   Gateway Edge: <span className="text-emerald-400 font-bold">Layer 1 & Layer 2 Active</span> • LLM Token Cost: <span className="text-emerald-400 font-bold">0 Tokens Spent (100% Saved)</span>
                 </div>
               </div>
