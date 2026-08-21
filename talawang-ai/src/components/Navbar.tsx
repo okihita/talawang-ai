@@ -27,9 +27,6 @@ export default function Navbar({
                 <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white group-hover:text-emerald-500 transition">
                   Talawang<span className="text-emerald-500">.ai</span>
                 </span>
-                <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-                  v1.0
-                </span>
               </div>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 font-sans">
                 AI Firewall & Security Gateway

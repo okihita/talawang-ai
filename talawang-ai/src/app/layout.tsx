@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Talawang AI — Autonomous Cyber Defense Gateway (HackNusa 2026)",
+  title: "Talawang AI — Autonomous Cyber Defense Gateway",
   description:
     "Autonomous sub-millisecond AI defense gateway intercepting prompt injections, jailbreaks, and deepfakes. Inspired by the Dayak Talawang shield.",
 };
@@ -26,9 +26,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} dark bg-zinc-950 text-zinc-100 antialiased`}
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} dark antialiased`}
     >
-      <body className="min-h-screen bg-zinc-950 font-sans">{children}</body>
+      <body className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans transition-colors duration-200">
+        {children}
+      </body>
     </html>
   );
 }
