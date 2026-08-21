@@ -3,7 +3,7 @@
 import DayakShieldBadge from "./DayakShieldBadge";
 import ThemeToggle from "./ThemeToggle";
 import Link from "next/link";
-import { BookOpen, LayoutDashboard, Play, Shield, ArrowRight } from "lucide-react";
+import { BookOpen, LayoutDashboard, Play } from "lucide-react";
 
 export default function Navbar() {
   return (
@@ -28,7 +28,7 @@ export default function Navbar() {
         </div>
 
         {/* Clean Navigation Links */}
-        <nav className="hidden md:flex items-center gap-2 font-medium text-sm text-zinc-600 dark:text-zinc-300">
+        <nav className="hidden md:flex items-center gap-1 font-medium text-sm text-zinc-600 dark:text-zinc-300">
           <Link
             href="/#demo"
             className="flex items-center gap-2 rounded-xl px-4 py-2 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 transition"
@@ -56,14 +56,6 @@ export default function Navbar() {
 
         {/* Right Actions & Light/Dark Theme Switch */}
         <div className="flex items-center gap-3">
-          <Link
-            href="/study-cases"
-            className="hidden sm:flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/20 transition"
-          >
-            <span>Read Case Studies</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
-
           {/* Theme Toggle Button */}
           <ThemeToggle />
         </div>
