@@ -13,7 +13,7 @@
   <em>"Inspired by the legendary Dayak <strong>Talawang</strong> shield, protecting modern Indonesian enterprise AI infrastructure against multi-lingual prompt injections, tool hijacking, zero-width steganography, and synthetic voice deepfakes in <strong>&lt;15ms</strong>."</em>
 </p>
 
-[🌐 Live Projector Dashboard](http://localhost:3000) • [📱 Mobile Hack Sandbox](http://localhost:3000/hack) • [🔬 Real-World Study Cases](http://localhost:3000/study-cases) • [📖 Documentation Hub](docs/)
+[🌐 Live Projector Dashboard](https://talawang.okihita.dev) • [📱 Mobile Hack Sandbox](https://talawang.okihita.dev/hack) • [🔬 Real-World Study Cases](https://talawang.okihita.dev/study-cases) • [📖 Documentation Hub](docs/)
 
 </div>
 
