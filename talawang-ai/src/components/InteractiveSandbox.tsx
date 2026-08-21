@@ -259,33 +259,36 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* STEP PROGRESS BAR                                                         */}
+      {/* MINIMALIST TIMELINE MARKER (Thin Line with Neutral Dots - KISS)           */}
       {/* ========================================================================= */}
-      <div className="space-y-2 pt-2">
-        <div className="flex items-center justify-between text-xs font-semibold text-zinc-500 dark:text-zinc-400">
-          <span>{t.simulator.stepPrefix} {currentBeat} {t.simulator.ofPrefix} 4</span>
-          <span className="text-zinc-900 dark:text-zinc-100 font-bold transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-            {currentBeat === 1 && t.simulator.step1Title}
-            {currentBeat === 2 && t.simulator.step2Title}
-            {currentBeat === 3 && t.simulator.step3Title}
-            {currentBeat === 4 && t.simulator.step4Title}
-          </span>
+      <div className="max-w-xl mx-auto w-full pt-2 pb-1 space-y-4">
+        {/* Thin line with 4 step dots */}
+        <div className="relative flex items-center justify-between w-full px-2">
+          {/* Background Connecting Line */}
+          <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 h-[1.5px] bg-zinc-200 dark:bg-zinc-800 -z-0" />
+
+          {/* 4 Dots */}
+          {[1, 2, 3, 4].map((step) => {
+            const isPassedOrCurrent = currentBeat >= step;
+            const isCurrent = currentBeat === step;
+
+            return (
+              <div
+                key={step}
+                className={`relative z-10 flex h-3.5 w-3.5 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                  isCurrent
+                    ? "border-zinc-900 dark:border-white bg-zinc-900 dark:bg-white ring-4 ring-zinc-200/80 dark:ring-zinc-800 scale-125"
+                    : isPassedOrCurrent
+                    ? "border-zinc-500 dark:border-zinc-400 bg-zinc-500 dark:bg-zinc-400"
+                    : "border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900"
+                }`}
+              />
+            );
+          })}
         </div>
 
-        <div className="grid grid-cols-4 gap-2">
-          <div className={`h-2 rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 1 ? "bg-emerald-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
-          <div className={`h-2 rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 2 ? "bg-amber-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
-          <div className={`h-2 rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 3 ? "bg-rose-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
-          <div className={`h-2 rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${currentBeat >= 4 ? "bg-emerald-500" : "bg-zinc-200 dark:bg-zinc-800"}`} />
-        </div>
-      </div>
-
-      {/* Human Narrator Banner */}
-      <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 p-5 space-y-1 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
-        <span className="text-xs uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-bold block">
-          {t.simulator.contextPrefix}
-        </span>
-        <p className="text-sm text-zinc-800 dark:text-zinc-200 leading-relaxed font-normal">
+        {/* Clean Single-Line Context Narration (No redundant boxes) */}
+        <p className="text-center text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed px-2">
           {currentBeat === 1 && (
             <span>{t.simulator.context1} (<strong>{chapter.targetCompany}</strong>)</span>
           )}
@@ -293,10 +296,10 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
             <span>{t.simulator.context2}</span>
           )}
           {currentBeat === 3 && (
-            <span>{t.simulator.context3}</span>
+            <span className="text-rose-600 dark:text-rose-400 font-semibold">{t.simulator.context3}</span>
           )}
           {currentBeat === 4 && (
-            <span>{t.simulator.context4}</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{t.simulator.context4}</span>
           )}
         </p>
       </div>

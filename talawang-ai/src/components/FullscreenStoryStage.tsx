@@ -285,19 +285,31 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
           }`}
         />
 
-        {/* Narrative Headline & Beat Subtitle */}
-        <div className="text-center space-y-3 relative z-10 max-w-2xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-          <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/90 px-4 py-1.5 text-xs font-semibold text-zinc-300">
-            <span>{t.simulator.stepPrefix} {currentBeat} {t.simulator.ofPrefix} 4:</span>
-            <span className="text-white font-bold">
-              {currentBeat === 1 && t.simulator.step1Title}
-              {currentBeat === 2 && t.simulator.step2Title}
-              {currentBeat === 3 && t.simulator.step3Title}
-              {currentBeat === 4 && t.simulator.step4Title}
-            </span>
+        {/* Narrative Headline & Beat Subtitle with Minimalist Timeline Marker */}
+        <div className="text-center space-y-4 relative z-10 max-w-xl mx-auto w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+          {/* Thin Line with 4 Step Dots */}
+          <div className="relative flex items-center justify-between w-full px-4 max-w-sm mx-auto">
+            <div className="absolute left-6 right-6 top-1/2 -translate-y-1/2 h-[1.5px] bg-zinc-800 -z-0" />
+            {[1, 2, 3, 4].map((step) => {
+              const isPassedOrCurrent = currentBeat >= step;
+              const isCurrent = currentBeat === step;
+
+              return (
+                <div
+                  key={step}
+                  className={`relative z-10 flex h-3 w-3 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isCurrent
+                      ? "border-white bg-white ring-4 ring-zinc-800 scale-125"
+                      : isPassedOrCurrent
+                      ? "border-zinc-400 bg-zinc-400"
+                      : "border-zinc-700 bg-zinc-900"
+                  }`}
+                />
+              );
+            })}
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
             {currentBeat === 1 && (
               <span>{lang === "id" ? "Perusahaan Anda meluncurkan " : "Your company deploys "}<span className="text-emerald-400">{chapter.targetCompany}</span>{lang === "id" ? " di WhatsApp." : " on WhatsApp."}</span>
             )}
@@ -312,7 +324,7 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
             )}
           </h1>
 
-          <p className="text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-zinc-400 max-w-lg mx-auto leading-relaxed">
             {currentBeat === 1 && (lang === "id" ? "Layanan berjalan normal untuk pelanggan sah hingga ada pelaku yang mencoba membajak sistem." : "Everything runs smoothly for legitimate customers until an adversary targets your system.")}
             {currentBeat === 2 && (lang === "id" ? "Pesan manipulatif berupaya memotong batas aturan keamanan bot Anda." : "The malicious message tries to trick the bot into bypassing security rules.")}
             {currentBeat === 3 && chapter.unsecuredRisk[lang]}
