@@ -13,6 +13,8 @@ import {
   FileCode2,
   ChevronRight,
   Maximize2,
+  Shield,
+  XCircle,
 } from "lucide-react";
 import { useI18n } from "@/i18n/I18nContext";
 
@@ -110,7 +112,7 @@ const STORY_CHAPTERS: StoryChapter[] = [
   },
 ];
 
-// Quick Snappy Typewriter Component
+// Snappy Typewriter Component
 function TypewriterText({
   text,
   speed = 10,
@@ -159,38 +161,32 @@ interface InteractiveSandboxProps {
 export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }: InteractiveSandboxProps) {
   const { lang, t } = useI18n();
   const [selectedChapterIdx, setSelectedChapterIdx] = useState(0);
-  // Beat: 1 = Setup Greeting, 2 = Attacker Strikes, 3 = Raw AI Breach, 4 = Talawang Rescue
-  const [currentBeat, setCurrentBeat] = useState<1 | 2 | 3 | 4>(1);
+  // Protection Mode: "unprotected" (Left) | "protected" (Right)
+  const [mode, setMode] = useState<"unprotected" | "protected">("unprotected");
 
   const chapter = STORY_CHAPTERS[selectedChapterIdx];
 
-  const handleNextBeat = () => {
-    if (currentBeat < 4) {
-      const nextBeat = (currentBeat + 1) as 1 | 2 | 3 | 4;
-      setCurrentBeat(nextBeat);
-      if (nextBeat === 4) {
-        confetti({
-          particleCount: 35,
-          spread: 55,
-          origin: { y: 0.8 },
-          colors: ["#10b981", "#34d399", "#06b6d4"],
-        });
-      }
-    } else {
-      setCurrentBeat(1);
-    }
-  };
-
   const handleSelectChapter = (idx: number) => {
     setSelectedChapterIdx(idx);
-    setCurrentBeat(1);
+  };
+
+  const handleToggleMode = (newMode: "unprotected" | "protected") => {
+    setMode(newMode);
+    if (newMode === "protected") {
+      confetti({
+        particleCount: 40,
+        spread: 60,
+        origin: { y: 0.8 },
+        colors: ["#10b981", "#34d399", "#06b6d4"],
+      });
+    }
   };
 
   return (
     <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 p-6 sm:p-10 shadow-xl dark:shadow-2xl backdrop-blur-xl space-y-8 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
       
       {/* ========================================================================= */}
-      {/* HUMAN-FRIENDLY HEADER WITH FULLSCREEN BUTTON TOP-RIGHT                    */}
+      {/* HEADER WITH FULLSCREEN BUTTON TOP-RIGHT                                   */}
       {/* ========================================================================= */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-6">
         <div className="space-y-1.5">
@@ -217,9 +213,9 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* SCENARIO SELECTOR (3 Clean, Balanced Tabs)                                 */}
+      {/* SCENARIO SELECTOR (3 Clean Pills)                                         */}
       {/* ========================================================================= */}
-      <div className="space-y-2.5">
+      <div className="space-y-3">
         <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 block">
           {t.simulator.scenarioLabel}
         </span>
@@ -259,57 +255,58 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* MINIMALIST TIMELINE MARKER (Thin Line with Neutral Dots - KISS)           */}
+      {/* 2-WAY LEFT-RIGHT SWITCHER: UNPROTECTED vs. PROTECTED                      */}
       {/* ========================================================================= */}
-      <div className="max-w-xl mx-auto w-full pt-2 pb-1 space-y-4">
-        {/* Thin line with 4 step dots */}
-        <div className="relative flex items-center justify-between w-full px-2">
-          {/* Background Connecting Line */}
-          <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 h-[1.5px] bg-zinc-200 dark:bg-zinc-800 -z-0" />
+      <div className="max-w-xl mx-auto w-full pt-1">
+        <div className="grid grid-cols-2 p-1.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-950/90 gap-1.5 shadow-inner">
+          
+          {/* Left: Unprotected */}
+          <button
+            onClick={() => handleToggleMode("unprotected")}
+            className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
+              mode === "unprotected"
+                ? "bg-white dark:bg-rose-950/80 text-rose-700 dark:text-rose-200 shadow-md border border-rose-300 dark:border-rose-800 ring-2 ring-rose-500/20"
+                : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+            }`}
+          >
+            <XCircle className={`h-4 w-4 shrink-0 ${mode === "unprotected" ? "text-rose-600 dark:text-rose-400" : "text-zinc-400"}`} />
+            <span>{t.simulator.unprotectedTab}</span>
+          </button>
 
-          {/* 4 Dots */}
-          {[1, 2, 3, 4].map((step) => {
-            const isPassedOrCurrent = currentBeat >= step;
-            const isCurrent = currentBeat === step;
-
-            return (
-              <div
-                key={step}
-                className={`relative z-10 flex h-3.5 w-3.5 items-center justify-center rounded-full border transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                  isCurrent
-                    ? "border-zinc-900 dark:border-white bg-zinc-900 dark:bg-white ring-4 ring-zinc-200/80 dark:ring-zinc-800 scale-125"
-                    : isPassedOrCurrent
-                    ? "border-zinc-500 dark:border-zinc-400 bg-zinc-500 dark:bg-zinc-400"
-                    : "border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900"
-                }`}
-              />
-            );
-          })}
+          {/* Right: Protected */}
+          <button
+            onClick={() => handleToggleMode("protected")}
+            className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
+              mode === "protected"
+                ? "bg-white dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-200 shadow-md border border-emerald-300 dark:border-emerald-800 ring-2 ring-emerald-500/20"
+                : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+            }`}
+          >
+            <ShieldCheck className={`h-4 w-4 shrink-0 ${mode === "protected" ? "text-emerald-600 dark:text-emerald-400" : "text-zinc-400"}`} />
+            <span>{t.simulator.protectedTab}</span>
+          </button>
         </div>
-
-        {/* Clean Single-Line Context Narration (No redundant boxes) */}
-        <p className="text-center text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed px-2">
-          {currentBeat === 1 && (
-            <span>{t.simulator.context1} (<strong>{chapter.targetCompany}</strong>)</span>
-          )}
-          {currentBeat === 2 && (
-            <span>{t.simulator.context2}</span>
-          )}
-          {currentBeat === 3 && (
-            <span className="text-rose-600 dark:text-rose-400 font-semibold">{t.simulator.context3}</span>
-          )}
-          {currentBeat === 4 && (
-            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{t.simulator.context4}</span>
-          )}
-        </p>
       </div>
+
+      {/* Clean Single-Line Context Narration */}
+      <p className="text-center text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed max-w-xl mx-auto px-2">
+        {mode === "unprotected" ? (
+          <span className="text-rose-700 dark:text-rose-300">
+            <strong>Tanpa Firewall:</strong> {chapter.unsecuredRisk[lang]}
+          </span>
+        ) : (
+          <span className="text-emerald-700 dark:text-emerald-300">
+            <strong>Dengan Talawang AI ({chapter.latencyMs}ms):</strong> {chapter.talawangImpact[lang]}
+          </span>
+        )}
+      </p>
 
       {/* ========================================================================= */}
       {/* NARROW CENTERED CHAT CONTAINER (Intuitive Messenger Feel)                 */}
       {/* ========================================================================= */}
       <div className="mx-auto max-w-xl w-full rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-950/80 p-5 sm:p-7 space-y-5 min-h-[340px] flex flex-col justify-end shadow-inner transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
 
-        {/* Bubble 1: Initial Bot Greeting (Avatar Inside Bubble) */}
+        {/* Bubble 1: Initial Bot Greeting */}
         <div className="flex flex-col items-start space-y-1 max-w-[90%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-2">
           <div className="rounded-2xl rounded-tl-sm bg-white dark:bg-zinc-900 p-4 text-xs leading-relaxed border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-sm space-y-2.5 w-full">
             <div className="flex items-center gap-2 pb-2 border-b border-zinc-100 dark:border-zinc-800/80">
@@ -325,36 +322,35 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
               <TypewriterText
                 text={chapter.initialBotGreeting}
                 speed={8}
-                triggerKey={`${chapter.id}-beat1-${lang}`}
+                triggerKey={`${chapter.id}-greeting-${lang}`}
               />
             </div>
           </div>
         </div>
 
-        {/* Bubble 2: Attacker Exploitation (Devil Emoji & Inside Tag) */}
-        {currentBeat >= 2 && (
-          <div className="flex flex-col items-end space-y-1 max-w-[90%] self-end transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
-            <div className="rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-4 text-xs leading-relaxed shadow-sm space-y-2.5 w-full border border-zinc-800">
-              <div className="flex items-center justify-between gap-2 pb-2 border-b border-zinc-800">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-sm">😈</span>
-                  <span className="font-bold text-xs text-amber-400">{t.simulator.maliciousUser}</span>
-                </div>
-                <span className="text-[10px] text-zinc-400 font-medium">{t.simulator.payloadTag}</span>
+        {/* Bubble 2: Attacker Exploitation (Devil Emoji) */}
+        <div className="flex flex-col items-end space-y-1 max-w-[90%] self-end transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
+          <div className="rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-4 text-xs leading-relaxed shadow-sm space-y-2.5 w-full border border-zinc-800">
+            <div className="flex items-center justify-between gap-2 pb-2 border-b border-zinc-800">
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm">😈</span>
+                <span className="font-bold text-xs text-amber-400">{t.simulator.maliciousUser}</span>
               </div>
-              <div className="text-zinc-200 leading-relaxed">
-                <TypewriterText
-                  text={chapter.attackerPrompt}
-                  speed={8}
-                  triggerKey={`${chapter.id}-beat2-${lang}`}
-                />
-              </div>
+              <span className="text-[10px] text-zinc-400 font-medium">{t.simulator.payloadTag}</span>
+            </div>
+            <div className="text-zinc-200 leading-relaxed">
+              <TypewriterText
+                text={chapter.attackerPrompt}
+                speed={8}
+                triggerKey={`${chapter.id}-attack-${lang}`}
+              />
             </div>
           </div>
-        )}
+        </div>
 
-        {/* Bubble 3: Without Talawang Breach (Beat 3 ONLY) */}
-        {currentBeat === 3 && (
+        {/* Bubble 3/4: Conditional Outcome Based on Mode */}
+        {mode === "unprotected" ? (
+          /* Unprotected Response */
           <div className="flex flex-col items-start space-y-2 max-w-[90%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
             <div className="rounded-2xl rounded-tl-sm bg-rose-50 dark:bg-rose-950/40 p-4 text-xs leading-relaxed border border-rose-200 dark:border-rose-900 text-rose-950 dark:text-rose-200 shadow-sm space-y-2.5 w-full">
               <div className="flex items-center gap-2 pb-2 border-b border-rose-200/60 dark:border-rose-900/60">
@@ -367,7 +363,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                 <TypewriterText
                   text={chapter.unsecuredResponse}
                   speed={8}
-                  triggerKey={`${chapter.id}-beat3-${lang}`}
+                  triggerKey={`${chapter.id}-unprotected-${lang}`}
                 />
               </div>
             </div>
@@ -376,10 +372,8 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
               <span><strong>{t.simulator.damageLabel} </strong>{chapter.unsecuredRisk[lang]}</span>
             </div>
           </div>
-        )}
-
-        {/* Bubble 4: With Talawang Rescue (Beat 4 ONLY) */}
-        {currentBeat === 4 && (
+        ) : (
+          /* Protected Response */
           <div className="flex flex-col items-start space-y-2 max-w-[90%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
             <div className="rounded-2xl rounded-tl-sm bg-emerald-50 dark:bg-emerald-950/30 p-4 text-xs leading-relaxed border border-emerald-300 dark:border-emerald-900/60 text-emerald-950 dark:text-emerald-200 shadow-sm space-y-2.5 w-full">
               <div className="flex items-center gap-2 pb-2 border-b border-emerald-200/60 dark:border-emerald-900/60">
@@ -394,7 +388,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                 <TypewriterText
                   text={chapter.talawangResponse}
                   speed={8}
-                  triggerKey={`${chapter.id}-beat4-${lang}`}
+                  triggerKey={`${chapter.id}-protected-${lang}`}
                 />
               </div>
             </div>
@@ -408,24 +402,32 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* EXTERNAL CONTROL TOOLBAR (Demarcated from Stage)                          */}
+      {/* EXTERNAL CONTROL TOOLBAR                                                  */}
       {/* ========================================================================= */}
       <div className="border-t border-zinc-200 dark:border-zinc-800 pt-6 flex items-center justify-end">
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          {currentBeat === 4 ? (
+          {mode === "unprotected" ? (
+            <button
+              onClick={() => handleToggleMode("protected")}
+              className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-4 text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
+            >
+              <ShieldCheck className="h-4 w-4" />
+              <span>{t.simulator.switchToProtectedBtn}</span>
+            </button>
+          ) : (
             <>
               <button
-                onClick={() => setCurrentBeat(1)}
+                onClick={() => handleToggleMode("unprotected")}
                 className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-6 py-3.5 text-xs font-semibold text-zinc-800 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer shadow-sm"
               >
-                <RotateCcw className="h-4 w-4" />
-                <span>{t.simulator.replayBtn}</span>
+                <span>{t.simulator.switchToUnprotectedBtn}</span>
               </button>
 
               <button
                 onClick={() => {
                   const nextIdx = (selectedChapterIdx + 1) % STORY_CHAPTERS.length;
                   handleSelectChapter(nextIdx);
+                  setMode("unprotected");
                 }}
                 className="flex-1 sm:flex-initial flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-3.5 text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
               >
@@ -433,15 +435,6 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                 <ChevronRight className="h-4 w-4" />
               </button>
             </>
-          ) : (
-            <button
-              onClick={handleNextBeat}
-              className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-zinc-950 px-8 py-4 text-sm font-bold transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg shadow-emerald-950/20 cursor-pointer"
-            >
-              {currentBeat === 1 && <span>{t.simulator.nextStep1}</span>}
-              {currentBeat === 2 && <span>{t.simulator.nextStep2}</span>}
-              {currentBeat === 3 && <span>{t.simulator.nextStep3}</span>}
-            </button>
           )}
         </div>
       </div>
