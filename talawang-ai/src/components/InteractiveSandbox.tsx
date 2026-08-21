@@ -481,50 +481,50 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         {/* ========================================================================= */}
         {currentStep === 4 && (
           mode === "unprotected" ? (
-            /* Unprotected Incident Report Banner */
-            <div className="w-full rounded-2xl border border-rose-500/60 bg-zinc-950/95 p-4 shadow-2xl space-y-2.5 text-left animate-in fade-in slide-in-from-bottom-3 transition-all duration-500">
-              <div className="flex items-center justify-between border-b border-rose-900/60 pb-2">
+            /* Unprotected Incident Report Banner (Red-ish in light mode, deep red in dark mode) */
+            <div className="w-full rounded-2xl border-2 border-rose-300 dark:border-rose-500/60 bg-rose-50/95 dark:bg-rose-950/85 p-4 shadow-lg space-y-2.5 text-left animate-in fade-in slide-in-from-bottom-3 transition-all duration-500">
+              <div className="flex items-center justify-between border-b border-rose-200 dark:border-rose-900/60 pb-2">
                 <div className="flex items-center gap-2">
                   <span className="flex h-2.5 w-2.5 rounded-full bg-rose-500 animate-pulse" />
-                  <span className="text-xs font-bold tracking-wider text-rose-400 uppercase">
+                  <span className="text-xs font-bold tracking-wider text-rose-700 dark:text-rose-400 uppercase">
                     🚨 {t.simulator.incidentReportHeader}
                   </span>
                 </div>
-                <span className="text-[10px] font-bold text-rose-300 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-800 tracking-wide">
+                <span className="text-[10px] font-bold text-rose-700 dark:text-rose-300 bg-rose-100 dark:bg-rose-900/80 px-2 py-0.5 rounded border border-rose-300 dark:border-rose-800 tracking-wide">
                   STATUS: BREACH COMPLETED
                 </span>
               </div>
 
               <div className="space-y-1 text-xs">
-                <div className="text-rose-200 font-semibold leading-relaxed">
-                  <strong>{t.simulator.damageLabel} </strong>{chapter.unsecuredRisk[lang]}
+                <div className="text-rose-950 dark:text-rose-200 font-semibold leading-relaxed">
+                  <strong className="text-rose-900 dark:text-rose-100">{t.simulator.damageLabel} </strong>{chapter.unsecuredRisk[lang]}
                 </div>
-                <div className="text-[11px] text-zinc-400 pt-1 border-t border-zinc-900">
-                  Vektor Serangan: <span className="text-zinc-200 font-medium">{chapter.threatType}</span> • Gateway Guardrail: <span className="text-rose-400 font-bold">OFF (0% Defense)</span>
+                <div className="text-[11px] text-rose-800/80 dark:text-zinc-400 pt-1.5 border-t border-rose-200 dark:border-zinc-900">
+                  Vektor Serangan: <span className="text-rose-950 dark:text-zinc-200 font-medium">{chapter.threatType}</span> • Gateway Guardrail: <span className="text-rose-600 dark:text-rose-400 font-bold">OFF (0% Defense)</span>
                 </div>
               </div>
             </div>
           ) : (
-            /* Protected Security Telemetry Audit Banner */
-            <div className="w-full rounded-2xl border border-emerald-500/60 bg-zinc-950/95 p-4 shadow-2xl space-y-2.5 text-left animate-in fade-in slide-in-from-bottom-3 transition-all duration-500">
-              <div className="flex items-center justify-between border-b border-emerald-900/60 pb-2">
+            /* Protected Security Telemetry Audit Banner (Emerald-ish in light mode, deep emerald in dark mode) */
+            <div className="w-full rounded-2xl border-2 border-emerald-300 dark:border-emerald-500/60 bg-emerald-50/95 dark:bg-emerald-950/85 p-4 shadow-lg space-y-2.5 text-left animate-in fade-in slide-in-from-bottom-3 transition-all duration-500">
+              <div className="flex items-center justify-between border-b border-emerald-200 dark:border-emerald-900/60 pb-2">
                 <div className="flex items-center gap-2">
                   <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-xs font-bold tracking-wider text-emerald-400 uppercase">
+                  <span className="text-xs font-bold tracking-wider text-emerald-700 dark:text-emerald-400 uppercase">
                     🛡️ {t.simulator.telemetryReportHeader}
                   </span>
                 </div>
-                <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800 tracking-wide">
+                <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/80 px-2 py-0.5 rounded border border-emerald-300 dark:border-emerald-800 tracking-wide">
                   LATENCY: {chapter.latencyMs}ms • BLOCKED
                 </span>
               </div>
 
               <div className="space-y-1 text-xs">
-                <div className="text-emerald-200 font-semibold leading-relaxed">
-                  <strong>{t.simulator.outcomeLabel} </strong>{chapter.talawangImpact[lang]}
+                <div className="text-emerald-950 dark:text-emerald-200 font-semibold leading-relaxed">
+                  <strong className="text-emerald-900 dark:text-emerald-100">{t.simulator.outcomeLabel} </strong>{chapter.talawangImpact[lang]}
                 </div>
-                <div className="text-[11px] text-zinc-400 pt-1 border-t border-zinc-900">
-                  Gateway Edge: <span className="text-emerald-400 font-bold">Layer 1 & Layer 2 Active</span> • LLM Token Cost: <span className="text-emerald-400 font-bold">0 Tokens Spent (100% Saved)</span>
+                <div className="text-[11px] text-emerald-800/80 dark:text-zinc-400 pt-1.5 border-t border-emerald-200 dark:border-zinc-900">
+                  Gateway Edge: <span className="text-emerald-700 dark:text-emerald-400 font-bold">Layer 1 & Layer 2 Active</span> • LLM Token Cost: <span className="text-emerald-700 dark:text-emerald-400 font-bold">0 Tokens Spent (100% Saved)</span>
                 </div>
               </div>
             </div>
