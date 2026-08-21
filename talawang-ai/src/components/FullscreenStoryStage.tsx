@@ -266,33 +266,20 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
     <div className="fixed inset-0 z-50 flex flex-col bg-zinc-100/95 dark:bg-zinc-950/98 text-zinc-900 dark:text-zinc-100 backdrop-blur-3xl animate-in fade-in duration-500 overflow-y-auto selection:bg-emerald-500/30 selection:text-emerald-700 dark:selection:text-emerald-200">
       
       {/* ========================================================================= */}
-      {/* CINEMATIC TOP NAVIGATION BAR                                              */}
+      {/* CINEMATIC TOP NAVIGATION BAR (Clean Brand + Controls)                     */}
       {/* ========================================================================= */}
       <header className="sticky top-0 z-50 w-full border-b border-zinc-200 dark:border-zinc-800/80 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xl px-6 sm:px-12 py-3.5">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           
-          {/* Chapter Selector Tabs */}
-          <div className="flex items-center gap-2.5 overflow-x-auto no-scrollbar">
-            {STORY_CHAPTERS.map((ch, idx) => {
-              const IconComp = ch.icon;
-              const isActive = selectedChapterIdx === idx;
-              const categoryText = (t.simulator as any)[ch.categoryKey] || ch.categoryKey;
-
-              return (
-                <button
-                  key={ch.id}
-                  onClick={() => handleSelectChapter(idx)}
-                  className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs sm:text-sm font-semibold shrink-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer ${
-                    isActive
-                      ? "bg-emerald-500 text-zinc-950 font-bold shadow-md shadow-emerald-950/30"
-                      : "border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                  }`}
-                >
-                  <IconComp className="h-4 w-4" />
-                  <span>Skenario {idx + 1}: {categoryText}</span>
-                </button>
-              );
-            })}
+          {/* Brand & Stage Title */}
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold">
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-base text-zinc-900 dark:text-white">Talawang AI</span>
+              <span className="text-xs text-zinc-400 hidden sm:inline">• {t.simulator.fullscreenBtn}</span>
+            </div>
           </div>
 
           {/* Right Controls: Language Switcher, Theme Switcher & Close Button */}
@@ -324,10 +311,44 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
           }`}
         />
 
-        {/* Narrative Headline & 2-Way Left-Right Switcher */}
-        <div className="text-center space-y-4 relative z-10 max-w-xl mx-auto w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+        {/* Narrative Headline, Scenario Pills & 2-Way Left-Right Switcher */}
+        <div className="text-center space-y-5 relative z-10 max-w-2xl mx-auto w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
           
-          {/* Left-Right Switcher */}
+          {/* Scenario Selector: 3 Clean Grid Pills Right Above Left-Right Toggle */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
+            {STORY_CHAPTERS.map((ch, idx) => {
+              const IconComp = ch.icon;
+              const isActive = selectedChapterIdx === idx;
+              const categoryText = (t.simulator as any)[ch.categoryKey] || ch.categoryKey;
+              const titleText = (t.simulator as any)[ch.titleKey] || ch.titleKey;
+
+              return (
+                <button
+                  key={ch.id}
+                  onClick={() => handleSelectChapter(idx)}
+                  className={`flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl border text-left transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-sm cursor-pointer ${
+                    isActive
+                      ? "border-emerald-500 bg-emerald-500/10 dark:bg-emerald-950/40 text-zinc-900 dark:text-white ring-2 ring-emerald-500/20 scale-[1.01]"
+                      : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white"
+                  }`}
+                >
+                  <div className={`p-2 rounded-xl border transition-all ${isActive ? "bg-emerald-500/20 border-emerald-500/30 text-emerald-600 dark:text-emerald-400" : "bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-500"}`}>
+                    <IconComp className="h-4 w-4" />
+                  </div>
+                  <div className="overflow-hidden">
+                    <span className="text-[10px] sm:text-[11px] font-medium text-zinc-400 dark:text-zinc-500 block uppercase tracking-wider">
+                      {categoryText}
+                    </span>
+                    <h4 className="text-xs font-bold text-zinc-900 dark:text-white truncate">
+                      {titleText.split(":")[1]?.trim() || titleText}
+                    </h4>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Left-Right Switcher (Directly Under Scenario Pills) */}
           <div className="grid grid-cols-2 p-1.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-200/80 dark:bg-zinc-900/90 gap-1.5 shadow-inner">
             <button
               onClick={() => handleToggleMode("unprotected")}
