@@ -5,34 +5,23 @@ import CyberGrid from "@/components/react-bits/CyberGrid";
 import Navbar from "@/components/Navbar";
 import InteractiveSandbox from "@/components/InteractiveSandbox";
 import FullscreenStoryStage from "@/components/FullscreenStoryStage";
-import YaraExporterModal from "@/components/YaraExporterModal";
-import QrChallengeModal from "@/components/QrChallengeModal";
 import DayakShieldBadge from "@/components/DayakShieldBadge";
 import { ThreatEvent } from "@/server/telemetry/threat-store";
 import { PromptScanResult } from "@/server/detectors/prompt-injection";
 import {
   ShieldCheck,
-  ShieldAlert,
   Zap,
   Lock,
   ArrowRight,
-  QrCode,
-  Smartphone,
   BookOpen,
   Building2,
   Layers,
-  Scale,
-  Sparkles,
   Play,
-  CheckCircle2,
-  FileCode2,
   Globe2,
 } from "lucide-react";
 import Link from "next/link";
 
 export default function DashboardPage() {
-  const [isYaraOpen, setIsYaraOpen] = useState(false);
-  const [isQrOpen, setIsQrOpen] = useState(false);
   const [isStoryOpen, setIsStoryOpen] = useState(false);
   const [events, setEvents] = useState<ThreatEvent[]>([]);
 
@@ -62,10 +51,7 @@ export default function DashboardPage() {
       <CyberGrid />
 
       {/* Main Navigation */}
-      <Navbar
-        onOpenYaraModal={() => setIsYaraOpen(true)}
-        onOpenQrModal={() => setIsQrOpen(true)}
-      />
+      <Navbar />
 
       <main className="relative z-10 mx-auto max-w-6xl px-6 sm:px-8 lg:px-12 py-16 sm:py-24 space-y-32">
         
@@ -259,10 +245,8 @@ export default function DashboardPage() {
         </div>
       </footer>
 
-      {/* Fullscreen Story Stage & Modals */}
+      {/* Fullscreen Story Stage */}
       <FullscreenStoryStage isOpen={isStoryOpen} onClose={() => setIsStoryOpen(false)} />
-      <YaraExporterModal isOpen={isYaraOpen} onClose={() => setIsYaraOpen(false)} />
-      <QrChallengeModal isOpen={isQrOpen} onClose={() => setIsQrOpen(false)} />
     </div>
   );
 }

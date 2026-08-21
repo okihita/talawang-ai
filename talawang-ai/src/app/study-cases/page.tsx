@@ -3,9 +3,6 @@
 import Navbar from "@/components/Navbar";
 import CyberGrid from "@/components/react-bits/CyberGrid";
 import DayakShieldBadge from "@/components/DayakShieldBadge";
-import { useState } from "react";
-import YaraExporterModal from "@/components/YaraExporterModal";
-import QrChallengeModal from "@/components/QrChallengeModal";
 import {
   ShieldAlert,
   ShieldCheck,
@@ -24,8 +21,6 @@ import {
 } from "lucide-react";
 
 export default function StudyCasesPage() {
-  const [isYaraOpen, setIsYaraOpen] = useState(false);
-  const [isQrOpen, setIsQrOpen] = useState(false);
 
   const cases = [
     {
@@ -127,10 +122,7 @@ export default function StudyCasesPage() {
       <CyberGrid />
 
       {/* Main Navigation */}
-      <Navbar
-        onOpenYaraModal={() => setIsYaraOpen(true)}
-        onOpenQrModal={() => setIsQrOpen(true)}
-      />
+      <Navbar />
 
       <main className="relative z-10 mx-auto max-w-5xl px-6 sm:px-8 lg:px-12 py-16 sm:py-24 space-y-16">
         
@@ -301,10 +293,6 @@ export default function StudyCasesPage() {
           </p>
         </div>
       </footer>
-
-      {/* Modals */}
-      <YaraExporterModal isOpen={isYaraOpen} onClose={() => setIsYaraOpen(false)} />
-      <QrChallengeModal isOpen={isQrOpen} onClose={() => setIsQrOpen(false)} />
     </div>
   );
 }

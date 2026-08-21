@@ -22,7 +22,6 @@ import {
   ChevronUp,
   Maximize2,
 } from "lucide-react";
-import { generateYaraRule } from "@/server/telemetry/threat-store";
 
 interface StoryChapter {
   id: string;
@@ -361,7 +360,7 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       </div>
 
       {/* ========================================================================= */}
-      {/* COLLAPSIBLE TECHNICAL TELEMETRY (For Engineers)                           */}
+      {/* COLLAPSIBLE TECHNICAL TELEMETRY (For Engineers & SOC)                     */}
       {/* ========================================================================= */}
       <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/60 overflow-hidden">
         <button
@@ -370,14 +369,14 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         >
           <div className="flex items-center gap-2">
             <Terminal className="h-4 w-4 text-emerald-500" />
-            <span>Technical Inspection Telemetry & Kaspersky YARA Log (SOC View)</span>
+            <span>View Technical Threat Telemetry (SOC Engineer View)</span>
           </div>
           {showTechDetails ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
 
         {showTechDetails && (
           <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 space-y-4 text-xs">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-zinc-600 dark:text-zinc-400">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-zinc-600 dark:text-zinc-400">
               <div>
                 <span className="font-semibold block text-zinc-900 dark:text-white">Threat Vector:</span>
                 <span>{chapter.threatType}</span>
@@ -387,13 +386,13 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
                 <span className="text-emerald-500 font-bold">{chapter.latencyMs}ms</span>
               </div>
               <div>
-                <span className="font-semibold block text-zinc-900 dark:text-white">Risk Score:</span>
+                <span className="font-semibold block text-zinc-900 dark:text-white">Anomaly Confidence:</span>
                 <span className="text-rose-500 font-bold">98.8% (Blocked)</span>
               </div>
-            </div>
-
-            <div className="rounded-xl bg-zinc-900 p-4 text-emerald-400 font-mono overflow-x-auto text-[11px]">
-              <pre>{generateYaraRule()}</pre>
+              <div>
+                <span className="font-semibold block text-zinc-900 dark:text-white">Action Taken:</span>
+                <span className="text-emerald-500 font-bold">Halted at Edge Proxy</span>
+              </div>
             </div>
           </div>
         )}
