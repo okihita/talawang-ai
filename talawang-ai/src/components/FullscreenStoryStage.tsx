@@ -5,21 +5,14 @@ import confetti from "canvas-confetti";
 import {
   ShieldCheck,
   AlertTriangle,
-  ArrowRight,
-  ArrowLeft,
   RotateCcw,
   Bot,
   User,
   CreditCard,
   Languages,
   FileCode2,
-  Lock,
-  Zap,
-  Sparkles,
   X,
-  Smartphone,
   ChevronRight,
-  Shield,
   CheckCircle2,
 } from "lucide-react";
 
@@ -108,6 +101,47 @@ const STORY_CHAPTERS: StoryChapter[] = [
     threatType: "Hidden Invisible Text (Steganography)",
   },
 ];
+
+// Quick Typewriter Component
+function TypewriterText({
+  text,
+  speed = 10,
+  triggerKey,
+}: {
+  text: string;
+  speed?: number;
+  triggerKey: string;
+}) {
+  const [displayed, setDisplayed] = useState("");
+  const [isDone, setIsDone] = useState(false);
+
+  useEffect(() => {
+    setDisplayed("");
+    setIsDone(false);
+    let idx = 0;
+    const timer = setInterval(() => {
+      idx += 2;
+      if (idx >= text.length) {
+        setDisplayed(text);
+        setIsDone(true);
+        clearInterval(timer);
+      } else {
+        setDisplayed(text.slice(0, idx));
+      }
+    }, speed);
+
+    return () => clearInterval(timer);
+  }, [text, triggerKey, speed]);
+
+  return (
+    <span>
+      {displayed}
+      {!isDone && (
+        <span className="inline-block w-1.5 h-3 ml-0.5 bg-emerald-400 animate-pulse align-middle" />
+      )}
+    </span>
+  );
+}
 
 interface FullscreenStoryStageProps {
   isOpen: boolean;
@@ -302,19 +336,36 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
             {/* Chat Message Stream */}
             <div className="min-h-[300px] flex flex-col justify-end space-y-4 p-2">
               
-              {/* Message 1: Initial Bot Greeting */}
-              <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in duration-500">
-                <div className="rounded-2xl rounded-tl-sm bg-zinc-900 p-3.5 text-xs text-zinc-200 leading-relaxed border border-zinc-800/80 shadow-sm">
-                  {chapter.initialBotGreeting}
+              {/* Message 1: Initial Bot Greeting (Avatar Inside Bubble) */}
+              <div className="flex flex-col items-start space-y-1 max-w-[88%] self-start animate-in fade-in duration-500 w-full">
+                <div className="rounded-2xl rounded-tl-sm bg-zinc-900 p-3.5 text-xs text-zinc-200 leading-relaxed border border-zinc-800/80 shadow-sm space-y-2 w-full">
+                  <div className="flex items-center gap-2 pb-1.5 border-b border-zinc-800/80">
+                    <div className="h-5 w-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold shrink-0">
+                      <Bot className="h-3 w-3" />
+                    </div>
+                    <span className="font-bold text-[11px] text-white">{chapter.targetCompany}</span>
+                  </div>
+                  <div className="text-zinc-200 leading-relaxed">
+                    <TypewriterText text={chapter.initialBotGreeting} speed={8} triggerKey={`${chapter.id}-fs-beat1`} />
+                  </div>
                 </div>
                 <span className="text-[10px] text-zinc-600 px-1 font-medium">10:41 AM</span>
               </div>
 
-              {/* Message 2: Attacker Payload */}
+              {/* Message 2: Attacker Payload (Devil Emoji Inside Header) */}
               {currentBeat >= 2 && (
-                <div className="flex flex-col items-end space-y-1 max-w-[88%] self-end animate-in fade-in slide-in-from-bottom-2 duration-500">
-                  <div className="rounded-2xl rounded-tr-sm bg-emerald-700 text-white p-3.5 text-xs leading-relaxed shadow-sm">
-                    {chapter.attackerPrompt}
+                <div className="flex flex-col items-end space-y-1 max-w-[88%] self-end animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
+                  <div className="rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-3.5 text-xs leading-relaxed shadow-sm space-y-2 w-full border border-zinc-800">
+                    <div className="flex items-center justify-between gap-2 pb-1.5 border-b border-zinc-800">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm">😈</span>
+                        <span className="font-bold text-[11px] text-amber-400">Malicious User</span>
+                      </div>
+                      <span className="text-[10px] text-zinc-400 font-medium">Injection Payload</span>
+                    </div>
+                    <div className="text-zinc-200 leading-relaxed">
+                      <TypewriterText text={chapter.attackerPrompt} speed={8} triggerKey={`${chapter.id}-fs-beat2`} />
+                    </div>
                   </div>
                   <span className="text-[10px] text-zinc-500 px-1 font-medium">10:42 AM • Sent</span>
                 </div>
@@ -322,13 +373,15 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
 
               {/* Message 3: Raw AI Response */}
               {currentBeat === 3 && (
-                <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500">
-                  <div className="flex items-center gap-1 text-[11px] text-rose-400 font-bold">
-                    <AlertTriangle className="h-3.5 w-3.5" />
-                    <span>Unprotected Bot Output</span>
-                  </div>
-                  <div className="rounded-2xl rounded-tl-sm bg-rose-950/80 p-3.5 text-xs text-rose-100 leading-relaxed border border-rose-600 shadow-md">
-                    <p className="whitespace-pre-line">{chapter.unsecuredResponse}</p>
+                <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
+                  <div className="rounded-2xl rounded-tl-sm bg-rose-950/80 p-3.5 text-xs text-rose-100 leading-relaxed border border-rose-600 shadow-md space-y-2 w-full">
+                    <div className="flex items-center gap-1.5 pb-1.5 border-b border-rose-800/80 text-[11px] text-rose-300 font-bold">
+                      <AlertTriangle className="h-3.5 w-3.5 text-rose-400" />
+                      <span>Unprotected Bot Output</span>
+                    </div>
+                    <div className="whitespace-pre-line leading-relaxed">
+                      <TypewriterText text={chapter.unsecuredResponse} speed={8} triggerKey={`${chapter.id}-fs-beat3`} />
+                    </div>
                   </div>
                   <span className="text-[10px] text-rose-400 font-bold px-1">
                     ⚠️ The Damage: Unauthorized Action Executed
@@ -338,13 +391,15 @@ export default function FullscreenStoryStage({ isOpen, onClose }: FullscreenStor
 
               {/* Message 4: Talawang Shielded Response */}
               {currentBeat === 4 && (
-                <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500">
-                  <div className="flex items-center gap-1 text-[11px] text-emerald-400 font-bold">
-                    <ShieldCheck className="h-3.5 w-3.5" />
-                    <span>Talawang Edge Gateway ({chapter.latencyMs}ms)</span>
-                  </div>
-                  <div className="rounded-2xl rounded-tl-sm bg-emerald-950/90 p-3.5 text-xs text-emerald-100 leading-relaxed border border-emerald-500 shadow-md">
-                    <p className="whitespace-pre-line">{chapter.talawangResponse}</p>
+                <div className="flex flex-col items-start space-y-1.5 max-w-[88%] self-start animate-in fade-in slide-in-from-bottom-2 duration-500 w-full">
+                  <div className="rounded-2xl rounded-tl-sm bg-emerald-950/90 p-3.5 text-xs text-emerald-100 leading-relaxed border border-emerald-500 shadow-md space-y-2 w-full">
+                    <div className="flex items-center gap-1.5 pb-1.5 border-b border-emerald-800/80 text-[11px] text-emerald-300 font-bold">
+                      <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+                      <span>Talawang Edge Gateway ({chapter.latencyMs}ms)</span>
+                    </div>
+                    <div className="whitespace-pre-line font-medium leading-relaxed">
+                      <TypewriterText text={chapter.talawangResponse} speed={8} triggerKey={`${chapter.id}-fs-beat4`} />
+                    </div>
                   </div>
                   <span className="text-[10px] text-emerald-400 font-bold px-1">
                     🛡️ Protected: Attack Halted in Real-Time

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import {
   ShieldCheck,
@@ -96,6 +96,47 @@ const STORY_CHAPTERS: StoryChapter[] = [
     threatType: "Hidden Invisible Text (Steganography)",
   },
 ];
+
+// Quick, Snappy Typewriter Component
+function TypewriterText({
+  text,
+  speed = 10,
+  triggerKey,
+}: {
+  text: string;
+  speed?: number;
+  triggerKey: string;
+}) {
+  const [displayed, setDisplayed] = useState("");
+  const [isDone, setIsDone] = useState(false);
+
+  useEffect(() => {
+    setDisplayed("");
+    setIsDone(false);
+    let idx = 0;
+    const timer = setInterval(() => {
+      idx += 2; // Type 2 chars per tick for snappy feeling
+      if (idx >= text.length) {
+        setDisplayed(text);
+        setIsDone(true);
+        clearInterval(timer);
+      } else {
+        setDisplayed(text.slice(0, idx));
+      }
+    }, speed);
+
+    return () => clearInterval(timer);
+  }, [text, triggerKey, speed]);
+
+  return (
+    <span>
+      {displayed}
+      {!isDone && (
+        <span className="inline-block w-1.5 h-3 ml-0.5 bg-emerald-500 dark:bg-emerald-400 animate-pulse align-middle" />
+      )}
+    </span>
+  );
+}
 
 interface InteractiveSandboxProps {
   onScanComplete?: (result: any, prompt: string) => void;
@@ -248,26 +289,46 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
       {/* ========================================================================= */}
       <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/70 p-6 sm:p-8 space-y-6 min-h-[300px] flex flex-col justify-end transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
 
-        {/* Bubble 1: Initial Bot Greeting */}
+        {/* Bubble 1: Initial Bot Greeting (Avatar Inside Bubble) */}
         <div className="flex flex-col items-start space-y-1 max-w-[85%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-2">
-          <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
-            <Bot className="h-3.5 w-3.5 text-emerald-500" />
-            <span>{chapter.targetCompany}</span>
-          </div>
-          <div className="rounded-2xl rounded-tl-sm bg-white dark:bg-zinc-900 p-4 text-xs leading-relaxed border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-sm">
-            {chapter.initialBotGreeting}
+          <div className="rounded-2xl rounded-tl-sm bg-white dark:bg-zinc-900 p-4 text-xs leading-relaxed border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 shadow-sm space-y-2.5 w-full">
+            <div className="flex items-center gap-2 pb-2 border-b border-zinc-100 dark:border-zinc-800/80">
+              <div className="h-6 w-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
+                <Bot className="h-3.5 w-3.5" />
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="font-bold text-xs text-zinc-900 dark:text-white">{chapter.targetCompany}</span>
+                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">• Verified Bot</span>
+              </div>
+            </div>
+            <div className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+              <TypewriterText
+                text={chapter.initialBotGreeting}
+                speed={8}
+                triggerKey={`${chapter.id}-beat1`}
+              />
+            </div>
           </div>
         </div>
 
-        {/* Bubble 2: Attacker Exploitation */}
+        {/* Bubble 2: Attacker Exploitation (Devil Emoji & Inside Tag) */}
         {currentBeat >= 2 && (
           <div className="flex flex-col items-end space-y-1 max-w-[85%] self-end transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
-            <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-medium">
-              <span>Malicious User</span>
-              <User className="h-3.5 w-3.5 text-amber-500" />
-            </div>
-            <div className="rounded-2xl rounded-tr-sm bg-zinc-800 dark:bg-zinc-800 text-white p-4 text-xs leading-relaxed shadow-sm">
-              {chapter.attackerPrompt}
+            <div className="rounded-2xl rounded-tr-sm bg-zinc-900 text-white p-4 text-xs leading-relaxed shadow-sm space-y-2.5 w-full border border-zinc-800">
+              <div className="flex items-center justify-between gap-2 pb-2 border-b border-zinc-800">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-sm">😈</span>
+                  <span className="font-bold text-xs text-amber-400">Malicious User</span>
+                </div>
+                <span className="text-[10px] text-zinc-400 font-medium">Injection Payload</span>
+              </div>
+              <div className="text-zinc-200 leading-relaxed">
+                <TypewriterText
+                  text={chapter.attackerPrompt}
+                  speed={8}
+                  triggerKey={`${chapter.id}-beat2`}
+                />
+              </div>
             </div>
           </div>
         )}
@@ -275,12 +336,20 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         {/* Bubble 3: Without Talawang Breach (Beat 3 ONLY) */}
         {currentBeat === 3 && (
           <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
-            <div className="flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 font-bold">
-              <AlertTriangle className="h-3.5 w-3.5" />
-              <span>Unprotected Bot Response</span>
-            </div>
-            <div className="rounded-2xl rounded-tl-sm bg-rose-50 dark:bg-rose-950/40 p-4 text-xs leading-relaxed border border-rose-200 dark:border-rose-900 text-rose-950 dark:text-rose-200 shadow-sm">
-              <p className="whitespace-pre-line">{chapter.unsecuredResponse}</p>
+            <div className="rounded-2xl rounded-tl-sm bg-rose-50 dark:bg-rose-950/40 p-4 text-xs leading-relaxed border border-rose-200 dark:border-rose-900 text-rose-950 dark:text-rose-200 shadow-sm space-y-2.5 w-full">
+              <div className="flex items-center gap-2 pb-2 border-b border-rose-200/60 dark:border-rose-900/60">
+                <div className="h-6 w-6 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-600 dark:text-rose-400 font-bold shrink-0">
+                  <AlertTriangle className="h-3.5 w-3.5" />
+                </div>
+                <span className="font-bold text-xs text-rose-900 dark:text-rose-200">Unprotected Bot Response</span>
+              </div>
+              <div className="whitespace-pre-line leading-relaxed">
+                <TypewriterText
+                  text={chapter.unsecuredResponse}
+                  speed={8}
+                  triggerKey={`${chapter.id}-beat3`}
+                />
+              </div>
             </div>
             <div className="rounded-xl bg-rose-100/60 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-900/60 p-3 text-xs text-rose-800 dark:text-rose-300 font-medium flex items-center gap-2">
               <AlertTriangle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
@@ -292,12 +361,22 @@ export default function InteractiveSandbox({ onScanComplete, onOpenFullscreen }:
         {/* Bubble 4: With Talawang Rescue (Beat 4 ONLY) */}
         {currentBeat === 4 && (
           <div className="flex flex-col items-start space-y-2 max-w-[85%] self-start transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] animate-in fade-in slide-in-from-bottom-3">
-            <div className="flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 font-bold">
-              <ShieldCheck className="h-4 w-4 text-emerald-500" />
-              <span>Protected by Talawang ({chapter.latencyMs}ms)</span>
-            </div>
-            <div className="rounded-2xl rounded-tl-sm bg-emerald-50 dark:bg-emerald-950/30 p-4 text-xs leading-relaxed border border-emerald-300 dark:border-emerald-900/60 text-emerald-950 dark:text-emerald-200 shadow-sm">
-              <p className="whitespace-pre-line">{chapter.talawangResponse}</p>
+            <div className="rounded-2xl rounded-tl-sm bg-emerald-50 dark:bg-emerald-950/30 p-4 text-xs leading-relaxed border border-emerald-300 dark:border-emerald-900/60 text-emerald-950 dark:text-emerald-200 shadow-sm space-y-2.5 w-full">
+              <div className="flex items-center gap-2 pb-2 border-b border-emerald-200/60 dark:border-emerald-900/60">
+                <div className="h-6 w-6 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold shrink-0">
+                  <ShieldCheck className="h-3.5 w-3.5" />
+                </div>
+                <span className="font-bold text-xs text-emerald-900 dark:text-emerald-200">
+                  Protected by Talawang AI ({chapter.latencyMs}ms)
+                </span>
+              </div>
+              <div className="whitespace-pre-line font-medium leading-relaxed">
+                <TypewriterText
+                  text={chapter.talawangResponse}
+                  speed={8}
+                  triggerKey={`${chapter.id}-beat4`}
+                />
+              </div>
             </div>
             <div className="rounded-xl bg-emerald-100/60 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900/60 p-3 text-xs text-emerald-800 dark:text-emerald-300 font-medium flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
